@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { 
     Users, 
     Shield, 
@@ -353,13 +353,13 @@ export const UserManagement: React.FC = () => {
                                     <td className="py-3 px-4 text-right">
                                         <div className="flex justify-end items-center gap-2">
                                             {userTab !== 'INTERNAL' && (
-                                                <button
-                                                    onClick={() => navigate(`/users/${user.id}`)}
+                                                <Link
+                                                    to={`/users/${user.id}`}
                                                     className="px-3 py-1.5 text-xs rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 font-medium"
                                                     title="View User"
                                                 >
                                                     View
-                                                </button>
+                                                </Link>
                                             )}
                                             {userTab === 'INTERNAL' && (
                                                 <button

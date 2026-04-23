@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useBranding } from '../contexts/BrandingContext';
 import { ReleaseData } from '../types';
 import { 
@@ -255,12 +255,12 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                                             </span>
                                         </td>
                                         <td className="px-4 py-3 text-right">
-                                            <button
-                                                onClick={() => navigate(`/releases/${r.id}/view`)}
-                                                className="px-3 py-1.5 text-xs bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                                            <Link
+                                                to={`/releases/${r.id}/view`}
+                                                className="px-3 py-1.5 text-xs bg-blue-600 text-white rounded-lg hover:bg-blue-700 inline-block"
                                             >
                                                 Lihat
-                                            </button>
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))
@@ -340,12 +340,12 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                                             </span>
                                         </td>
                                         <td className="px-4 py-3 text-right">
-                                            <button
-                                                onClick={() => navigate('/publishing/songs')}
-                                                className="px-3 py-1.5 text-xs bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+                                            <Link
+                                                to="/publishing/songs"
+                                                className="px-3 py-1.5 text-xs bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 inline-block"
                                             >
                                                 Kelola
-                                            </button>
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))

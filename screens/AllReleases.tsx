@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Disc, Music, Calendar, Eye, Search, Filter, ArrowUpDown, ArrowUp, ArrowDown, Globe, ChevronLeft, ChevronRight, List, Plus, Users } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { ReleaseData } from '../types';
 import { formatDMY } from '../utils/date';
 import { assetUrl } from '../utils/url';
@@ -459,15 +459,13 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                     </td>
                                     <td className="px-4 py-2 text-right">
                                         <div className="flex justify-end gap-2">
-                                            <button 
-                                                onClick={() => {
-                                                    onViewDetails(release);
-                                                }}
+                                            <Link 
+                                                to={`/releases/${release.id}/view`}
                                                 className="flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-200 text-slate-600 hover:text-blue-600 hover:border-blue-300 rounded-lg transition-all text-[14px] font-bold shadow-sm whitespace-nowrap"
                                                 title="View & Manage"
                                             >
                                                 <Eye size={12} /> View
-                                            </button>
+                                            </Link>
                                         </div>
                                     </td>
                                 </tr>

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ReleaseData } from '../types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../utils/api';
 
 interface Props {
@@ -124,13 +124,13 @@ export const Artists: React.FC<Props> = ({ releases }) => {
                   Artist Page
                 </a>
               )}
-              <button
-                onClick={() => navigate(`/aggregator/artists/${encodeURIComponent(a.name)}`)}
-                className="w-full px-3 py-2 text-xs rounded bg-blue-600 text-white font-bold hover:bg-blue-700"
+              <Link
+                to={`/aggregator/artists/${encodeURIComponent(a.name)}`}
+                className="w-full px-3 py-2 text-xs rounded bg-blue-600 text-white font-bold hover:bg-blue-700 text-center"
                 title="Detail Artist"
               >
                 Detail
-              </button>
+              </Link>
             </div>
           );
         })}
