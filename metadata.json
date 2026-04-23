@@ -1,0 +1,5 @@
+{
+  "name": "Dimensi Suara CMS",
+  "description": "Music distribution CMS for uploading songs with MySQL storage.",
+  "requestFramePermissions": []
+}

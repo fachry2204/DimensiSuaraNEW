@@ -1,0 +1,10 @@
+{
+  "ignore": [
+    "server/db/*",
+    "uploads/*",
+    "test-*.js",
+    "check-users.js",
+    "generate-token.js"
+  ],
+  "ext": "js,json"
+}
