@@ -483,7 +483,7 @@ export const Statistics: React.FC<Props> = ({ releases, reportData, token, defau
                         {/* Table Content */}
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-white">
+                                <thead className="bg-slate-50 border-b border-slate-200">
                                     {tableTab === 'tracks' ? (
                                     <tr>
                                         <th className="px-6 py-4 text-left text-xs font-bold text-slate-800">Track Title</th>

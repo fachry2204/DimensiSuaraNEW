@@ -137,7 +137,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
 
   const ThSortable = ({ label, sortKey, align = 'left' }: { label: string, sortKey: SortKey, align?: 'left'|'right' }) => (
       <th 
-        className={`px-4 py-2 text-[13px] text-slate-500 tracking-wider cursor-pointer hover:bg-slate-100 transition-colors group text-${align}`}
+        className={`px-4 py-2 text-[13px] text-slate-400 tracking-wider cursor-pointer hover:bg-white/5 transition-colors group text-${align}`}
         onClick={() => handleSort(sortKey)}
       >
         <div className={`flex items-center gap-2 ${align === 'right' ? 'justify-end' : ''}`}>
@@ -149,11 +149,11 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
 
   // Stat card UI
   const StatCard = ({ title, count, icon, colorClass, bgClass, subtext, cardClass }: any) => (
-    <div className={`p-5 rounded-2xl shadow-sm border flex items-center justify-between transition-transform hover:-translate-y-1 hover:shadow-md ${cardClass || 'bg-white border-gray-100'}`}>
+    <div className={`p-5 rounded-2xl shadow-sm border border-brand-border flex items-center justify-between transition-transform hover:-translate-y-1 hover:shadow-md ${cardClass || 'bg-brand-card'}`}>
         <div>
-            <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">{title}</p>
-            <h3 className="text-2xl font-bold text-slate-800">{count}</h3>
-            <p className="text-[12px] text-slate-400 mt-1.5 font-normal">{subtext}</p>
+            <p className="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">{title}</p>
+            <h3 className="text-2xl font-bold text-white">{count}</h3>
+            <p className="text-[12px] text-slate-500 mt-1.5 font-normal">{subtext}</p>
         </div>
         <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${bgClass} ${colorClass}`}>
             {icon}
@@ -185,8 +185,8 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
     <div className="p-4 md:p-8 w-full max-w-[1400px] mx-auto min-h-screen">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div className="md:hidden">
-                <h1 className="text-[15px] text-slate-800 tracking-tight">All Releases</h1>
-                <p className="text-slate-500 mt-0.5 text-[10px]">Manage and track your music catalog status.</p>
+                <h1 className="text-[15px] text-white tracking-tight">All Releases</h1>
+                <p className="text-slate-400 mt-0.5 text-[10px]">Manage and track your music catalog status.</p>
             </div>
         </div>
 
@@ -199,7 +199,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                 colorClass="text-indigo-600" 
                 bgClass="bg-indigo-100"
                 subtext="Total single releases"
-                cardClass="bg-indigo-50 border-indigo-100"
+                cardClass="bg-indigo-500/10 border-indigo-500/20"
             />
             <StatCard 
                 title="Jumlah Album" 
@@ -208,7 +208,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                 colorClass="text-purple-600" 
                 bgClass="bg-purple-100"
                 subtext="Total album releases"
-                cardClass="bg-purple-50 border-purple-100"
+                cardClass="bg-purple-500/10 border-purple-500/20"
             />
             <StatCard 
                 title="Jumlah Track" 
@@ -217,7 +217,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                 colorClass="text-blue-600" 
                 bgClass="bg-blue-100"
                 subtext="Tracks across catalog"
-                cardClass="bg-blue-50 border-blue-100"
+                cardClass="bg-blue-500/10 border-blue-500/20"
             />
             <StatCard 
                 title="Jumlah Artis" 
@@ -226,7 +226,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                 colorClass="text-emerald-600" 
                 bgClass="bg-emerald-100"
                 subtext="Total unique artists"
-                cardClass="bg-emerald-50 border-emerald-100"
+                cardClass="bg-emerald-500/10 border-emerald-500/20"
             />
             
         </div>
@@ -263,8 +263,8 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                             ? 'bg-red-100 text-red-800 border-red-300 shadow-sm'
                             : 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100/60'
                         : isActive
-                        ? 'bg-slate-800 text-white border-slate-800 shadow-md'
-                        : 'bg-white text-slate-500 border-gray-200 hover:border-slate-300 hover:bg-gray-50';
+                        ? 'bg-brand-purple text-white border-brand-purple shadow-md'
+                        : 'bg-brand-card text-slate-500 border-brand-border hover:border-slate-300 hover:bg-white/5';
                 
                 return (
                     <button
@@ -282,23 +282,23 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                 ${
                                     tab.id === 'PENDING'
                                         ? isActive
-                                            ? 'bg-yellow-50/80 text-yellow-800 border-yellow-300'
-                                            : 'bg-yellow-50 text-yellow-700 border-yellow-200'
+                                            ? 'bg-white/10 text-yellow-500 border-yellow-500/30'
+                                            : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
                                         : tab.id === 'PROCESSING'
                                         ? isActive
-                                            ? 'bg-blue-50/80 text-blue-800 border-blue-300'
-                                            : 'bg-blue-50 text-blue-700 border-blue-200'
+                                            ? 'bg-white/10 text-blue-500 border-blue-500/30'
+                                            : 'bg-blue-500/10 text-blue-500 border-blue-500/20'
                                         : tab.id === 'RELEASED'
                                         ? isActive
-                                            ? 'bg-green-50/80 text-green-800 border-green-300'
-                                            : 'bg-green-50 text-green-700 border-green-200'
+                                            ? 'bg-white/10 text-green-500 border-green-500/30'
+                                            : 'bg-green-500/10 text-green-500 border-green-500/20'
                                         : tab.id === 'REJECTED'
                                         ? isActive
-                                            ? 'bg-red-50/80 text-red-800 border-red-300'
-                                            : 'bg-red-50 text-red-700 border-red-200'
+                                            ? 'bg-white/10 text-red-500 border-red-500/30'
+                                            : 'bg-red-500/10 text-red-500 border-red-500/20'
                                         : isActive
                                         ? 'bg-white/10 text-white border-white/30'
-                                        : 'bg-slate-100 text-slate-600 border-slate-200'
+                                        : 'bg-white/5 text-slate-500 border-brand-border'
                                 }
                             `}
                         >
@@ -316,14 +316,13 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search Title, Artist, UPC, Aggregator..." 
-                        className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 bg-white shadow-sm transition-all text-[13px]"
+                        className="w-full pl-9 pr-3 py-2 border border-brand-border rounded-lg focus:outline-none focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 bg-brand-card shadow-sm transition-all text-[13px] text-white"
                     />
-                    <Search size={16} className="absolute left-3 top-2.5 text-gray-400" />
+                    <Search size={16} className="absolute left-3 top-2.5 text-slate-500" />
                 </div>
                 <button
                     onClick={() => navigate('/new-release')}
-                    className="flex items-center gap-2 px-3 py-1.5 text-white rounded hover:opacity-90 transition-colors text-[14px] font-bold shadow-sm"
-                    style={{ backgroundColor: getButtonColor() }}
+                    className="flex items-center gap-2 px-3 py-1.5 text-white bg-brand-purple rounded hover:opacity-90 transition-colors text-[14px] font-bold shadow-sm"
                     title="Create New Release"
                 >
                     <Plus size={14} />
@@ -332,10 +331,10 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
             </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-md border border-gray-300 overflow-hidden flex flex-col min-h-[500px]">
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col min-h-[500px]">
             <div className="overflow-x-auto flex-1">
                 <table className="w-full text-left">
-                    <thead className="bg-slate-50 border-b-2 border-gray-300">
+                    <thead className="bg-slate-50 border-b-2 border-slate-200">
                         <tr>
                             <ThSortable label="Release" sortKey="title" />
                             <th className="px-4 py-2 text-[13px] text-slate-500 tracking-wider">User</th>
@@ -347,7 +346,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                             <th className="px-4 py-2 text-[13px] text-slate-500 tracking-wider text-right">Action</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-300">
+                    <tbody className="divide-y divide-slate-100">
                         {displayedReleases.map((release) => {
                             // Determine type
                             const type = (release.tracks || []).length > 1 ? "Album/EP" : "Single";
@@ -377,7 +376,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                 : undefined;
 
                             return (
-                                <tr key={release.id || Math.random()} className="even:bg-slate-50 hover:bg-blue-50 transition-colors group text-[13px]">
+                                <tr key={release.id || Math.random()} className="even:bg-slate-50/50 hover:bg-blue-50 transition-colors group text-[13px]">
                                     <td className="px-4 py-2">
                                         <div className="flex items-center gap-4">
                                             <div className={`w-12 h-12 rounded-lg bg-blue-50 overflow-hidden flex items-center justify-center text-slate-400 relative shrink-0 border border-blue-100`}>
@@ -461,7 +460,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                         <div className="flex justify-end gap-2">
                                             <Link 
                                                 to={`/releases/${release.id}/view`}
-                                                className="flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-200 text-slate-600 hover:text-blue-600 hover:border-blue-300 rounded-lg transition-all text-[14px] font-bold shadow-sm whitespace-nowrap"
+                                                className="flex items-center gap-1 px-3 py-1.5 bg-brand-purple text-white hover:opacity-90 rounded-lg transition-all text-[14px] font-bold shadow-sm whitespace-nowrap"
                                                 title="View & Manage"
                                             >
                                                 <Eye size={12} /> View
@@ -492,7 +491,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
             )}
 
             {/* Pagination Footer */}
-            <div className="p-4 border-t border-gray-100 flex items-center justify-between bg-gray-50/50">
+            <div className="p-4 border-t border-slate-200 flex items-center justify-between bg-slate-50/50">
                 <div className="text-[13px] text-slate-500 font-medium">
                     Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to {Math.min((currentPage - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE, sortedReleases.length)} of {sortedReleases.length} results
                 </div>

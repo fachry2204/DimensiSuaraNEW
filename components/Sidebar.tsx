@@ -63,28 +63,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
   const getLinkClass = (isActive: boolean) => 
     `w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] ${
       isActive
-        ? 'bg-white text-black shadow-sm ring-1 ring-white/20'
-        : 'text-white/80 hover:bg-white/10 hover:text-white'
+        ? 'bg-brand-purple text-white shadow-lg shadow-brand-purple/20'
+        : 'text-slate-400 hover:bg-white/5 hover:text-white'
     }`;
 
   const getIconClass = (isActive: boolean) =>
-    isActive ? 'text-black' : 'text-white/70 group-hover:text-white';
+    isActive ? 'text-white' : 'text-slate-400 group-hover:text-white';
 
   const getSubLinkClass = (isActive: boolean) => 
     `w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 font-medium text-[12px] ${
       isActive
-        ? 'text-white bg-white/10'
-        : 'text-white/60 hover:text-white hover:bg-white/5'
+        ? 'text-brand-purple bg-brand-purple/10'
+        : 'text-slate-500 hover:text-white hover:bg-white/5'
     }`;
 
   return (
-    <aside className="w-64 bg-black backdrop-blur-xl border-r border-white/10 h-screen md:min-h-screen flex flex-col shadow-lg shadow-blue-900/5 transition-all duration-300 sticky top-0 overflow-y-auto pb-6 md:pb-0 sidebar-scroll">
+    <aside className="w-64 bg-brand-card border-r border-brand-border h-screen md:min-h-screen flex flex-col shadow-2xl transition-all duration-300 sticky top-0 overflow-y-auto pb-6 md:pb-0 sidebar-scroll">
       {/* Brand Logo */}
-      <div className="min-h-[80px] h-auto py-4 flex flex-col items-center justify-center px-6 border-b border-white/10 flex-shrink-0">
+      <div className="min-h-[80px] h-auto py-4 flex flex-col items-center justify-center px-6 border-b border-brand-border flex-shrink-0">
         {logo ? (
             <img src={logo} alt="Logo" className="w-auto h-auto max-h-[150px] object-contain mb-2" />
         ) : (
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30 mb-2">
+            <div className="w-12 h-12 bg-brand-purple rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-purple/30 mb-2">
                 <Music4 size={24} />
             </div>
         )}
@@ -99,7 +99,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
         {/* Dashboard Menu */}
         <div>
           <h3 
-            className="px-4 text-[14px] font-semibold text-white/60 uppercase tracking-wider mb-3 flex items-center justify-between cursor-pointer hover:text-white transition-colors"
+            className="px-4 text-[11px] font-bold text-slate-500 uppercase tracking-[0.1em] mb-4 flex items-center justify-between cursor-pointer hover:text-brand-purple transition-colors"
             onClick={() => toggleSection('dashboard')}
           >
             Dashboard
@@ -217,7 +217,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
             {/* Statistik Dropdown */}
             <li>
                 <div 
-                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-white/80 hover:bg-white/10 hover:text-white cursor-pointer"
+                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-slate-400 hover:bg-white/5 hover:text-white cursor-pointer"
                     onClick={() => toggleSection('statistics')}
                 >
                     <div className="flex items-center gap-3">
@@ -227,7 +227,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
                     {expandedSections.statistics ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                 </div>
                 {expandedSections.statistics && (
-                    <ul className="pl-4 mt-1 space-y-1 border-l border-white/10 ml-6">
+                    <ul className="pl-4 mt-1 space-y-1 border-l border-brand-border ml-6">
                         <li>
                             <NavLink to="/statistics/aggregator" className={({ isActive }) => getSubLinkClass(isActive)}>
                                 Aggregator

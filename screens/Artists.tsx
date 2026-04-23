@@ -74,27 +74,27 @@ export const Artists: React.FC<Props> = ({ releases }) => {
   }, [artists]);
 
   const palette = [
-    'from-blue-50 to-blue-100 border-blue-100',
-    'from-indigo-50 to-indigo-100 border-indigo-100',
-    'from-cyan-50 to-cyan-100 border-cyan-100',
-    'from-emerald-50 to-emerald-100 border-emerald-100',
-    'from-amber-50 to-amber-100 border-amber-100',
-    'from-rose-50 to-rose-100 border-rose-100',
-    'from-violet-50 to-violet-100 border-violet-100',
+    'from-indigo-900/20 to-indigo-900/40 border-indigo-500/20',
+    'from-purple-900/20 to-purple-900/40 border-purple-500/20',
+    'from-blue-900/20 to-blue-900/40 border-blue-500/20',
+    'from-emerald-900/20 to-emerald-900/40 border-emerald-500/20',
+    'from-amber-900/20 to-amber-900/40 border-amber-500/20',
+    'from-rose-900/20 to-rose-900/40 border-rose-500/20',
+    'from-violet-900/20 to-violet-900/40 border-violet-500/20',
   ];
 
   return (
     <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
       <div className="mb-6">
-        <h1 className="text-xl font-bold text-slate-800">Artists</h1>
-        <p className="text-xs text-slate-500">Daftar artis berdasarkan rilisan yang tersedia</p>
+        <h1 className="text-xl font-bold text-white">Artists</h1>
+        <p className="text-xs text-slate-400">Daftar artis berdasarkan rilisan yang tersedia</p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {artists.map((a, idx) => {
           const bg = palette[idx % palette.length];
           const prof = profiles[a.name];
           return (
-            <div key={a.name} className={`border rounded-xl p-4 flex flex-col gap-3 shadow-sm bg-gradient-to-br ${bg}`}>
+            <div key={a.name} className={`border rounded-xl p-4 flex flex-col gap-3 shadow-sm bg-brand-card bg-gradient-to-br ${bg}`}>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full overflow-hidden bg-white/70 flex items-center justify-center">
                   {prof?.image ? (
@@ -104,8 +104,8 @@ export const Artists: React.FC<Props> = ({ releases }) => {
                   )}
                 </div>
                 <div className="min-w-0">
-                  <div className="text-sm font-bold text-slate-800 truncate">{a.name}</div>
-                  <div className="text-[11px] text-slate-600 truncate">
+                  <div className="text-sm font-bold text-white truncate">{a.name}</div>
+                  <div className="text-[11px] text-slate-400 truncate">
                     Albums: {a.albumCount} • Singles: {a.singleCount}
                   </div>
                 </div>
@@ -126,7 +126,7 @@ export const Artists: React.FC<Props> = ({ releases }) => {
               )}
               <Link
                 to={`/aggregator/artists/${encodeURIComponent(a.name)}`}
-                className="w-full px-3 py-2 text-xs rounded bg-blue-600 text-white font-bold hover:bg-blue-700 text-center"
+                className="w-full px-3 py-2 text-xs rounded bg-brand-purple text-white font-bold hover:opacity-90 text-center"
                 title="Detail Artist"
               >
                 Detail

@@ -329,7 +329,7 @@ const Tickets: React.FC<TicketsProps> = ({ token, userRole }) => {
                     </div>
                 ) : (
                     <table className="w-full text-left">
-                        <thead className="bg-gray-50 text-gray-600 text-xs">
+                        <thead className="bg-slate-50 text-gray-600 text-xs">
                             <tr>
                                 <th className="px-6 py-3 font-normal">Subjek</th>
                                 {userRole === 'Admin' && <th className="px-6 py-3 font-normal">Pengguna</th>}

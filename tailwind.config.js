@@ -10,13 +10,19 @@ export default {
     extend: {
       colors: {
         brand: {
-          blue: '#3b82f6', // blue-500
-          dark: '#1e293b', // slate-800
-          light: '#eff6ff', // blue-50
+          blue: '#3b82f6', 
+          dark: '#0f0f12', 
+          light: '#eff6ff', 
+          purple: '#b35cf6',
+          card: '#1a1a1f',
+          border: '#2a2a2e',
         }
       },
       fontFamily: {
-        sans: ['Arial', 'sans-serif'],
+        sans: ['"Inter"', 'sans-serif'],
+      },
+      backgroundImage: {
+        'gradient-neon': 'linear-gradient(135deg, #b35cf6 0%, #6366f1 100%)',
       }
     },
   },

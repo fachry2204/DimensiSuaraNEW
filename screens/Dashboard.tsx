@@ -87,10 +87,10 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
   };
 
   const StatCard = ({ title, count, icon, colorClass, bgClass, subtext, cardClass, isLoading }: any) => (
-    <div className={`p-5 rounded-2xl shadow-sm border flex items-center justify-between transition-transform hover:-translate-y-1 hover:shadow-md ${cardClass || 'bg-white border-gray-100'}`}>
+    <div className={`p-5 rounded-2xl shadow-sm border border-brand-border flex items-center justify-between transition-transform hover:-translate-y-1 hover:shadow-md ${cardClass || 'bg-brand-card'}`}>
         <div>
-            <p className="text-slate-500 text-[11px] font-bold uppercase tracking-wider mb-1">{title}</p>
-            <h3 className="text-2xl font-bold text-slate-800">
+            <p className="text-slate-400 text-[11px] font-bold uppercase tracking-wider mb-1">{title}</p>
+            <h3 className="text-2xl font-bold text-white">
                 {isLoading ? <Loader2 className="animate-spin h-6 w-6 text-slate-300" /> : count}
             </h3>
             <p className="text-[11px] text-slate-400 mt-1.5 font-medium">{subtext}</p>
@@ -103,17 +103,17 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
 
   return (
     <div className="p-4 md:p-8 w-full max-w-[1400px] mx-auto min-h-screen">
-       <div className="mb-8">
-            <h1 className="text-lg font-bold text-slate-800 tracking-tight">Dashboard Overview</h1>
-            <p className="text-slate-500 mt-1 text-xs">Welcome back, here is your catalog and publishing overview.</p>
+        <div className="mb-8">
+            <h1 className="text-lg font-bold text-white tracking-tight">Dashboard Overview</h1>
+            <p className="text-slate-400 mt-1 text-xs">Welcome back, here is your catalog and publishing overview.</p>
        </div>
 
        {/* AGGREGATOR / RELEASES SECTION */}
        <div className="mb-10">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                    <Music className="text-blue-600" size={18} />
-                    <h2 className="text-sm font-bold text-slate-700">Aggregator Status</h2>
+                    <Music className="text-brand-purple" size={18} />
+                    <h2 className="text-sm font-bold text-slate-200">Aggregator Status</h2>
                 </div>
                 <button 
                     onClick={() => navigate('/new-release')}
@@ -132,7 +132,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                     colorClass="text-yellow-600" 
                     bgClass="bg-yellow-50"
                     subtext="Waiting for approval"
-                    cardClass="bg-yellow-50/50 border-yellow-100"
+                    cardClass="bg-yellow-500/10 border-yellow-500/20"
                 />
                 <StatCard 
                     title="Processing" 
@@ -141,7 +141,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                     colorClass="text-blue-600" 
                     bgClass="bg-blue-50"
                     subtext="Sent to stores"
-                    cardClass="bg-blue-50/50 border-blue-100"
+                    cardClass="bg-blue-500/10 border-blue-500/20"
                 />
                 <StatCard 
                     title="Released" 
@@ -150,7 +150,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                     colorClass="text-green-600" 
                     bgClass="bg-green-50"
                     subtext="Active on DSPs"
-                    cardClass="bg-green-50/50 border-green-100"
+                    cardClass="bg-green-500/10 border-green-500/20"
                 />
                 <StatCard 
                     title="Rejected" 
@@ -159,7 +159,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                     colorClass="text-red-600" 
                     bgClass="bg-red-50"
                     subtext="Requires attention"
-                    cardClass="bg-red-50/50 border-red-100"
+                    cardClass="bg-red-500/10 border-red-500/20"
                 />
             </div>
        </div>
@@ -167,8 +167,8 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
        {/* PUBLISHING SECTION */}
        <div>
             <div className="flex items-center gap-2 mb-4">
-                <FileText className="text-purple-600" size={18} />
-                <h2 className="text-sm font-bold text-slate-700">Publishing Status</h2>
+                <FileText className="text-brand-purple" size={18} />
+                <h2 className="text-sm font-bold text-slate-200">Publishing Status</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <StatCard 
@@ -178,7 +178,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                     colorClass="text-orange-600" 
                     bgClass="bg-orange-50"
                     subtext="New submissions"
-                    cardClass="bg-orange-50/50 border-orange-100"
+                    cardClass="bg-orange-500/10 border-orange-500/20"
                     isLoading={isLoadingSongs}
                 />
                  <StatCard 
@@ -188,7 +188,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                     colorClass="text-indigo-600" 
                     bgClass="bg-indigo-50"
                     subtext="Under verification"
-                    cardClass="bg-indigo-50/50 border-indigo-100"
+                    cardClass="bg-indigo-500/10 border-indigo-500/20"
                     isLoading={isLoadingSongs}
                 />
                 <StatCard 
@@ -198,7 +198,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                     colorClass="text-teal-600" 
                     bgClass="bg-teal-50"
                     subtext="Registered & Live"
-                    cardClass="bg-teal-50/50 border-teal-100"
+                    cardClass="bg-teal-500/10 border-teal-500/20"
                     isLoading={isLoadingSongs}
                 />
                 <StatCard 
@@ -208,18 +208,18 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                     colorClass="text-rose-600" 
                     bgClass="bg-rose-50"
                     subtext="Needs correction"
-                    cardClass="bg-rose-50/50 border-rose-100"
+                    cardClass="bg-rose-500/10 border-rose-500/20"
                     isLoading={isLoadingSongs}
                 />
             </div>
             <div className="mt-10">
                 <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                        <Clock className="text-yellow-600" size={18} />
-                        <h3 className="text-sm font-bold text-slate-700">Release Pending/Review</h3>
+                        <Clock className="text-brand-purple" size={18} />
+                        <h3 className="text-sm font-bold text-slate-200">Release Pending/Review</h3>
                     </div>
                 </div>
-                <div className="border border-slate-200 rounded-xl overflow-hidden bg-white">
+                <div className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50 border-b border-slate-200">
                             <tr>
@@ -238,7 +238,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                                 </tr>
                             ) : (
                                 pagedPending.map((r, idx) => (
-                                    <tr key={String(r.id)} className="hover:bg-slate-50">
+                                    <tr key={String(r.id)} className="hover:bg-slate-50 border-b border-slate-100 last:border-0">
                                         <td className="px-4 py-3 text-xs text-slate-500">{(pendingPage - 1) * pageSize + idx + 1}</td>
                                         <td className="px-4 py-3">
                                             <div className="text-sm font-semibold text-slate-800">{r.title}</div>
@@ -257,7 +257,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                                         <td className="px-4 py-3 text-right">
                                             <Link
                                                 to={`/releases/${r.id}/view`}
-                                                className="px-3 py-1.5 text-xs bg-blue-600 text-white rounded-lg hover:bg-blue-700 inline-block"
+                                                className="px-3 py-1.5 text-xs bg-brand-purple text-white rounded-lg hover:opacity-90 inline-block font-bold"
                                             >
                                                 Lihat
                                             </Link>
@@ -267,7 +267,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                             )}
                         </tbody>
                     </table>
-                    <div className="flex items-center justify-between p-3 border-t border-slate-100">
+                    <div className="flex items-center justify-between p-3 border-t border-slate-200 bg-slate-50/50">
                         <div className="text-xs text-slate-500">Halaman {pendingPage} dari {totalPendingPages}</div>
                         <div className="flex items-center gap-1">
                             <button
@@ -300,11 +300,11 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
             <div className="mt-6">
                 <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                        <Clock className="text-indigo-600" size={18} />
-                        <h3 className="text-sm font-bold text-slate-700">Publishing Pending</h3>
+                        <Clock className="text-brand-purple" size={18} />
+                        <h3 className="text-sm font-bold text-slate-200">Publishing Pending</h3>
                     </div>
                 </div>
-                <div className="border border-slate-200 rounded-xl overflow-hidden bg-white">
+                <div className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm">
                     <table className="w-full text-left">
                         <thead className="bg-slate-50 border-b border-slate-200">
                             <tr>
@@ -342,7 +342,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                                         <td className="px-4 py-3 text-right">
                                             <Link
                                                 to="/publishing/songs"
-                                                className="px-3 py-1.5 text-xs bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 inline-block"
+                                                className="px-3 py-1.5 text-xs bg-brand-purple text-white rounded-lg hover:opacity-90 inline-block font-bold"
                                             >
                                                 Kelola
                                             </Link>
@@ -352,7 +352,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                             )}
                         </tbody>
                     </table>
-                    <div className="flex items-center justify-between p-3 border-t border-slate-100">
+                    <div className="flex items-center justify-between p-3 border-t border-slate-200 bg-slate-50/50">
                         <div className="text-xs text-slate-500">Halaman {publishingPage} dari {totalPublishingPages}</div>
                         <div className="flex items-center gap-1">
                             <button

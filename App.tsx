@@ -59,8 +59,8 @@ const App: React.FC = () => {
   const { branding } = useBranding();
 
   // Header Branding State
-  const [headerBgColor, setHeaderBgColor] = useState<string>('rgba(255, 255, 255, 0.8)');
-  const [headerTitleColor, setHeaderTitleColor] = useState<string>('#1e293b'); // Default slate-800
+  const [headerBgColor, setHeaderBgColor] = useState<string>('rgba(15, 15, 18, 0.8)');
+  const [headerTitleColor, setHeaderTitleColor] = useState<string>('#f8fafc'); // slate-50
 
   useEffect(() => {
     if (branding) {
@@ -894,7 +894,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 font-sans">
+    <div className="flex min-h-screen bg-brand-dark text-slate-100 font-sans">
       
       {/* Mobile Menu Button */}
       <button 
@@ -921,7 +921,7 @@ const App: React.FC = () => {
         
         {/* GLOBAL HEADER */}
         <header 
-            className="sticky top-0 z-30 backdrop-blur-xl border-b border-white/20 px-6 py-3 flex items-center justify-between shadow-sm transition-colors duration-300"
+            className="sticky top-0 z-30 backdrop-blur-xl border-b border-brand-border px-6 py-3 flex items-center justify-between shadow-sm transition-colors duration-300"
             style={{ background: headerBgColor }}
         >
             {location.pathname === '/dashboard' ? (
@@ -988,7 +988,7 @@ const App: React.FC = () => {
                                 <h3 className="font-bold text-slate-800 text-sm">Notifications</h3>
                                 <button 
                                     onClick={() => setShowNotifications(false)}
-                                    className="text-slate-400 hover:text-slate-600"
+                                    className="text-slate-500 hover:text-slate-300"
                                 >
                                     <X size={16} />
                                 </button>
@@ -1037,7 +1037,7 @@ const App: React.FC = () => {
                     onClick={() => setShowProfileModal(true)}
                 >
                     <div className="text-right hidden sm:block">
-                        <div className="text-sm font-bold capitalize" style={{ color: headerTitleColor }}>{currentUserData?.full_name || currentUserData?.name || currentUser}</div>
+                        <div className="text-sm font-bold capitalize text-slate-50">{currentUserData?.full_name || currentUserData?.name || currentUser}</div>
                         <div className="text-[10px] font-medium opacity-70" style={{ color: headerTitleColor }}>
                             {userRole === 'Admin' 
                                 ? 'Super Administrator' 

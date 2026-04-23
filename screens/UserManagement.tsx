@@ -273,8 +273,8 @@ export const UserManagement: React.FC = () => {
             {/* Table */}
             <div className="overflow-x-auto">
                 <table className="w-full text-left">
-                    <thead>
-                        <tr className="border-b border-gray-200">
+                    <thead className="bg-slate-50 border-b border-slate-200">
+                        <tr>
                             <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">User</th>
                             {userTab !== 'INTERNAL' && (
                                 <>

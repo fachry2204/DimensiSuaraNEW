@@ -161,7 +161,7 @@ export const AggregatorDashboard: React.FC<Props> = ({ releases, onViewRelease, 
        </div>
 
        {/* RECENT ACTIVITY TABLE */}
-       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="p-4 border-b border-gray-100 flex justify-between items-center">
                 <h3 className="text-[11px] text-slate-800 flex items-center gap-2 font-bold uppercase tracking-wider">
                     <LayoutDashboard size={16} className="text-slate-400" />
@@ -176,8 +176,8 @@ export const AggregatorDashboard: React.FC<Props> = ({ releases, onViewRelease, 
             </div>
             
             <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                    <thead className="bg-slate-50 border-b border-gray-100">
+                <table className="w-full text-left bg-white">
+                    <thead className="bg-slate-50 border-b border-slate-200">
                         <tr>
                             <th className="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase">Cover</th>
                             <th className="px-6 py-3 text-[11px] font-bold text-slate-500 uppercase">Title</th>
