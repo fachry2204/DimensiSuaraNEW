@@ -890,21 +890,21 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                             <div className="space-y-8">
                                 {/* Status Selector */}
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-2">Release Status</label>
+                                    <label className="block text-sm font-bold text-black mb-2">Release Status</label>
                                     <select 
                                         value={status}
                                         onChange={(e) => setStatus(e.target.value as any)}
-                                        className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 font-bold text-slate-700
+                                        className={`w-full px-4 py-3 rounded-xl border-2 focus:outline-none focus:ring-2 font-bold text-black
                                             ${status === 'Rejected' ? 'border-red-200 bg-red-50 focus:border-red-500 focus:ring-red-100' : 
                                             status === 'Live' ? 'border-green-200 bg-green-50 focus:border-green-500 focus:ring-green-100' :
                                             'border-blue-200 bg-white focus:border-blue-500 focus:ring-blue-100'}
                                         `}
                                     >
-                                        <option value="Pending">Pending Review</option>
-                                        <option value="Request Edit">Request Edit</option>
-                                        <option value="Processing">Processing (Aggregator)</option>
-                                        <option value="Live">Released</option>
-                                        <option value="Rejected">Rejected</option>
+                                        <option value="Pending" className="text-black">Pending Review</option>
+                                        <option value="Request Edit" className="text-black">Request Edit</option>
+                                        <option value="Processing" className="text-black">Processing (Aggregator)</option>
+                                        <option value="Live" className="text-black">Released</option>
+                                        <option value="Rejected" className="text-black">Rejected</option>
                                     </select>
                                 </div>
 
@@ -923,7 +923,7 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                                                         value={rejectionReason}
                                                         onChange={(e) => setRejectionReason(e.target.value)}
                                                         placeholder="e.g. Cover Art tidak sesuai guideline"
-                                                        className="flex-1 px-4 py-3 border border-red-200 rounded-lg focus:outline-none focus:border-red-500 text-sm"
+                                                        className="flex-1 px-4 py-3 border border-red-200 rounded-lg focus:outline-none focus:border-red-500 text-sm text-black font-semibold"
                                                     />
                                                     <button 
                                                         onClick={generateRejectionMessage}
@@ -946,7 +946,7 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                                                     onChange={(e) => setRejectionDesc(e.target.value)}
                                                     placeholder="Deskripsi detail akan muncul di sini setelah klik OK..."
                                                     rows={6}
-                                                    className="w-full px-4 py-3 border border-red-200 rounded-lg focus:outline-none focus:border-red-500 text-sm resize-none bg-white shadow-sm"
+                                                    className="w-full px-4 py-3 border border-red-200 rounded-lg focus:outline-none focus:border-red-500 text-sm resize-none bg-white shadow-sm text-black font-semibold"
                                                 />
                                             </div>
                                         </div>
@@ -963,11 +963,11 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                                         <select 
                                             value={selectedAggregator}
                                             onChange={(e) => setSelectedAggregator(e.target.value)}
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-purple-500 shadow-sm"
+                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-purple-500 shadow-sm text-black font-semibold"
                                         >
-                                            <option value="">-- Choose Aggregator --</option>
+                                            <option value="" className="text-black">-- Choose Aggregator --</option>
                                             {availableAggregators.map(agg => (
-                                                <option key={agg} value={agg}>{agg}</option>
+                                                <option key={agg} value={agg} className="text-black">{agg}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -989,7 +989,7 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                                                 value={upcInput}
                                                 onChange={(e) => setUpcInput(e.target.value)}
                                                 placeholder="Enter UPC Code (Required)"
-                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 font-mono text-sm shadow-sm
+                                                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 font-mono text-sm shadow-sm text-black font-bold
                                                     ${!upcInput ? 'border-red-300 focus:border-red-500 focus:ring-red-100 bg-white' : 'border-green-200 focus:ring-green-500'}`}
                                             />
                                             {!upcInput && <p className="text-[10px] text-red-500 mt-1 font-bold">UPC is required to set status to Released.</p>}
@@ -1005,7 +1005,7 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                                                     return (
                                                         <div key={track.id} className="flex items-center gap-3 bg-white p-2 rounded border border-green-100">
                                                             <div className="flex items-center justify-center w-6 h-6 rounded-full bg-green-100 text-green-700 font-bold text-xs">{track.trackNumber}</div>
-                                                            <span className="text-sm text-slate-700 w-1/3 truncate font-medium" title={track.title}>{track.title}</span>
+                                                            <span className="text-sm text-black w-1/3 truncate font-bold" title={track.title}>{track.title}</span>
                                                             <input 
                                                                 value={isrcInputs[track.id] || ''}
                                                                 onChange={(e) => setIsrcInputs(prev => ({...prev, [track.id]: e.target.value}))}

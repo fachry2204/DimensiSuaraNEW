@@ -298,7 +298,7 @@ export const Step1ReleaseInfo: React.FC<Props> = ({ data, updateData, releaseTyp
                   <h3 className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-4 absolute -top-2 left-4 bg-white px-2">Admin Controls</h3>
                   <div className="mb-3">
                     <SelectInput
-                        label="Release Owner (Admin Only)"
+                        label={<span className="text-black font-bold">Release Owner (Admin Only)</span>}
                         options={users.map(u => u.username)}
                         value={users.find(u => u.id === Number(data.userId))?.username || ""}
                         onChange={(e) => {
@@ -332,7 +332,7 @@ export const Step1ReleaseInfo: React.FC<Props> = ({ data, updateData, releaseTyp
 
                   {/* Primary Artists (Multiple) */}
                   <div>
-                    <label className="block text-xs font-medium text-slate-700 mb-1">Primary Artist(s) <span className="text-red-500">*</span></label>
+                    <label className="block text-xs font-bold text-black mb-1">Primary Artist(s) <span className="text-red-500">*</span></label>
                     <div className="space-y-2">
                       {data.primaryArtists.map((artist, index) => {
                         const artistName = typeof artist === 'string' ? artist : artist.name;
@@ -352,7 +352,7 @@ export const Step1ReleaseInfo: React.FC<Props> = ({ data, updateData, releaseTyp
                                 setSearchIdx(index);
                                 setSearchQuery(artistName || '');
                               }}
-                              className="flex-1 px-3 py-2 border border-gray-300 rounded bg-white text-xs text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 placeholder-slate-400 transition-all font-medium"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded bg-white text-xs text-black focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 placeholder-slate-400 transition-all font-semibold"
                               placeholder="Artist Name"
                             />
                             {searchIdx === index && showDropdown && (
@@ -411,7 +411,7 @@ export const Step1ReleaseInfo: React.FC<Props> = ({ data, updateData, releaseTyp
                                 value={spotifyLink}
                                 onChange={(e) => handleArtistChange(index, 'spotifyLink', e.target.value)}
                                 onBlur={(e) => detectSpotifyArtist(index, e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded bg-white text-xs text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 placeholder-slate-400 transition-all font-medium"
+                                className="w-full px-3 py-2 border border-gray-300 rounded bg-white text-xs text-black focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 placeholder-slate-400 transition-all font-semibold"
                                 placeholder="Spotify Artist Link (Optional)"
                             />
                             {spotifyLink && (spotifyLink.includes('spotify.com') || spotifyLink.startsWith('spotify:')) && (

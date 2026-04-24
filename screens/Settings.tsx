@@ -536,14 +536,14 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                     </div>
 
                     <div className="max-w-md">
-                        <label className="block text-sm font-bold text-slate-700 mb-3">Active Aggregators</label>
+                        <label className="block text-sm font-bold text-black mb-3">Active Aggregators</label>
                         
                         <div className="flex gap-2 mb-4">
                             <input 
                                 value={newAgg}
                                 onChange={(e) => setNewAgg(e.target.value)}
                                 placeholder="Add new aggregator (e.g. Tunecore)"
-                                className="flex-1 px-4 py-2 border border-gray-200 rounded-xl focus:border-blue-500 outline-none"
+                                className="flex-1 px-4 py-2 border border-gray-200 rounded-xl focus:border-blue-500 outline-none text-black font-semibold"
                             />
                             <button 
                                 onClick={handleAddAggregator}
@@ -565,7 +565,7 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                                                 <input
                                                     value={editingValue}
                                                     onChange={(e) => setEditingValue(e.target.value)}
-                                                    className="flex-1 px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:border-blue-500 outline-none"
+                                                    className="flex-1 px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:border-blue-500 outline-none text-black font-semibold"
                                                     placeholder="Aggregator name"
                                                 />
                                                 <button
@@ -630,7 +630,7 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         {/* Logo Upload */}
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-3">Logo System</label>
+                            <label className="block text-sm font-bold text-black mb-3">Logo System</label>
                             <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center bg-slate-50 hover:bg-slate-100 transition-colors relative">
                                 {logoFile ? (
                                     <div className="relative">
@@ -666,7 +666,7 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
 
                         {/* Login Background Upload */}
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-3">Background Login Page</label>
+                            <label className="block text-sm font-bold text-black mb-3">Background Login Page</label>
                             <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center bg-slate-50 hover:bg-slate-100 transition-colors relative">
                                  {bgFile ? (
                                     <div className="relative w-full h-32">
@@ -703,7 +703,7 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-2">Warna Teks Judul</label>
+                            <label className="block text-sm font-bold text-black mb-2">Warna Teks Judul</label>
                             <div className="flex gap-2">
                                 <input 
                                     type="color" 
@@ -716,14 +716,14 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                                     value={branding.login_title_color || ''}
                                     onChange={(e) => setBranding({...branding, login_title_color: e.target.value})}
                                     placeholder="#1e293b"
-                                    className="flex-1 px-4 py-2 border border-gray-200 rounded-xl focus:border-blue-500 outline-none font-mono text-sm"
+                                    className="flex-1 px-4 py-2 border border-gray-200 rounded-xl focus:border-blue-500 outline-none font-mono text-sm text-black font-semibold"
                                 />
                             </div>
                         </div>
 
                         {/* Favicon Upload */}
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-3">Favicon</label>
+                            <label className="block text-sm font-bold text-black mb-3">Favicon</label>
                             <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center bg-slate-50 hover:bg-slate-100 transition-colors relative">
                                 {faviconFile ? (
                                     <div className="relative">
@@ -761,7 +761,7 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                             </div>
                         </div>
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-2">Warna Teks Footer</label>
+                            <label className="block text-sm font-bold text-black mb-2">Warna Teks Footer</label>
                             <div className="flex gap-2">
                                 <input 
                                     type="color" 
