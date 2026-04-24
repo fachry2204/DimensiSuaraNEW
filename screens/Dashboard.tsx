@@ -273,27 +273,36 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                             <button
                                 onClick={() => setPendingPage(Math.max(1, pendingPage - 1))}
                                 disabled={pendingPage === 1}
-                                className="px-2 py-1 text-xs border border-slate-200 rounded-lg disabled:opacity-50"
+                                className="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-lg disabled:opacity-50 disabled:bg-slate-300 font-bold hover:bg-blue-600 transition-colors"
                             >
                                 Prev
                             </button>
-                            {Array.from({ length: totalPendingPages }).map((_, i) => (
+                            {Array.from({ length: totalPendingPages })
+                                .map((_, i) => i + 1)
+                                .filter(page => {
+                                    // Show first 5 pages or range around current
+                                    if (totalPendingPages <= 5) return true;
+                                    const start = Math.max(1, Math.min(pendingPage - 2, totalPendingPages - 4));
+                                    const end = start + 4;
+                                    return page >= start && page <= end;
+                                })
+                                .map((page) => (
                                 <button
-                                    key={i}
-                                    onClick={() => setPendingPage(i + 1)}
+                                    key={page}
+                                    onClick={() => setPendingPage(page)}
                                     className={`px-3 py-1.5 text-xs rounded-lg font-bold transition-all ${
-                                        pendingPage === i + 1 
+                                        pendingPage === page 
                                             ? 'bg-green-500 text-white shadow-sm shadow-green-500/30' 
                                             : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
                                     }`}
                                 >
-                                    {i + 1}
+                                    {page}
                                 </button>
                             ))}
                             <button
                                 onClick={() => setPendingPage(Math.min(totalPendingPages, pendingPage + 1))}
                                 disabled={pendingPage === totalPendingPages}
-                                className="px-2 py-1 text-xs border border-slate-200 rounded-lg disabled:opacity-50"
+                                className="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-lg disabled:opacity-50 disabled:bg-slate-300 font-bold hover:bg-blue-600 transition-colors"
                             >
                                 Next
                             </button>
@@ -362,27 +371,35 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                             <button
                                 onClick={() => setPublishingPage(Math.max(1, publishingPage - 1))}
                                 disabled={publishingPage === 1}
-                                className="px-2 py-1 text-xs border border-slate-200 rounded-lg disabled:opacity-50"
+                                className="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-lg disabled:opacity-50 disabled:bg-slate-300 font-bold hover:bg-blue-600 transition-colors"
                             >
                                 Prev
                             </button>
-                            {Array.from({ length: totalPublishingPages }).map((_, i) => (
+                            {Array.from({ length: totalPublishingPages })
+                                .map((_, i) => i + 1)
+                                .filter(page => {
+                                    if (totalPublishingPages <= 5) return true;
+                                    const start = Math.max(1, Math.min(publishingPage - 2, totalPublishingPages - 4));
+                                    const end = start + 4;
+                                    return page >= start && page <= end;
+                                })
+                                .map((page) => (
                                 <button
-                                    key={i}
-                                    onClick={() => setPublishingPage(i + 1)}
+                                    key={page}
+                                    onClick={() => setPublishingPage(page)}
                                     className={`px-3 py-1.5 text-xs rounded-lg font-bold transition-all ${
-                                        publishingPage === i + 1 
+                                        publishingPage === page 
                                             ? 'bg-green-500 text-white shadow-sm shadow-green-500/30' 
                                             : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
                                     }`}
                                 >
-                                    {i + 1}
+                                    {page}
                                 </button>
                             ))}
                             <button
                                 onClick={() => setPublishingPage(Math.min(totalPublishingPages, publishingPage + 1))}
                                 disabled={publishingPage === totalPublishingPages}
-                                className="px-2 py-1 text-xs border border-slate-200 rounded-lg disabled:opacity-50"
+                                className="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-lg disabled:opacity-50 disabled:bg-slate-300 font-bold hover:bg-blue-600 transition-colors"
                             >
                                 Next
                             </button>
