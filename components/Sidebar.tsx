@@ -9,6 +9,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
   const [logo, setLogo] = useState<string | null>(null);
+  const [systemTitle, setSystemTitle] = useState<string>('Aggregator & Publishing');
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     dashboard: false,
     aggregator: false,
@@ -56,6 +57,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
           .then(res => res.json())
           .then(data => {
               if (data.logo) setLogo(data.logo);
+              if (data.login_title) setSystemTitle(data.login_title);
           })
           .catch(err => console.error("Failed to fetch branding:", err));
   }, []);
@@ -89,7 +91,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
             </div>
         )}
         <div className="text-center">
-            <span className="text-xs font-bold text-white block tracking-wide">Aggregator & Publishing</span>
+            <span className="text-xs font-bold text-white block tracking-wide">{systemTitle}</span>
         </div>
       </div>
 

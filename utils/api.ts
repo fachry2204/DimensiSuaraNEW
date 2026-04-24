@@ -674,7 +674,7 @@ export const api = {
 
     updateBranding: async (token, formData: FormData) => {
         const res = await fetch(`${API_BASE_URL}/settings/branding`, {
-            method: 'POST',
+            method: 'PUT',
             headers: { 
                 'Authorization': `Bearer ${token}`
             },
