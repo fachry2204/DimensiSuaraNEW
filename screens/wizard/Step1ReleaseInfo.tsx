@@ -287,8 +287,8 @@ export const Step1ReleaseInfo: React.FC<Props> = ({ data, updateData, releaseTyp
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="text-center mb-6">
-        <h2 className="text-xs font-bold text-slate-800 mb-2">Basic Information</h2>
-        <p className="text-xs text-slate-500">Let's start with the essentials of your release.</p>
+        <h2 className="text-sm font-bold text-slate-900 mb-2">Basic Information</h2>
+        <p className="text-xs text-slate-600">Let's start with the essentials of your release.</p>
       </div>
       
       <div className="flex flex-col gap-6 items-start w-full">
@@ -339,7 +339,7 @@ export const Step1ReleaseInfo: React.FC<Props> = ({ data, updateData, releaseTyp
                         const spotifyLink = typeof artist === 'string' ? '' : artist.spotifyLink || '';
 
                         return (
-                        <div key={index} className="flex flex-col gap-2 p-3 bg-slate-50 rounded border border-slate-100">
+                        <div key={index} className="flex flex-col gap-2 p-3 bg-slate-50/50 rounded border border-slate-200 shadow-sm">
                           <div className="flex items-center gap-2 relative">
                             <input 
                               value={artistName}
@@ -352,7 +352,7 @@ export const Step1ReleaseInfo: React.FC<Props> = ({ data, updateData, releaseTyp
                                 setSearchIdx(index);
                                 setSearchQuery(artistName || '');
                               }}
-                              className="flex-1 px-3 py-2 border border-gray-300 rounded bg-white text-xs focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 placeholder-gray-400 transition-all"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded bg-white text-xs text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 placeholder-slate-400 transition-all font-medium"
                               placeholder="Artist Name"
                             />
                             {searchIdx === index && showDropdown && (
@@ -411,7 +411,7 @@ export const Step1ReleaseInfo: React.FC<Props> = ({ data, updateData, releaseTyp
                                 value={spotifyLink}
                                 onChange={(e) => handleArtistChange(index, 'spotifyLink', e.target.value)}
                                 onBlur={(e) => detectSpotifyArtist(index, e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded bg-white text-xs focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 placeholder-gray-400 transition-all"
+                                className="w-full px-3 py-2 border border-gray-300 rounded bg-white text-xs text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 placeholder-slate-400 transition-all font-medium"
                                 placeholder="Spotify Artist Link (Optional)"
                             />
                             {spotifyLink && (spotifyLink.includes('spotify.com') || spotifyLink.startsWith('spotify:')) && (

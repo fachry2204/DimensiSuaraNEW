@@ -235,7 +235,8 @@ router.put('/branding', authenticateToken, upload.fields([{ name: 'logo', maxCou
         
         res.json({ message: 'Branding updated', branding: rows[0] });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error('Branding Update Error:', err);
+        res.status(500).json({ error: 'Database update failed', details: err.message, code: err.code });
     }
 });
 

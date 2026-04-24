@@ -402,8 +402,8 @@ export const Step4Review: React.FC<Props> = ({ data, onSave, onBack, userRole })
   return (
     <div className="w-full max-w-6xl mx-auto">
       <div className="text-center mb-6">
-        <h2 className="text-xs font-bold text-slate-800 mb-1">Final Review</h2>
-        <p className="text-xs text-slate-500">Please verify all information before submitting your release.</p>
+        <h2 className="text-sm font-bold text-slate-900 mb-1">Final Review</h2>
+        <p className="text-xs text-slate-600">Please verify all information before submitting your release.</p>
       </div>
 
       {/* SECTION 1: RELEASE METADATA SUMMARY */}
@@ -508,12 +508,12 @@ export const Step4Review: React.FC<Props> = ({ data, onSave, onBack, userRole })
                 <table className="w-full text-left text-xs">
                     <thead className="bg-slate-50 border-b border-gray-100">
                         <tr>
-                            <th className="px-6 py-4 font-medium text-slate-600 w-16 text-center text-xs">#</th>
-                            <th className="px-6 py-4 font-medium text-slate-600 text-xs">Title & File</th>
-                            <th className="px-6 py-4 font-medium text-slate-600 text-xs">Credits</th>
-                            <th className="px-6 py-4 font-medium text-slate-600 w-24 text-center text-xs">Explicit</th>
-                            <th className="px-6 py-4 font-medium text-slate-600 font-mono text-xs">ISRC</th>
-                            <th className="px-6 py-4 font-medium text-slate-600 w-28 text-center text-xs">Clip</th>
+                            <th className="px-6 py-4 font-bold text-slate-900 w-16 text-center text-xs">#</th>
+                            <th className="px-6 py-4 font-bold text-slate-900 text-xs">Title & File</th>
+                            <th className="px-6 py-4 font-bold text-slate-900 text-xs">Credits</th>
+                            <th className="px-6 py-4 font-bold text-slate-900 w-24 text-center text-xs">Explicit</th>
+                            <th className="px-6 py-4 font-bold text-slate-900 font-mono text-xs">ISRC</th>
+                            <th className="px-6 py-4 font-bold text-slate-900 w-28 text-center text-xs">Clip</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
@@ -784,6 +784,6 @@ const MetaItem: React.FC<{ label: string; value: React.ReactNode; icon: React.Re
         <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider flex items-center gap-1.5 mb-1.5">
             {React.cloneElement(icon as React.ReactElement, { size: 14 })} {label}
         </span>
-        <div className="text-xs font-semibold text-slate-800 break-words">{value || "-"}</div>
+        <div className="text-xs font-bold text-slate-900 break-words">{value || "-"}</div>
     </div>
 );

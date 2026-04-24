@@ -566,8 +566,8 @@ export const Step2TrackInfo: React.FC<Props> = ({ data, updateData, releaseType 
     <div className="w-full max-w-5xl mx-auto relative">
        <div className="flex justify-between items-end mb-6 border-b border-gray-100 pb-4">
         <div>
-            <h2 className="text-xs font-medium text-slate-800 mb-1">Tracklist</h2>
-            <p className="text-xs text-slate-500">Upload audio and fill in details for each track.</p>
+            <h2 className="text-sm font-bold text-slate-900 mb-1">Tracklist</h2>
+            <p className="text-xs text-slate-600">Upload audio and fill in details for each track.</p>
         </div>
         
         {releaseType === 'ALBUM' && (

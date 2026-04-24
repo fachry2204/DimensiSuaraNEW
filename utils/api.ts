@@ -681,8 +681,7 @@ export const api = {
             body: formData,
             credentials: 'include'
         });
-        if (!res.ok) throw new Error('Failed to update branding');
-        return res.json();
+        return parseResponse(res);
     },
 
     getAggregators: async (token) => {

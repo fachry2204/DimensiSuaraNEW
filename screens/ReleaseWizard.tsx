@@ -153,23 +153,22 @@ export const ReleaseWizard: React.FC<Props> = ({ type, onBack, onSave, initialDa
     <div className="min-h-screen pb-20">
       <div className="max-w-5xl mx-auto pt-6 px-4 md:px-6">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6 backdrop-blur-sm bg-white/50 p-3 rounded-lg border border-white/50 shadow-sm">
+        <div className="flex justify-between items-center mb-6 bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
             <div className="flex flex-col">
-                <div className="flex items-center space-x-2 text-[10px] text-slate-500 mb-0.5">
-                    <span className="font-medium text-blue-600">Dashboard</span>
+                <div className="flex items-center space-x-2 text-[10px] text-slate-600 mb-0.5">
+                    <span className="font-semibold text-blue-600">Dashboard</span>
                     <span>/</span>
                     <span>{initialData ? 'View' : 'Upload'}</span>
                 </div>
-                <h1 className="text-base font-medium text-slate-800 tracking-tight">{title}</h1>
+                <h1 className="text-sm font-bold text-slate-900 tracking-tight">{title}</h1>
             </div>
-            
         </div>
 
         {/* Stepper */}
         <StepIndicator currentStep={currentStep} onStepClick={(s) => { if (s <= currentStep) setCurrentStep(s); }} />
 
         {/* Main Card */}
-        <div className="bg-white/80 backdrop-blur-xl rounded-lg shadow-xl shadow-blue-900/5 border border-white p-4 mb-6 relative">
+        <div className="bg-white rounded-lg shadow-xl shadow-blue-900/5 border border-gray-200 p-4 mb-6 relative">
             {renderStep()}
         </div>
 

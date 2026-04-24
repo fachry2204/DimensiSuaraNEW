@@ -59,7 +59,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
               if (data.logo) setLogo(data.logo);
               if (data.login_title) setSystemTitle(data.login_title);
           })
-          .catch(err => console.error("Failed to fetch branding:", err));
+          .catch(err => {
+              console.error("Failed to fetch branding:", err);
+              // Fallback is already 'Aggregator & Publishing' by default state
+          });
   }, []);
 
   const getLinkClass = (isActive: boolean) => 

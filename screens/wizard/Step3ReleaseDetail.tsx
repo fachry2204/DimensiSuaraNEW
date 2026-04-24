@@ -24,8 +24,8 @@ export const Step3ReleaseDetail: React.FC<Props> = ({ data, updateData, releaseT
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-xs font-bold text-slate-800 mb-2">Release Specifics</h2>
-        <p className="text-xs text-slate-500">Distribution details and dates.</p>
+        <h2 className="text-sm font-bold text-slate-900 mb-1">Release Specifics</h2>
+        <p className="text-xs text-slate-600">Distribution details and dates.</p>
       </div>
 
       <div className="border border-gray-200 rounded-lg p-6 relative mt-6 mb-8">
@@ -72,7 +72,7 @@ export const Step3ReleaseDetail: React.FC<Props> = ({ data, updateData, releaseT
                                type="date" 
                                value={data.originalReleaseDate}
                                onChange={(e) => updateData({ originalReleaseDate: e.target.value })}
-                               className="w-full px-4 py-1.5 text-xs border border-gray-300 rounded bg-gray-50 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 shadow-sm transition-all pl-4 pr-10 appearance-none [&::-webkit-calendar-picker-indicator]:opacity-0"
+                               className="w-full px-4 py-1.5 text-xs text-slate-900 border border-gray-300 rounded bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 shadow-sm transition-all pl-4 pr-10 appearance-none [&::-webkit-calendar-picker-indicator]:opacity-0 font-medium"
                             />
                            <div 
                                onClick={() => originalDateInputRef.current?.showPicker()}

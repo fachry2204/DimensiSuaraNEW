@@ -423,8 +423,8 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
 
   const InfoRow = ({ label, value, highlight = false }: { label: string, value: string, highlight?: boolean }) => (
       <div className="flex flex-col mb-2.5">
-          <span className="text-[10px] uppercase font-semibold text-slate-400 tracking-wider mb-0.5">{label}</span>
-          <div className={`text-[13px] flex items-center justify-between group ${highlight ? 'text-blue-700' : 'text-slate-800'}`}>
+          <span className="text-[10px] uppercase font-bold text-slate-600 tracking-wider mb-0.5">{label}</span>
+          <div className={`text-[13px] font-medium flex items-center justify-between group ${highlight ? 'text-blue-700' : 'text-slate-900'}`}>
               <span className="truncate pr-2">{value || "-"}</span>
               {value && (
                   <button 
@@ -440,7 +440,7 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
   );
 
   return (
-    <div className="w-full min-h-screen bg-gray-50 pb-12 animate-fade-in">
+    <div className="w-full min-h-screen bg-white pb-12 animate-fade-in">
         
         {/* Header - No longer a modal header */}
         <div className="bg-white sticky top-0 z-30 shadow-sm border-b border-gray-200">
@@ -476,7 +476,7 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
         </div>
 
         <div className="max-w-6xl mx-auto px-4 md:px-8 py-8">
-            <div className="flex flex-col md:flex-row gap-8 items-start mb-8 bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <div className="flex flex-col md:flex-row gap-8 items-start mb-8 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                 <div className="flex flex-col gap-3 flex-shrink-0 w-40 md:w-48">
                     <div className="w-full aspect-square rounded-xl bg-gray-200 shadow-md overflow-hidden border border-gray-300 flex flex-col relative group">
                         <div className="flex-1 relative">
@@ -548,10 +548,10 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                     </div>
                 </div>
                 <div className="flex-1">
-                    <div className="text-sm text-slate-500 mb-1">
+                    <div className="text-sm text-slate-600 mb-1 font-medium">
                         {(release as any).ownerDisplayName || 'Unknown User'}
                     </div>
-                    <h1 className="text-3xl font-bold text-slate-800 mb-1">{release.title}</h1>
+                    <h1 className="text-3xl font-bold text-slate-900 mb-1">{release.title}</h1>
                     <p className="text-slate-600 font-medium text-lg mb-3">
                         {release.primaryArtists.map(a => typeof a === 'string' ? a : a.name).join(", ")}
                     </p>
