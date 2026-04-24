@@ -419,8 +419,8 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                                 )}
                                             </div>
                                             <div className="min-w-[150px]">
-                                                <div className="font-bold text-slate-800 truncate max-w-[200px] text-[13px]" title={release.title}>{release.title || "Untitled Release"}</div>
-                                                <div className="text-[13px] text-slate-500 truncate max-w-[200px] font-bold" title={(release.primaryArtists || []).map(a => typeof a === 'string' ? a : a.name).join(', ')}>
+                                                <div className="font-medium text-slate-800 truncate max-w-[200px] text-[13px]" title={release.title}>{release.title || "Untitled Release"}</div>
+                                                <div className="text-[13px] text-slate-500 truncate max-w-[200px] font-medium" title={(release.primaryArtists || []).map(a => typeof a === 'string' ? a : a.name).join(', ')}>
                                                     {(release.primaryArtists || []).map(a => typeof a === 'string' ? a : a.name).join(', ') || "Unknown Artist"}
                                                 </div>
                                             </div>
@@ -433,7 +433,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                         </div>
                                     </td>
                                     <td className="px-4 py-2">
-                                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[13px] font-bold whitespace-nowrap shadow-sm border ${
+                                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[13px] font-medium whitespace-nowrap shadow-sm border ${
                                             type === "Single" 
                                                 ? "bg-blue-100 text-blue-700 border-blue-200" 
                                                 : "bg-green-100 text-green-700 border-green-200"
@@ -457,8 +457,8 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                     {userRole === 'Admin' && (
                                     <td className="px-4 py-2 text-[13px]">
                                         {release.aggregator ? (
-                                            <div className="flex items-center gap-1 text-[13px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-100 w-fit">
-                                                <Globe size={10} />
+                                            <div className="flex items-center gap-1 text-[13px] font-medium text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-100 w-fit">
+                                                <Music size={10} />
                                                 {release.aggregator}
                                             </div>
                                         ) : (
@@ -470,7 +470,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                         <div className="flex flex-col items-start gap-1">
                                             <span 
                                                 title={rejectionTooltip}
-                                                className={`inline-block px-2 py-0.5 rounded-full text-[13px] font-bold whitespace-nowrap border ${statusClass}`}
+                                                className={`inline-block px-2 py-0.5 rounded-full text-[13px] font-medium whitespace-nowrap border ${statusClass}`}
                                             >
                                                 {status === 'Live' || status === 'Released' ? 'Released' : status}
                                             </span>
@@ -480,7 +480,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                         <div className="flex justify-end gap-2">
                                             <Link 
                                                 to={`/releases/${release.id}/view`}
-                                                className="flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition-all text-[14px] font-bold shadow-sm whitespace-nowrap"
+                                                className="flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition-all text-[14px] font-medium shadow-sm whitespace-nowrap"
                                                 title="View & Manage"
                                             >
                                                 <Eye size={12} /> View

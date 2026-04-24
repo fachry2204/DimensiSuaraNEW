@@ -675,11 +675,11 @@ export const Step2TrackInfo: React.FC<Props> = ({ data, updateData, releaseType 
                                                             <FileAudio size={20} />
                                                         </div>
                                                         <div className="flex flex-col min-w-0">
-                                                            <p className="text-sm font-medium text-blue-900 truncate">
+                                                            <p className="text-sm font-bold text-blue-900 truncate">
                                                                 {typeof track.audioFile === 'string' ? 'Existing Audio' : track.audioFile.name}
                                                             </p>
                                                             <div className="flex items-center gap-2">
-                                                                <span className="text-xs text-blue-500">Uploaded</span>
+                                                                <span className="text-xs text-blue-600 font-bold bg-blue-100/50 px-2 py-0.5 rounded">Uploaded</span>
                                                                 <div className="scale-75 origin-left w-32">
                                                                     <AudioPreview file={track.audioFile} />
                                                                 </div>
@@ -698,6 +698,13 @@ export const Step2TrackInfo: React.FC<Props> = ({ data, updateData, releaseType 
                                                     </>
                                                 )}
                                             </div>
+                                            
+                                            {track.audioFile && !isProcessingAudio && (
+                                                <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 rounded-lg border border-green-200">
+                                                    <Check size={16} className="text-green-600" />
+                                                    <span className="text-[11px] font-bold uppercase tracking-wider">Upload Berhasil</span>
+                                                </div>
+                                            )}
                                             
                                             {!track.audioFile && (
                                                 <div className="hidden sm:block">
@@ -740,11 +747,11 @@ export const Step2TrackInfo: React.FC<Props> = ({ data, updateData, releaseType 
                                                             <Scissors size={20} />
                                                         </div>
                                                         <div className="flex flex-col min-w-0">
-                                                            <p className="text-sm font-medium text-orange-900 truncate">
+                                                            <p className="text-sm font-bold text-orange-900 truncate">
                                                                 {typeof track.audioClip === 'string' ? 'Existing Clip' : track.audioClip.name}
                                                             </p>
                                                             <div className="flex items-center gap-2 w-full">
-                                                                <span className="text-xs text-orange-500 whitespace-nowrap">Ready</span>
+                                                                <span className="text-xs text-orange-600 font-bold bg-orange-100/50 px-2 py-0.5 rounded whitespace-nowrap">Ready</span>
                                                                 <div className="scale-75 origin-left w-[133%]">
                                                                     <AudioPreview file={track.audioClip} />
                                                                 </div>
@@ -765,6 +772,12 @@ export const Step2TrackInfo: React.FC<Props> = ({ data, updateData, releaseType 
                                             </div>
 
                                             <div className="flex items-center gap-2">
+                                                {track.audioClip && !isProcessingClip && (
+                                                    <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 rounded-lg border border-green-200">
+                                                        <Check size={16} className="text-green-600" />
+                                                        <span className="text-[11px] font-bold uppercase tracking-wider">Upload Berhasil</span>
+                                                    </div>
+                                                )}
                                                 {track.audioFile && !track.audioClip && (
                                                     <button 
                                                         type="button"
