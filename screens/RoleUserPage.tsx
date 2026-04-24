@@ -221,7 +221,7 @@ export const RoleUserPage: React.FC = () => {
                       <button
                         disabled={isUpdating === u.id}
                         onClick={() => updateStatus(u.id, 'Active')}
-                        className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors disabled:opacity-50"
+                        className="px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-500 text-white hover:bg-blue-600 transition-colors disabled:opacity-50 shadow-sm shadow-blue-100"
                         title="Set Active"
                       >
                         Set Active

@@ -265,7 +265,7 @@ export const MyProfile: React.FC<Props> = ({ currentUserData }) => {
                 href={previewUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="px-4 py-2 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700"
+                className="px-4 py-2 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 shadow-lg shadow-blue-100 transition-all"
               >
                 Buka di Tab Baru
               </a>

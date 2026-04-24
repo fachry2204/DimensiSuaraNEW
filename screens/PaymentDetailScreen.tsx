@@ -195,12 +195,12 @@ export const PaymentDetailScreen: React.FC = () => {
                                     <div key={idx} className="flex flex-col items-center gap-2 px-2 flex-1">
                                         <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-colors border-4 ${
                                             isPast 
-                                                ? 'bg-indigo-600 border-indigo-100 text-white shadow-lg shadow-indigo-200' 
+                                                ? 'bg-blue-500 border-blue-100 text-white shadow-lg shadow-blue-100' 
                                                 : 'bg-white border-slate-200 text-slate-400'
                                         }`}>
                                             {isPast ? <CheckCircle size={18} /> : idx + 1}
                                         </div>
-                                        <span className={`text-sm font-medium ${isPast ? 'text-indigo-600' : 'text-slate-400'}`}>
+                                        <span className={`text-sm font-bold ${isPast ? 'text-blue-500' : 'text-slate-400'}`}>
                                             {step.label}
                                         </span>
                                     </div>
@@ -307,7 +307,7 @@ export const PaymentDetailScreen: React.FC = () => {
                                     <span className="text-slate-500">Biaya Tambahan:</span>
                                     <input 
                                         type="number" 
-                                        className="w-32 px-3 py-1.5 text-right text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+                                        className="w-32 px-3 py-1.5 text-right text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                                         value={additionalFeeInput}
                                         onChange={(e) => setAdditionalFeeInput(Number(e.target.value))}
                                     />
@@ -329,7 +329,7 @@ export const PaymentDetailScreen: React.FC = () => {
                         {invoice.status === 'Pending Payment' && (
                             <button 
                                 onClick={() => handleStatusUpdate('Proses Payment')}
-                                className="w-full py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2"
+                                className="w-full py-4 bg-blue-500 text-white rounded-xl font-bold hover:bg-blue-600 transition-colors shadow-lg shadow-blue-100 flex items-center justify-center gap-2"
                             >
                                 <CheckCircle size={20} />
                                 Proses Pembayaran
@@ -388,7 +388,7 @@ export const PaymentDetailScreen: React.FC = () => {
                     </button>
                     <button 
                         onClick={handleSaveDetail}
-                        className="px-6 py-2.5 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-900 transition-colors shadow-lg shadow-slate-900/10"
+                        className="px-6 py-2.5 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 transition-colors shadow-lg shadow-blue-100"
                     >
                         Simpan Perubahan
                     </button>

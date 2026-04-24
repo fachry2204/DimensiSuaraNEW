@@ -547,7 +547,7 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                             />
                             <button 
                                 onClick={handleAddAggregator}
-                                className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+                                className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors shadow-sm"
                             >
                                 <Plus size={20} />
                             </button>
@@ -570,7 +570,7 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                                                 />
                                                 <button
                                                     onClick={handleSaveEdit}
-                                                    className="px-3 py-1.5 text-xs font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                                    className="px-3 py-1.5 text-xs font-bold bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors shadow-sm"
                                                 >
                                                     Save
                                                 </button>
@@ -926,7 +926,7 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                         <button 
                             onClick={handleSaveBranding}
                             disabled={isLoadingBranding}
-                            className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors font-bold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-100"
                         >
                             {isLoadingBranding ? (
                                 <>
@@ -1131,7 +1131,7 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                             <button 
                                 onClick={handleCheckSystem}
                                 disabled={checkingSystem}
-                                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors flex items-center gap-2"
+                                className="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-bold hover:bg-blue-600 transition-colors flex items-center gap-2 shadow-sm"
                             >
                                 <RefreshCw size={16} className={checkingSystem ? 'animate-spin' : ''} />
                                 Check for Updates
@@ -1341,7 +1341,7 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                                             }
                                         }}
                                         disabled={testingEmail}
-                                        className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-bold disabled:opacity-50"
+                                        className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors font-bold disabled:opacity-50 shadow-sm"
                                     >
                                         {testingEmail ? 'Mengirim...' : 'Kirim Test Email'}
                                     </button>
@@ -1440,7 +1440,7 @@ export const Settings: React.FC<Props> = ({ aggregators, onSaveAggregators }) =>
                         <button 
                             onClick={handleSaveGateway}
                             disabled={savingGateway}
-                            className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors font-bold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-100"
                         >
                             {savingGateway ? (
                                 <>

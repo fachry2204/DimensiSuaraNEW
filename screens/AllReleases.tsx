@@ -56,6 +56,9 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
 
   const getCount = (statusMap: string | null) => {
     if (statusMap === null) return releases.length;
+    if (statusMap === 'Live') {
+        return releases.filter(r => r.status === 'Live' || r.status === 'Released').length;
+    }
     return releases.filter(r => (r.status || 'Pending') === statusMap).length;
   };
 
@@ -63,7 +66,16 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
   const filteredReleases = releases.filter(release => {
     // Status Filter
     const currentTab = tabs.find(t => t.id === activeStatusTab);
-    const statusMatch = currentTab?.statusMap ? (release.status || 'Pending') === currentTab.statusMap : true;
+    const releaseStatus = release.status || 'Pending';
+    let statusMatch = true;
+    
+    if (currentTab?.statusMap) {
+        if (currentTab.statusMap === 'Live') {
+            statusMatch = releaseStatus === 'Live' || releaseStatus === 'Released';
+        } else {
+            statusMatch = releaseStatus === currentTab.statusMap;
+        }
+    }
     
     // Search Filter (Expanded to include Aggregator)
     const searchLower = searchQuery.toLowerCase();
@@ -250,6 +262,10 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                         ? isActive
                             ? 'bg-yellow-100 text-yellow-800 border-yellow-300 shadow-sm'
                             : 'bg-yellow-50 text-yellow-700 border-yellow-200 hover:bg-yellow-100/60'
+                        : tab.id === 'REQUEST_EDIT'
+                        ? isActive
+                            ? 'bg-orange-500 text-white border-orange-600 shadow-sm'
+                            : 'bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100/60'
                         : tab.id === 'PROCESSING'
                         ? isActive
                             ? 'bg-blue-100 text-blue-800 border-blue-300 shadow-sm'
@@ -263,7 +279,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                             ? 'bg-red-100 text-red-800 border-red-300 shadow-sm'
                             : 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100/60'
                         : isActive
-                        ? 'bg-brand-purple text-white border-brand-purple shadow-md'
+                        ? 'bg-blue-500 text-white border-blue-500 shadow-md'
                         : 'bg-brand-card text-slate-500 border-brand-border hover:border-slate-300 hover:bg-white/5';
                 
                 return (
@@ -290,8 +306,12 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                             : 'bg-blue-500/10 text-blue-500 border-blue-500/20'
                                         : tab.id === 'RELEASED'
                                         ? isActive
-                                            ? 'bg-white/10 text-green-500 border-green-500/30'
-                                            : 'bg-green-500/10 text-green-500 border-green-500/20'
+                                            ? 'bg-white/20 text-white border-white/40'
+                                            : 'bg-green-500/10 text-green-600 border-green-500/20'
+                                        : tab.id === 'REQUEST_EDIT'
+                                        ? isActive
+                                            ? 'bg-white/20 text-white border-white/40'
+                                            : 'bg-orange-500/10 text-orange-600 border-orange-500/20'
                                         : tab.id === 'REJECTED'
                                         ? isActive
                                             ? 'bg-white/10 text-red-500 border-red-500/30'
@@ -316,13 +336,13 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search Title, Artist, UPC, Aggregator..." 
-                        className="w-full pl-9 pr-3 py-2 border border-brand-border rounded-lg focus:outline-none focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/10 bg-brand-card shadow-sm transition-all text-[13px] text-white"
+                        className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 bg-white shadow-sm transition-all text-[13px] text-slate-800"
                     />
-                    <Search size={16} className="absolute left-3 top-2.5 text-slate-500" />
+                    <Search size={16} className="absolute left-3 top-2.5 text-slate-400" />
                 </div>
                 <button
                     onClick={() => navigate('/new-release')}
-                    className="flex items-center gap-2 px-3 py-1.5 text-white bg-brand-purple rounded hover:opacity-90 transition-colors text-[14px] font-bold shadow-sm"
+                    className="flex items-center gap-2 px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors text-[14px] font-bold shadow-md shadow-blue-100"
                     title="Create New Release"
                 >
                     <Plus size={14} />
@@ -332,9 +352,9 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col min-h-[500px]">
-            <div className="overflow-x-auto flex-1">
-                <table className="w-full text-left">
-                    <thead className="bg-slate-50 border-b-2 border-slate-200">
+            <div className="overflow-x-auto flex-1 bg-white">
+                <table className="w-full text-left bg-white">
+                    <thead className="bg-[#f1f5f9] border-b-2 border-slate-200">
                         <tr>
                             <ThSortable label="Release" sortKey="title" />
                             <th className="px-4 py-2 text-[13px] text-slate-500 tracking-wider">User</th>
@@ -358,10 +378,10 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
 
                             // Determine color based on status
                             let statusClass = "bg-gray-100 text-gray-600 border-gray-200";
-                            if (status === 'Live') statusClass = "bg-green-100 text-green-700 border-green-200";
+                            if (status === 'Live' || status === 'Released') statusClass = "bg-green-100 text-green-700 border-green-200";
                             if (status === 'Processing') statusClass = "bg-blue-100 text-blue-700 border-blue-200";
                             if (status === 'Pending') statusClass = "bg-yellow-100 text-yellow-700 border-yellow-200";
-                            if (status === 'Request Edit') statusClass = "bg-orange-100 text-orange-700 border-orange-200";
+                            if (status === 'Request Edit') statusClass = "bg-orange-50 text-orange-600 border-orange-200";
                             if (status === 'Rejected') statusClass = "bg-red-100 text-red-700 border-red-200 cursor-help";
 
                             // ISRC Logic
@@ -376,7 +396,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                 : undefined;
 
                             return (
-                                <tr key={release.id || Math.random()} className="even:bg-slate-50/50 hover:bg-blue-50 transition-colors group text-[13px]">
+                                <tr key={release.id || Math.random()} className="hover:bg-slate-50 transition-colors group text-[13px] bg-white">
                                     <td className="px-4 py-2">
                                         <div className="flex items-center gap-4">
                                             <div className={`w-12 h-12 rounded-lg bg-blue-50 overflow-hidden flex items-center justify-center text-slate-400 relative shrink-0 border border-blue-100`}>
@@ -452,7 +472,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                                 title={rejectionTooltip}
                                                 className={`inline-block px-2 py-0.5 rounded-full text-[13px] font-bold whitespace-nowrap border ${statusClass}`}
                                             >
-                                                {status === 'Live' ? 'Released' : status}
+                                                {status === 'Live' || status === 'Released' ? 'Released' : status}
                                             </span>
                                         </div>
                                     </td>
@@ -460,7 +480,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                         <div className="flex justify-end gap-2">
                                             <Link 
                                                 to={`/releases/${release.id}/view`}
-                                                className="flex items-center gap-1 px-3 py-1.5 bg-brand-purple text-white hover:opacity-90 rounded-lg transition-all text-[14px] font-bold shadow-sm whitespace-nowrap"
+                                                className="flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition-all text-[14px] font-bold shadow-sm whitespace-nowrap"
                                                 title="View & Manage"
                                             >
                                                 <Eye size={12} /> View
@@ -526,8 +546,8 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                          onClick={() => setCurrentPage(page)}
                                          className={`w-8 h-8 flex items-center justify-center rounded-lg text-[13px] font-bold transition-all ${
                                              currentPage === page
-                                                 ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
-                                                 : 'text-slate-500 hover:bg-white hover:shadow-sm'
+                                                 ? 'bg-green-500 text-white shadow-md shadow-green-200'
+                                                 : 'bg-blue-100 text-blue-600 hover:bg-blue-200 shadow-sm'
                                          }`}
                                      >
                                          {page}

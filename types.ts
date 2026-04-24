@@ -165,6 +165,8 @@ export interface User {
   ktp_doc_path?: string;
   npwp_doc_path?: string;
   signature_doc_path?: string;
+  contract_doc_path?: string;
+  contract_status?: string;
 }
 
 export interface Notification {

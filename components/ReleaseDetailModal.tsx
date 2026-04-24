@@ -462,8 +462,8 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                                 onClick={handleSaveStatus}
                                 className={`px-5 py-2 text-white font-bold rounded-lg shadow-md flex items-center gap-2 transition-all text-sm
                                     ${status === 'Rejected' 
-                                        ? 'bg-red-600 hover:bg-red-700 shadow-red-500/30' 
-                                        : 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/30'}
+                                        ? 'bg-red-500 hover:bg-red-600 shadow-red-100' 
+                                        : 'bg-blue-500 hover:bg-blue-600 shadow-blue-100'}
                                 `}
                             >
                                 <Save size={16} />
@@ -523,7 +523,7 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                         <button
                             onClick={() => fileInputRef.current?.click()}
                             disabled={isUploadingCover}
-                            className="w-full py-2 rounded-lg bg-blue-600 text-white text-xs font-bold shadow-sm hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                            className="w-full py-2 rounded-lg bg-blue-500 text-white text-xs font-bold shadow-sm hover:bg-blue-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                         >
                             {isUploadingCover ? <Loader2 size={14} className="animate-spin" /> : <Camera size={14} />}
                             Ganti Art Cover
@@ -558,13 +558,13 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                     
                     <div className="flex flex-wrap items-center gap-3 mb-4">
                         <span className={`px-3 py-1.5 rounded-full text-xs font-bold border flex items-center gap-1.5 ${
-                            status === 'Live' ? 'bg-green-100 text-green-700 border-green-200' :
+                            (status === 'Live' || status === 'Released') ? 'bg-green-100 text-green-700 border-green-200' :
                             status === 'Processing' ? 'bg-blue-100 text-blue-700 border-blue-200' :
                             status === 'Rejected' ? 'bg-red-100 text-red-700 border-red-200' :
                             'bg-yellow-100 text-yellow-700 border-yellow-200'
                         }`}>
                             {status === 'Rejected' && <AlertTriangle size={14} />}
-                            <span className="uppercase tracking-wider">{status === 'Live' ? 'Released' : status}</span>
+                            <span className="uppercase tracking-wider">{(status === 'Live' || status === 'Released') ? 'Released' : status}</span>
                         </span>
                         {userRole === 'Admin' && release.aggregator && (
                             <span className="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-100 text-purple-700 border border-purple-200 flex items-center gap-1.5">
@@ -634,7 +634,7 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                             <button
                                 onClick={() => onEdit(release)}
                                 disabled={!!isUpdatingCoverArt}
-                                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-lg shadow-sm hover:bg-blue-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                                className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white text-xs font-bold rounded-lg shadow-sm hover:bg-blue-600 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                                 title="Edit Release"
                             >
                                 <Edit3 size={14} />

@@ -213,7 +213,7 @@ export const UserManagement: React.FC = () => {
                             });
                             setShowAddUserModal(true);
                         }}
-                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium"
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors text-sm font-medium"
                     >
                         <Plus size={18} />
                         Add New User
@@ -355,7 +355,7 @@ export const UserManagement: React.FC = () => {
                                             {userTab !== 'INTERNAL' && (
                                                 <Link
                                                     to={`/users/${user.id}`}
-                                                    className="px-3 py-1.5 text-xs rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 font-medium"
+                                                    className="px-3 py-1.5 text-xs rounded-lg bg-blue-500 text-white hover:bg-blue-600 font-bold"
                                                     title="View User"
                                                 >
                                                     View
@@ -364,7 +364,7 @@ export const UserManagement: React.FC = () => {
                                             {userTab === 'INTERNAL' && (
                                                 <button
                                                     onClick={() => handleEditUser(user)}
-                                                    className="px-3 py-1.5 text-xs rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 font-medium flex items-center gap-1"
+                                                    className="px-3 py-1.5 text-xs rounded-lg bg-blue-500 text-white hover:bg-blue-600 font-bold flex items-center gap-1"
                                                     title="Edit User"
                                                 >
                                                     <Edit size={12} /> Edit
@@ -482,7 +482,7 @@ export const UserManagement: React.FC = () => {
                         <button 
                             onClick={handleSaveUser}
                             disabled={isSubmitting}
-                            className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                            className="px-6 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                         >
                             {isSubmitting ? (
                                 <>
@@ -746,7 +746,7 @@ export const UserManagement: React.FC = () => {
                                     });
                                 }
                             }}
-                            className={`px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm shadow-blue-200 ${statusDraft === 'Rejected' && !rejectReason?.trim() ? 'opacity-60 cursor-not-allowed' : ''}`}
+                            className={`px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors shadow-sm shadow-blue-200 ${statusDraft === 'Rejected' && !rejectReason?.trim() ? 'opacity-60 cursor-not-allowed' : ''}`}
                         >
                             Simpan
                         </button>

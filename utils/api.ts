@@ -646,13 +646,14 @@ export const api = {
         return parseResponse(res);
     },
 
-    uploadUserDoc: async (_token, type, file) => {
+    uploadUserDoc: async (token, type, file) => {
         const formData = new FormData();
         formData.append('type', type);
         formData.append('file', file);
 
         const res = await fetch(`${API_BASE_URL}/users/upload-doc`, {
             method: 'POST',
+            headers: token ? { 'Authorization': `Bearer ${token}` } : {},
             body: formData,
             credentials: 'include'
         });
@@ -815,7 +816,7 @@ export const api = {
         return res.json();
     },
     
-    updateUserStatus: async (token, userId, status, reason?: string, aggregatorPercentage?: number, publishingPercentage?: number, contractStatus?: string) => {
+    updateUserStatus: async (token, userId, status, reason?: string, aggregatorPercentage?: number, publishingPercentage?: number, contractStatus?: string, contractDocPath?: string) => {
         const res = await fetch(`${API_BASE_URL}/users/${userId}/status`, {
             method: 'PUT',
             headers: { 
@@ -827,7 +828,8 @@ export const api = {
                 reason, 
                 aggregator_percentage: aggregatorPercentage, 
                 publishing_percentage: publishingPercentage,
-                contract_status: contractStatus 
+                contract_status: contractStatus,
+                contract_doc_path: contractDocPath 
             }),
             credentials: 'include'
         });

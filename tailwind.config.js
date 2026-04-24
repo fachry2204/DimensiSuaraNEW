@@ -13,7 +13,7 @@ export default {
           blue: '#3b82f6', 
           dark: '#0f0f12', 
           light: '#eff6ff', 
-          purple: '#b35cf6',
+          purple: '#aa91cc',
           card: '#1a1a1f',
           border: '#2a2a2e',
         }
@@ -22,7 +22,7 @@ export default {
         sans: ['"Inter"', 'sans-serif'],
       },
       backgroundImage: {
-        'gradient-neon': 'linear-gradient(135deg, #b35cf6 0%, #6366f1 100%)',
+        'gradient-neon': 'linear-gradient(135deg, #aa91cc 0%, #6366f1 100%)',
       }
     },
   },

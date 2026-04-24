@@ -254,7 +254,7 @@ export const Contracts: React.FC<Props> = ({ token, defaultTab = 'aggregator' })
               </button>
               <button 
                 onClick={handleOpenAddModal}
-                className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium shadow-lg shadow-blue-200"
+                className="flex items-center gap-2 px-4 py-2.5 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors text-sm font-medium shadow-lg shadow-blue-100"
               >
                 <Plus size={18} />
                 {activeTab === 'aggregator' ? 'Tambah Kontrak User' : 'Buat Kontrak Baru'}
@@ -263,9 +263,9 @@ export const Contracts: React.FC<Props> = ({ token, defaultTab = 'aggregator' })
           </div>
 
           {/* Table */}
-          <div className="border border-slate-200 rounded-xl overflow-hidden">
-            <table className="w-full text-left">
-              <thead className="bg-slate-50 border-b border-slate-200">
+          <div className="border border-slate-200 rounded-xl overflow-hidden bg-white">
+            <table className="w-full text-left bg-white">
+              <thead className="bg-[#f1f5f9] border-b border-slate-200">
                 <tr>
                   <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-16">No</th>
                   <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -315,7 +315,7 @@ export const Contracts: React.FC<Props> = ({ token, defaultTab = 'aggregator' })
                             <td className="px-6 py-4 text-right">
                                 <div className="flex items-center justify-end gap-2">
                                     <button 
-                                        className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                        className="p-2 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors shadow-sm"
                                         title="Lihat Detail"
                                         onClick={() => {
                                             if (activeTab === 'aggregator') {
@@ -329,14 +329,14 @@ export const Contracts: React.FC<Props> = ({ token, defaultTab = 'aggregator' })
                                         <Eye size={16} />
                                     </button>
                                     <button 
-                                        className="p-1.5 text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors"
+                                        className="p-2 bg-yellow-50 text-yellow-600 hover:bg-yellow-100 rounded-lg transition-colors shadow-sm"
                                         title="Edit Kontrak"
                                         onClick={() => console.log('Edit', item.id)}
                                     >
                                         <Edit size={16} />
                                     </button>
                                     <button 
-                                        className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                        className="p-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition-colors shadow-sm"
                                         title="Hapus Kontrak"
                                         onClick={() => {
                                             setItemToDelete(item);
@@ -439,7 +439,7 @@ export const Contracts: React.FC<Props> = ({ token, defaultTab = 'aggregator' })
                         disabled={!selectedUser}
                         className={`flex-1 py-2.5 rounded-xl font-medium transition-colors shadow-lg ${
                             selectedUser 
-                                ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-200' 
+                                ? 'bg-blue-500 text-white hover:bg-blue-600 shadow-blue-100' 
                                 : 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none'
                         }`}
                     >

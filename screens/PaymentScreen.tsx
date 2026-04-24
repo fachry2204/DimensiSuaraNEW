@@ -215,7 +215,7 @@ export const PaymentScreen: React.FC<Props> = ({ token, defaultTab = 'aggregator
                                                 onClick={() => {
                                                     navigate(`/reports/payments/detail/${inv.id}`, { state: { invoice: inv } });
                                                 }}
-                                                className="text-indigo-600 hover:text-indigo-800 font-medium text-xs border border-indigo-200 px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors"
+                                                className="px-3 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-xs font-bold shadow-sm transition-all"
                                             >
                                                 Detail
                                             </button>

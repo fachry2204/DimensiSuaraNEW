@@ -553,7 +553,7 @@ export const UserDetailPage: React.FC = () => {
           <div className="pt-4 flex justify-end">
             <button
               onClick={handleSave}
-              className={`px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm shadow-blue-200 ${(statusDraft === 'Rejected' || statusDraft === 'Blocked') && !rejectReason?.trim() ? 'opacity-60 cursor-not-allowed' : ''}`}
+              className={`px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition-colors shadow-sm shadow-blue-100 ${(statusDraft === 'Rejected' || statusDraft === 'Blocked') && !rejectReason?.trim() ? 'opacity-60 cursor-not-allowed' : ''}`}
             >
               Simpan
             </button>
@@ -581,7 +581,7 @@ export const UserDetailPage: React.FC = () => {
                 href={previewUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="px-4 py-2 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700"
+                className="px-4 py-2 bg-blue-500 text-white font-bold rounded-xl hover:bg-blue-600 shadow-lg shadow-blue-100 flex items-center justify-center"
               >
                 Buka di Tab Baru
               </a>
@@ -604,7 +604,7 @@ export const UserDetailPage: React.FC = () => {
                 setShowSuccessModal(false);
                 navigate('/users');
               }}
-              className="w-full py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors"
+              className="w-full py-3 bg-blue-500 text-white font-medium rounded-xl hover:bg-blue-600 transition-colors"
             >
               Tutup
             </button>
@@ -664,7 +664,7 @@ export const UserDetailPage: React.FC = () => {
               <button
                 onClick={handleEditSave}
                 disabled={isSaving}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-sm shadow-blue-200 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 rounded-xl shadow-sm shadow-blue-100 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
               >
                 {isSaving ? (
                   <>

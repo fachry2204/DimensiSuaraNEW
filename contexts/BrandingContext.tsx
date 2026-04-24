@@ -56,7 +56,7 @@ export const BrandingProvider: React.FC<{ children: ReactNode }> = ({ children }
     }, [branding.favicon_url]);
 
     const getButtonColor = () => {
-        return branding.login_button_color || '#4f46e5'; // Default indigo-600
+        return branding.login_button_color || '#3b82f6'; // Default blue-500 (Biru Muda)
     };
 
     const getTextColor = () => {

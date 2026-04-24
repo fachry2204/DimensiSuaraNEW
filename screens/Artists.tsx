@@ -126,7 +126,7 @@ export const Artists: React.FC<Props> = ({ releases }) => {
               )}
               <Link
                 to={`/aggregator/artists/${encodeURIComponent(a.name)}`}
-                className="w-full px-3 py-2 text-xs rounded bg-brand-purple text-white font-bold hover:opacity-90 text-center"
+                className="w-full px-3 py-2 text-xs rounded bg-blue-500 text-white font-bold hover:bg-blue-600 text-center"
                 title="Detail Artist"
               >
                 Detail

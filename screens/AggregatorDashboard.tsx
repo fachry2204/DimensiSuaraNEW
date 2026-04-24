@@ -33,7 +33,7 @@ export const AggregatorDashboard: React.FC<Props> = ({ releases, onViewRelease, 
     total: releases.length,
     pending: releases.filter(r => (r.status || 'Pending') === 'Pending').length,
     processing: releases.filter(r => r.status === 'Processing').length,
-    live: releases.filter(r => r.status === 'Live').length,
+    live: releases.filter(r => r.status === 'Live' || r.status === 'Released').length,
     rejected: releases.filter(r => r.status === 'Rejected').length,
   };
 

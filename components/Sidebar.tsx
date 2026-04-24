@@ -63,8 +63,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
   const getLinkClass = (isActive: boolean) => 
     `w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] ${
       isActive
-        ? 'bg-brand-purple text-white shadow-lg shadow-brand-purple/20'
-        : 'text-slate-400 hover:bg-white/5 hover:text-white'
+        ? 'bg-[#aa91cc] text-white shadow-lg shadow-[#aa91cc]/20'
+        : 'text-slate-400 hover:bg-[#aa91cc] hover:text-white'
     }`;
 
   const getIconClass = (isActive: boolean) =>
@@ -73,8 +73,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
   const getSubLinkClass = (isActive: boolean) => 
     `w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 font-medium text-[12px] ${
       isActive
-        ? 'text-brand-purple bg-brand-purple/10'
-        : 'text-slate-500 hover:text-white hover:bg-white/5'
+        ? 'text-white bg-[#aa91cc] shadow-sm'
+        : 'text-slate-500 hover:text-white hover:bg-[#aa91cc]/40'
     }`;
 
   return (
@@ -84,7 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
         {logo ? (
             <img src={logo} alt="Logo" className="w-auto h-auto max-h-[150px] object-contain mb-2" />
         ) : (
-            <div className="w-12 h-12 bg-brand-purple rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-purple/30 mb-2">
+            <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30 mb-2">
                 <Music4 size={24} />
             </div>
         )}
@@ -98,27 +98,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
         
         {/* Dashboard Menu */}
         <div>
-          <h3 
-            className="px-4 text-[11px] font-bold text-slate-500 uppercase tracking-[0.1em] mb-4 flex items-center justify-between cursor-pointer hover:text-brand-purple transition-colors"
-            onClick={() => toggleSection('dashboard')}
-          >
-            Dashboard
-            {expandedSections.dashboard ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-          </h3>
-          {expandedSections.dashboard && (
-            <ul className="space-y-2">
-            <li>
-              <NavLink to="/dashboard" className={({ isActive }) => getLinkClass(isActive)}>
-                {({ isActive }) => (
-                  <>
-                    <LayoutDashboard size={20} className={getIconClass(isActive)} />
-                    Dashboard
-                  </>
-                )}
-              </NavLink>
-            </li>
-          </ul>
-          )}
+          <NavLink to="/dashboard" className={({ isActive }) => getLinkClass(isActive)}>
+            {({ isActive }) => (
+              <>
+                <LayoutDashboard size={20} className={getIconClass(isActive)} />
+                Dashboard
+              </>
+            )}
+          </NavLink>
         </div>
 
         {/* Aggregator Menu */}
@@ -217,7 +204,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
             {/* Statistik Dropdown */}
             <li>
                 <div 
-                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-slate-400 hover:bg-white/5 hover:text-white cursor-pointer"
+                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-slate-400 hover:bg-[#aa91cc] hover:text-white cursor-pointer"
                     onClick={() => toggleSection('statistics')}
                 >
                     <div className="flex items-center gap-3">
@@ -245,7 +232,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
             {/* Laporan Dropdown */}
             <li>
                 <div 
-                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-white/80 hover:bg-white/10 hover:text-white cursor-pointer"
+                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-white/80 hover:bg-[#aa91cc] hover:text-white cursor-pointer"
                     onClick={() => toggleSection('reportList')}
                 >
                     <div className="flex items-center gap-3">
@@ -273,7 +260,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
             {/* Pendapatan Dropdown - REMOVED */}
             {/* <li>
                 <div 
-                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-white/80 hover:bg-white/10 hover:text-white cursor-pointer"
+                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-white/80 hover:bg-[#aa91cc] hover:text-white cursor-pointer"
                     onClick={() => toggleSection('revenue')}
                 >
                     <div className="flex items-center gap-3">
@@ -301,7 +288,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
             {/* Import Laporan Dropdown */}
             <li>
                 <div 
-                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-white/80 hover:bg-white/10 hover:text-white cursor-pointer"
+                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-white/80 hover:bg-[#aa91cc] hover:text-white cursor-pointer"
                     onClick={() => toggleSection('importReports')}
                 >
                     <div className="flex items-center gap-3">
@@ -329,7 +316,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
             {/* Pembayaran Dropdown */}
             <li>
                 <div 
-                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-white/80 hover:bg-white/10 hover:text-white cursor-pointer"
+                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl transition-all duration-200 group font-bold text-[13px] text-white/80 hover:bg-[#aa91cc] hover:text-white cursor-pointer"
                     onClick={() => toggleSection('payments')}
                 >
                     <div className="flex items-center gap-3">
@@ -494,8 +481,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
               <div
                 className={`flex items-center justify-between px-4 py-3 cursor-pointer transition-all duration-200 border-l-4 ${
                   location.pathname.startsWith('/me/contracts')
-                    ? 'border-blue-500 bg-white/10 text-white' 
-                    : 'border-transparent text-white/70 hover:bg-white/5 hover:text-white'
+                    ? 'border-[#aa91cc] bg-[#aa91cc] text-white' 
+                    : 'border-transparent text-white/70 hover:bg-[#aa91cc] hover:text-white'
                 }`}
                 onClick={() => toggleSection('kontrak')}
               >

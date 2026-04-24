@@ -83,7 +83,9 @@ router.get('/profile', authenticateToken, async (req, res) => {
             colNames.includes('aggregator_percentage') ? 'aggregator_percentage' : 'NULL as aggregator_percentage',
             colNames.includes('publishing_percentage') ? 'publishing_percentage' : 'NULL as publishing_percentage',
             colNames.includes('block_reason') ? 'block_reason' : 'NULL as block_reason',
-            colNames.includes('blocked_at') ? 'DATE_FORMAT(blocked_at, "%Y-%m-%d") as blockedAt' : 'NULL as blockedAt'
+            colNames.includes('blocked_at') ? 'DATE_FORMAT(blocked_at, "%Y-%m-%d") as blockedAt' : 'NULL as blockedAt',
+            colNames.includes('contract_doc_path') ? 'contract_doc_path' : 'NULL as contract_doc_path',
+            colNames.includes('contract_status') ? 'contract_status' : `'Not Generated' as contract_status`
         ];
 
         const sql = `SELECT ${selectParts.join(', ')} FROM users WHERE id = ?`;
@@ -336,7 +338,8 @@ router.put('/:id', authenticateToken, async (req, res) => {
             full_name, account_type, company_name, nik, phone, address,
             country, province, city, district, subdistrict, postal_code,
             pic_name, pic_position, pic_phone,
-            ktp_doc_path, npwp_doc_path, signature_doc_path, nib_doc_path, kemenkumham_doc_path
+            ktp_doc_path, npwp_doc_path, signature_doc_path, nib_doc_path, kemenkumham_doc_path,
+            contract_doc_path, contract_status
         } = req.body;
 
         const updates = [];
@@ -366,7 +369,8 @@ router.put('/:id', authenticateToken, async (req, res) => {
             full_name, account_type, company_name, nik, phone, address,
             country, province, city, district, subdistrict, postal_code,
             pic_name, pic_position, pic_phone,
-            ktp_doc_path, npwp_doc_path, signature_doc_path, nib_doc_path, kemenkumham_doc_path
+            ktp_doc_path, npwp_doc_path, signature_doc_path, nib_doc_path, kemenkumham_doc_path,
+            contract_doc_path, contract_status
         };
 
         const [cols] = await db.query('SHOW COLUMNS FROM users');
@@ -396,7 +400,9 @@ router.put('/:id', authenticateToken, async (req, res) => {
             colNames.includes('npwp_doc_path') ? 'npwp_doc_path' : 'NULL as npwp_doc_path',
             colNames.includes('signature_doc_path') ? 'signature_doc_path' : 'NULL as signature_doc_path',
             colNames.includes('nib_doc_path') ? 'nib_doc_path' : 'NULL as nib_doc_path',
-            colNames.includes('kemenkumham_doc_path') ? 'kemenkumham_doc_path' : 'NULL as kemenkumham_doc_path'
+            colNames.includes('kemenkumham_doc_path') ? 'kemenkumham_doc_path' : 'NULL as kemenkumham_doc_path',
+            colNames.includes('contract_doc_path') ? 'contract_doc_path' : 'NULL as contract_doc_path',
+            colNames.includes('contract_status') ? 'contract_status' : `'Not Generated' as contract_status`
         ];
         const [rows] = await db.query(`SELECT ${selectParts.join(', ')} FROM users WHERE id = ?`, [userId]);
         
@@ -416,7 +422,7 @@ router.put('/:id/status', authenticateToken, async (req, res) => {
             return res.status(403).json({ error: 'Access denied' });
         }
         const userId = req.params.id;
-        const { status, reason, aggregator_percentage, publishing_percentage, contract_status } = req.body || {};
+        const { status, reason, aggregator_percentage, publishing_percentage, contract_status, contract_doc_path } = req.body || {};
         const allowed = ['Pending', 'Review', 'Approved', 'Rejected', 'Active', 'Inactive', 'Blocked'];
         if (!allowed.includes(String(status))) {
             return res.status(400).json({ error: 'Invalid status value' });
@@ -459,6 +465,10 @@ router.put('/:id/status', authenticateToken, async (req, res) => {
         if (hasContractStatus && contract_status) {
             updates.push('contract_status = ?');
             params.push(contract_status);
+        }
+        if (colNames.includes('contract_doc_path') && contract_doc_path) {
+            updates.push('contract_doc_path = ?');
+            params.push(contract_doc_path);
         }
 
         if (status === 'Approved') {
@@ -518,6 +528,7 @@ router.put('/:id/status', authenticateToken, async (req, res) => {
         if (hasBlockReason) selectFields.push('block_reason');
         if (hasBlockedAt) selectFields.push('DATE_FORMAT(blocked_at, "%Y-%m-%d") as blockedAt');
         if (hasContractStatus) selectFields.push('contract_status');
+        if (colNames.includes('contract_doc_path')) selectFields.push('contract_doc_path');
 
         const [rows] = await db.query(`SELECT ${selectFields.join(', ')} FROM users WHERE id = ?`, [userId]);
         if (rows.length === 0) {
@@ -577,6 +588,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
             colNames.includes('aggregator_percentage') ? 'aggregator_percentage' : 'NULL as aggregator_percentage',
             colNames.includes('publishing_percentage') ? 'publishing_percentage' : 'NULL as publishing_percentage',
             colNames.includes('contract_status') ? 'contract_status' : `'Not Generated' as contract_status`,
+            colNames.includes('contract_doc_path') ? 'contract_doc_path' : 'NULL as contract_doc_path',
             colNames.includes('block_reason') ? 'block_reason' : 'NULL as block_reason',
             colNames.includes('blocked_at') ? 'DATE_FORMAT(blocked_at, "%Y-%m-%d") as blockedAt' : 'NULL as blockedAt'
         ];

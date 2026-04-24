@@ -173,7 +173,7 @@ const Tickets: React.FC<TicketsProps> = ({ token, userRole }) => {
                 {userRole !== 'Admin' && (
                     <button 
                         onClick={() => setIsCreating(true)}
-                        className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 text-xs"
+                        className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 text-xs font-bold shadow-sm"
                     >
                         <Plus size={16} />
                         Buat Tiket Baru
@@ -191,7 +191,7 @@ const Tickets: React.FC<TicketsProps> = ({ token, userRole }) => {
                                 type="text" 
                                 value={newSubject}
                                 onChange={(e) => setNewSubject(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-xs"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs"
                                 placeholder="Contoh: Kendala Upload Lagu"
                                 required
                             />
@@ -206,7 +206,7 @@ const Tickets: React.FC<TicketsProps> = ({ token, userRole }) => {
                                     setYoutubeLink('');
                                     setSelectedReleaseId('');
                                 }}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-xs"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs"
                             >
                                 {categories.map(c => (
                                     <option key={c} value={c}>{c}</option>
@@ -221,7 +221,7 @@ const Tickets: React.FC<TicketsProps> = ({ token, userRole }) => {
                                     type="url" 
                                     value={youtubeLink}
                                     onChange={(e) => setYoutubeLink(e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-xs"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs"
                                     placeholder="https://youtube.com/..."
                                     required
                                 />
@@ -239,14 +239,15 @@ const Tickets: React.FC<TicketsProps> = ({ token, userRole }) => {
                                     <select
                                         value={selectedReleaseId}
                                         onChange={(e) => setSelectedReleaseId(e.target.value)}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-xs"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs"
                                         required
                                     >
                                         <option value="">-- Pilih Rilisan --</option>
                                         {releases
-                                            .filter(r => category === 'Takedown Rilisan' ? r.status === 'Live' : true)
+                                            .filter(r => category === 'Takedown Rilisan' ? (r.status === 'Live' || r.status === 'Released') : true)
                                             .map(r => {
-                                                const label = r.status === 'Live' ? 'Released' : (r.status || 'Pending');
+                                                const isReleased = r.status === 'Live' || r.status === 'Released';
+                                                const label = isReleased ? 'Released' : (r.status || 'Pending');
                                                 return (
                                                   <option key={r.id} value={r.id}>
                                                     {r.title} ({r.upc || 'No UPC'}) - {label}
@@ -279,7 +280,7 @@ const Tickets: React.FC<TicketsProps> = ({ token, userRole }) => {
                             <textarea 
                                 value={newMessage}
                                 onChange={(e) => setNewMessage(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-xs"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs"
                                 rows={4}
                                 placeholder="Jelaskan kendala Anda secara detail..."
                                 required
@@ -296,7 +297,7 @@ const Tickets: React.FC<TicketsProps> = ({ token, userRole }) => {
                             <button 
                                 type="submit"
                                 disabled={submitting}
-                                className="px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 disabled:opacity-50 text-xs"
+                                className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 disabled:opacity-50 text-xs font-bold shadow-sm"
                             >
                                 {submitting ? 'Mengirim...' : 'Kirim Tiket'}
                             </button>
@@ -314,7 +315,7 @@ const Tickets: React.FC<TicketsProps> = ({ token, userRole }) => {
                             placeholder="Cari tiket..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-xs"
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs"
                         />
                     </div>
                 </div>
@@ -362,9 +363,9 @@ const Tickets: React.FC<TicketsProps> = ({ token, userRole }) => {
                                     <td className="px-6 py-4">
                                         <button 
                                             onClick={() => navigate(`/tickets/${ticket.id}`)}
-                                            className="text-indigo-600 hover:text-indigo-800 text-xs flex items-center gap-1"
+                                            className="px-3 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-xs font-bold flex items-center gap-1 shadow-sm transition-all"
                                         >
-                                            <MessageSquare size={16} />
+                                            <MessageSquare size={14} />
                                             Lihat Detail
                                         </button>
                                     </td>

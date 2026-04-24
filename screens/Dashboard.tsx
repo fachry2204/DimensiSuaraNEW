@@ -55,7 +55,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
   const releaseStats = {
     pending: releases.filter(r => (r.status || 'Pending') === 'Pending').length,
     processing: releases.filter(r => r.status === 'Processing').length,
-    live: releases.filter(r => r.status === 'Live').length,
+    live: releases.filter(r => r.status === 'Live' || r.status === 'Released').length,
     rejected: releases.filter(r => r.status === 'Rejected').length,
   };
 
@@ -112,7 +112,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
        <div className="mb-10">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                    <Music className="text-brand-purple" size={18} />
+                    <Music className="text-blue-500" size={18} />
                     <h2 className="text-sm font-bold text-slate-200">Aggregator Status</h2>
                 </div>
                 <button 
@@ -167,7 +167,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
        {/* PUBLISHING SECTION */}
        <div>
             <div className="flex items-center gap-2 mb-4">
-                <FileText className="text-brand-purple" size={18} />
+                <FileText className="text-blue-500" size={18} />
                 <h2 className="text-sm font-bold text-slate-200">Publishing Status</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -215,7 +215,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
             <div className="mt-10">
                 <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                        <Clock className="text-brand-purple" size={18} />
+                        <Clock className="text-blue-500" size={18} />
                         <h3 className="text-sm font-bold text-slate-200">Release Pending/Review</h3>
                     </div>
                 </div>
@@ -257,7 +257,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                                         <td className="px-4 py-3 text-right">
                                             <Link
                                                 to={`/releases/${r.id}/view`}
-                                                className="px-3 py-1.5 text-xs bg-brand-purple text-white rounded-lg hover:opacity-90 inline-block font-bold"
+                                                className="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-lg hover:bg-blue-600 inline-block font-bold"
                                             >
                                                 Lihat
                                             </Link>
@@ -281,7 +281,11 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                                 <button
                                     key={i}
                                     onClick={() => setPendingPage(i + 1)}
-                                    className={`px-2 py-1 text-xs rounded-lg ${pendingPage === i + 1 ? 'bg-blue-600 text-white' : 'border border-slate-200'}`}
+                                    className={`px-3 py-1.5 text-xs rounded-lg font-bold transition-all ${
+                                        pendingPage === i + 1 
+                                            ? 'bg-green-500 text-white shadow-sm shadow-green-500/30' 
+                                            : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                                    }`}
                                 >
                                     {i + 1}
                                 </button>
@@ -300,7 +304,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
             <div className="mt-6">
                 <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                        <Clock className="text-brand-purple" size={18} />
+                        <Clock className="text-blue-500" size={18} />
                         <h3 className="text-sm font-bold text-slate-200">Publishing Pending</h3>
                     </div>
                 </div>
@@ -342,7 +346,7 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                                         <td className="px-4 py-3 text-right">
                                             <Link
                                                 to="/publishing/songs"
-                                                className="px-3 py-1.5 text-xs bg-brand-purple text-white rounded-lg hover:opacity-90 inline-block font-bold"
+                                                className="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-lg hover:bg-blue-600 inline-block font-bold"
                                             >
                                                 Kelola
                                             </Link>
@@ -366,7 +370,11 @@ export const Dashboard: React.FC<Props> = ({ releases, token }) => {
                                 <button
                                     key={i}
                                     onClick={() => setPublishingPage(i + 1)}
-                                    className={`px-2 py-1 text-xs rounded-lg ${publishingPage === i + 1 ? 'bg-indigo-600 text-white' : 'border border-slate-200'}`}
+                                    className={`px-3 py-1.5 text-xs rounded-lg font-bold transition-all ${
+                                        publishingPage === i + 1 
+                                            ? 'bg-green-500 text-white shadow-sm shadow-green-500/30' 
+                                            : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                                    }`}
                                 >
                                     {i + 1}
                                 </button>

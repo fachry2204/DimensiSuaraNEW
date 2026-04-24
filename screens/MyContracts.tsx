@@ -117,7 +117,7 @@ export const MyContracts: React.FC<Props> = ({ currentUserData, defaultTab }) =>
                           </span>
                         </td>
                         <td className="px-4 py-3">
-                          <button className="text-blue-600 hover:text-blue-700 font-medium text-xs border border-blue-200 hover:bg-blue-50 px-3 py-1.5 rounded-lg transition-colors">
+                          <button className="px-3 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-xs font-bold shadow-sm transition-all">
                             View Detail
                           </button>
                         </td>
@@ -220,7 +220,7 @@ export const MyContracts: React.FC<Props> = ({ currentUserData, defaultTab }) =>
                       </span>
                     </td>
                     <td className="px-4 py-3">
-                      <button className="text-blue-600 hover:text-blue-700 font-medium text-xs flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!contract.doc}>
+                      <button className="px-3 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-xs font-bold flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm transition-all" disabled={!contract.doc}>
                         <Download size={14} />
                         Unduh
                       </button>

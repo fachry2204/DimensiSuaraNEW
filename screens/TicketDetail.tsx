@@ -168,7 +168,7 @@ const TicketDetail: React.FC<TicketDetailProps> = ({ token, userRole, onAuthExpi
                                 </div>
                                 <div className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                                     alignRight 
-                                        ? 'bg-indigo-600 text-white rounded-tr-none' 
+                                        ? 'bg-blue-600 text-white rounded-tr-none shadow-md shadow-blue-100' 
                                         : 'bg-white border border-gray-200 text-gray-800 rounded-tl-none shadow-sm'
                                 }`}>
                                     {msg.message}
@@ -186,12 +186,12 @@ const TicketDetail: React.FC<TicketDetailProps> = ({ token, userRole, onAuthExpi
                         value={reply}
                         onChange={(e) => setReply(e.target.value)}
                         placeholder="Tulis balasan..."
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
+                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                     />
                     <button 
                         type="submit" 
                         disabled={sending || !reply.trim()}
-                        className="bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                     >
                         <Send size={20} />
                     </button>
