@@ -311,21 +311,21 @@ export const UserManagement: React.FC<Props> = ({ currentUserRole, token: propTo
                 <table className="w-full text-left">
                     <thead className="bg-slate-50 border-b border-slate-200">
                         <tr>
-                            <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">User</th>
+                            <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">User</th>
                             {userTab !== 'INTERNAL' && (
                                 <>
-                                    <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Aggregator %</th>
-                                    <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Publishing %</th>
+                                    <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Aggregator %</th>
+                                    <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Publishing %</th>
                                 </>
                             )}
                             {userTab !== 'REGISTERED' && (
-                              <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Role</th>
+                              <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Role</th>
                             )}
-                            <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                            <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Joined Date</th>
-                            <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Approved</th>
-                            <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Reject Date</th>
-                            <th className="text-right py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Action</th>
+                            <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Status</th>
+                            <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Joined Date</th>
+                            <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Approved</th>
+                            <th className="text-left py-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Reject Date</th>
+                            <th className="text-right py-3 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Action</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
@@ -334,21 +334,21 @@ export const UserManagement: React.FC<Props> = ({ currentUserRole, token: propTo
                                 <tr key={user.id} className="hover:bg-slate-50 transition-colors">
                                     <td className="py-3 px-4">
                                         <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[10px] font-bold">
                       {(user.full_name || user.name).charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <div className="font-medium text-slate-800 text-sm">{user.full_name || user.name}</div>
-                      <div className="text-xs text-slate-500">{user.email}</div>
+                      <div className="font-bold text-slate-800 text-[11px]">{user.full_name || user.name}</div>
+                      <div className="text-[10px] text-slate-500 font-bold">{user.email}</div>
                     </div>
                   </div>
                                     </td>
                                     {userTab !== 'INTERNAL' && (
                                         <>
-                                            <td className="py-3 px-4 text-sm text-slate-600">
+                                            <td className="py-3 px-4 text-[11px] text-slate-600 font-bold">
                                                 {user.role !== 'Admin' && user.aggregator_percentage !== null && user.aggregator_percentage !== undefined ? `${user.aggregator_percentage}%` : '-'}
                                             </td>
-                                            <td className="py-3 px-4 text-sm text-slate-600">
+                                            <td className="py-3 px-4 text-[11px] text-slate-600 font-bold">
                                                 {user.role !== 'Admin' && user.publishing_percentage !== null && user.publishing_percentage !== undefined ? `${user.publishing_percentage}%` : '-'}
                                             </td>
                                         </>
@@ -365,7 +365,7 @@ export const UserManagement: React.FC<Props> = ({ currentUserRole, token: propTo
                                       </td>
                                     )}
                                     <td className="py-3 px-4">
-                                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
+                                        <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold ${
                                             user.status === 'Pending' ? 'bg-yellow-100 text-yellow-700' :
                                             user.status === 'Review' ? 'bg-blue-100 text-blue-700' :
                                             user.status === 'Approved' ? 'bg-green-100 text-green-700' :
@@ -373,17 +373,17 @@ export const UserManagement: React.FC<Props> = ({ currentUserRole, token: propTo
                                             user.status === 'Active' ? 'bg-green-100 text-green-700' :
                                             user.status === 'Inactive' ? 'bg-gray-100 text-gray-700' : 'bg-slate-100 text-slate-700'
                                         }`}>
-                                            {user.status === 'Rejected' ? <XCircle size={12} /> : <CheckCircle size={12} />}
+                                            {user.status === 'Rejected' ? <XCircle size={10} /> : <CheckCircle size={10} />}
                                             {user.status}
                                         </span>
                                     </td>
-                                    <td className="py-3 px-4 text-sm text-slate-600">
+                                    <td className="py-3 px-4 text-[11px] text-slate-600 font-bold">
                                         {user.registeredDate || '-'}
                                     </td>
-                                    <td className="py-3 px-4 text-sm text-slate-600">
+                                    <td className="py-3 px-4 text-[11px] text-slate-600 font-bold">
                                         {user.joinedDate || '-'}
                                     </td>
-                                    <td className="py-3 px-4 text-sm text-slate-600">
+                                    <td className="py-3 px-4 text-[11px] text-slate-600 font-bold">
                                         {user.rejectedDate || '-'}
                                     </td>
                                     <td className="py-3 px-4 text-right">

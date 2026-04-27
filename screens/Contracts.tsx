@@ -267,15 +267,15 @@ export const Contracts: React.FC<Props> = ({ token, defaultTab = 'aggregator' })
             <table className="w-full text-left bg-white">
               <thead className="bg-[#f1f5f9] border-b border-slate-200">
                 <tr>
-                  <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider w-16">No</th>
-                  <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider w-16">No</th>
+                  <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                       {activeTab === 'aggregator' ? 'User / Label' : 'Pencipta Lagu'}
                   </th>
-                  <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                       {activeTab === 'aggregator' ? 'Tanggal Bergabung' : 'Tanggal Didaftarkan'}
                   </th>
-                  <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status Kontrak</th>
-                  <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Aksi</th>
+                  <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Status Kontrak</th>
+                  <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider text-right">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 bg-white">
@@ -291,23 +291,22 @@ export const Contracts: React.FC<Props> = ({ token, defaultTab = 'aggregator' })
                 ) : filteredData.length > 0 ? (
                     filteredData.map((item, idx) => (
                         <tr key={item.id} className="hover:bg-slate-50 transition-colors">
-                            <td className="px-6 py-4 text-sm text-slate-500 font-mono">{idx + 1}</td>
+                            <td className="px-6 py-4 text-[11px] text-slate-500 font-bold font-mono">{idx + 1}</td>
                             <td className="px-6 py-4">
                                 <div>
-                                    <p className="font-semibold text-slate-800">
+                                    <p className="font-bold text-slate-800 text-[11px]">
                                         {activeTab === 'aggregator' ? (item.full_name || item.name) : item.name}
                                     </p>
                                     {activeTab === 'aggregator' && item.name !== (item.full_name || item.name) && (
-                                        <p className="text-xs text-slate-500">{item.email}</p>
+                                        <p className="text-[10px] text-slate-500 font-bold">{item.email}</p>
                                     )}
-                                    {/* {item.email && <p className="text-xs text-slate-500">{item.email}</p>} */}
                                 </div>
                             </td>
-                            <td className="px-6 py-4 text-sm text-slate-600">
+                            <td className="px-6 py-4 text-[11px] text-slate-600 font-bold">
                                 {item.date ? new Date(item.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '-'}
                             </td>
                             <td className="px-6 py-4">
-                                <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(item.contract_status)}`}>
+                                <span className={`inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[10px] font-bold border ${getStatusColor(item.contract_status)}`}>
                                     {getStatusIcon(item.contract_status)}
                                     {item.contract_status}
                                 </span>
@@ -380,7 +379,7 @@ export const Contracts: React.FC<Props> = ({ token, defaultTab = 'aggregator' })
                 </div>
                 
                 <div className="mb-6">
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Pilih User</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-2">Pilih User</label>
                     <div className="border border-slate-200 rounded-xl max-h-60 overflow-y-auto">
                         {isLoadingUsers ? (
                             <div className="p-4 text-center text-slate-500 flex items-center justify-center gap-2">

@@ -11,6 +11,10 @@
     background-color: rgba(170, 145, 204, 0.4);
     color: white;
   }
+
+  h1, h2 {
+    color: white !important;
+  }
 }
 
 /* Custom thin scrollbar for Sidebar */

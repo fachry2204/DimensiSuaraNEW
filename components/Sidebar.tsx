@@ -28,7 +28,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentUser, userRole }) => {
   });
 
   const toggleSection = (section: string) => {
-    const TOP_SECTIONS = ['dashboard','aggregator','publishing','report','reportUser','system','dataSaya','bantuan', 'kontrak'];
+    const TOP_SECTIONS = ['dashboard','aggregator','publishing','report','reportUser','system','dataSaya','bantuan'];
     const REPORT_SUBS = ['statistics','reportList','importReports','payments','revenue'];
     setExpandedSections(prev => {
       const next = { ...prev };

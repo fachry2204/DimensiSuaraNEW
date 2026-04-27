@@ -27,7 +27,7 @@ export const MyContracts: React.FC<Props> = ({ currentUserData, defaultTab }) =>
   const fetchUsers = async () => {
     setIsLoading(true);
     try {
-      const token = localStorage.getItem('token'); // Simple token retrieval
+      const token = localStorage.getItem('cms_token'); // Correct key: cms_token
       const res = await api.getUsers(token || '');
       // Filter only role 'User'
       const users = Array.isArray(res) ? res : [];
