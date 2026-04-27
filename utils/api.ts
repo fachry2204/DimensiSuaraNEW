@@ -558,7 +558,10 @@ export const api = {
             },
             body: JSON.stringify({ data })
         });
-        if (!res.ok) throw new Error('Failed to import reports');
+        if (!res.ok) {
+            const errorData = await res.json().catch(() => ({}));
+            throw new Error(errorData.error || 'Failed to import reports');
+        }
         return res.json();
     },
 

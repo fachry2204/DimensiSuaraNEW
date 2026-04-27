@@ -133,25 +133,28 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
               formattedPeriod = new Date().toISOString().slice(0, 8) + '01';
           }
 
+          // Safety: Truncate long strings to avoid DB errors (VARCHAR limits)
+          const limit = (str: string, max: number) => String(str || '').substring(0, max);
+
           processedData.push({
             id: `${Date.now()}-${index}`,
-            upc: upc || '',
-            isrc: isrc || '',
-            title: title || 'Unknown Title',
-            artist: artist || 'Unknown Artist',
-            platform: platform || 'Unknown',
-            country: country || 'WW',
+            upc: limit(upc, 50),
+            isrc: limit(isrc, 50),
+            title: limit(title || 'Unknown Title', 255),
+            artist: limit(artist || 'Unknown Artist', 255),
+            platform: limit(platform, 100),
+            country: limit(country, 100),
             quantity: quantity,
             revenue: revenue,
             period: formattedPeriod,
-            sales_period: sales_period || '',
-            reporting_period: reporting_period || '',
-            album_title: album_title || '',
-            release_date: release_date || '',
-            royalty_type: royalty_type || '',
-            sales_type: sales_type || '',
-            sales_sub_type: sales_sub_type || '',
-            originalFileName: file.name,
+            sales_period: limit(sales_period, 50),
+            reporting_period: limit(reporting_period, 50),
+            album_title: limit(album_title, 255),
+            release_date: limit(release_date, 50),
+            royalty_type: limit(royalty_type, 100),
+            sales_type: limit(sales_type, 100),
+            sales_sub_type: limit(sales_sub_type, 100),
+            originalFileName: limit(file.name, 255),
             uploadTimestamp: timestamp,
             status: 'Pending',
             verificationStatus: 'Unchecked'
