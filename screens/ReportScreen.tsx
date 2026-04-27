@@ -1,6 +1,6 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useEffect } from 'react';
 import * as XLSX from 'xlsx';
-import { Upload, FileText, AlertCircle, CheckCircle, CheckCircle2, Download, Calendar, Clock, ChevronLeft, Search, User, XCircle, Filter, FileSpreadsheet, Trash2, AlertTriangle } from 'lucide-react';
+import { Upload, FileText, AlertCircle, CheckCircle, CheckCircle2, Download, Calendar, Clock, ChevronLeft, ChevronRight, Search, User, XCircle, Filter, FileSpreadsheet, Trash2, AlertTriangle } from 'lucide-react';
 import { ReportData, ReleaseData } from '../types';
 import { formatDMY, formatHM } from '../utils/date';
 import { PublishingReports } from './publishing/PublishingReports';
@@ -35,6 +35,44 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
   const [selectedAggregator, setSelectedAggregator] = useState<string>('');
   const [batchToDelete, setBatchToDelete] = useState<{ fileName: string, timestamp: string } | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 50;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedFile]);
+
+  const Pagination = ({ totalItems, currentPage, onPageChange }: { totalItems: number, currentPage: number, onPageChange: (p: number) => void }) => {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    if (totalPages <= 1) return null;
+
+    return (
+        <div className="flex items-center justify-between px-6 py-4 bg-slate-50/50 border-t border-slate-100">
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                Showing <span className="text-black">{(currentPage - 1) * itemsPerPage + 1}</span> - <span className="text-black">{Math.min(currentPage * itemsPerPage, totalItems)}</span> of <span className="text-black">{totalItems}</span> items
+            </div>
+            <div className="flex items-center gap-2">
+                <button 
+                    onClick={() => onPageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="p-1.5 text-black hover:bg-white hover:shadow-sm rounded-lg disabled:opacity-20 transition-all border border-transparent hover:border-slate-200"
+                >
+                    <ChevronLeft size={16} />
+                </button>
+                <div className="bg-white border border-slate-200 px-3 py-1 rounded-lg text-[11px] font-bold text-black shadow-sm">
+                    {currentPage} <span className="text-slate-300 mx-1">/</span> {totalPages}
+                </div>
+                <button 
+                    onClick={() => onPageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="p-1.5 text-black hover:bg-white hover:shadow-sm rounded-lg disabled:opacity-20 transition-all border border-transparent hover:border-slate-200"
+                >
+                    <ChevronRight size={16} />
+                </button>
+            </div>
+        </div>
+    );
+  };
 
   const handleDeleteBatch = async () => {
     if (!batchToDelete || !token) return;
@@ -119,12 +157,11 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
               isrc = String(row['ISRC'] || row['isrc'] || '');
               title = row['Track Title'] || row['Title'] || row['title'] || '';
               artist = row['Track Artists'] || row['Artist'] || row['artist'] || 'Unknown Artist';
-              platform = row['Store Name'] || row['Platform'] || row['platform'] || 'Unknown';
+              platform = row['Store Name'] || row['Platform'] || row['Store'] || 'Unknown';
               country = row['Sales Region'] || row['Country'] || row['country'] || 'WW';
-              
-              quantity = parseNum(row['Stream/Create'] || row['Quantity'] || row['quantity'] || 0);
+              quantity = parseNum(row['Units of Sold'] || row['Stream/Create'] || row['Quantity'] || row['quantity'] || 0);
               revenue = parseNum(row['Final Royalty'] || row['Revenue'] || row['revenue'] || 0);
-              period = String(row['Sales Period'] || row['Period'] || row['period'] || period);
+              period = row['Sales Period'] || row['Period'] || row['period'] || period;
               
               sales_period = String(row['Sales Period'] || '');
               reporting_period = String(row['Reporting Period'] || '');
@@ -255,7 +292,7 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
         "Sales Region": "ID", 
         "Sales Type": "Subscription",
         "Sales Sub Type": "Premium",
-        "Stream/Create": 12500, 
+        "Units of Sold": 12500, 
         "Final Royalty": 625000 
       },
       { 
@@ -272,7 +309,7 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
         "Sales Region": "US", 
         "Sales Type": "Subscription",
         "Sales Sub Type": "Premium",
-        "Stream/Create": 800, 
+        "Units of Sold": 800, 
         "Final Royalty": 450000 
       }
     ]);
@@ -448,7 +485,7 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                     <th className="px-6 py-4">Title / Album</th>
                                     <th className="px-6 py-4">User</th>
                                     <th className="px-6 py-4">Platform</th>
-                                    <th className="px-6 py-4 text-right">Qty</th>
+                                    <th className="px-6 py-4 text-right">Units of Sold</th>
                                     <th className="px-6 py-4 text-right">Revenue</th>
                                 </tr>
                             </thead>
@@ -463,7 +500,7 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                         </td>
                                     </tr>
                                 ) : (
-                                    data.slice(0, 1000).map((row) => {
+                                    data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((row) => {
                                         const release = releases.find(r => r.upc === row.upc || r.tracks?.some((t: any) => t.isrc === row.isrc));
                                         const ownerName = (release as any)?.ownerDisplayName || 'No Akun';
 
@@ -494,6 +531,14 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                 )}
                             </tbody>
                         </table>
+                        <Pagination 
+                            totalItems={data.length} 
+                            currentPage={currentPage} 
+                            onPageChange={(p) => {
+                                setCurrentPage(p);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }} 
+                        />
                     </div>
                 </div>
             ) : (
@@ -606,13 +651,13 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                             <th className="px-6 py-4">title / album</th>
                                             <th className="px-6 py-4">Akun Pemilik</th>
                                             <th className="px-6 py-4">platform</th>
-                                            <th className="px-6 py-4 text-right">qty</th>
+                                            <th className="px-6 py-4 text-right">Units of Sold</th>
                                             <th className="px-6 py-4 text-right">revenue</th>
                                             <th className="px-6 py-4">status</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">
-                                        {selectedFileData.map((row: any) => {
+                                        {selectedFileData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((row: any) => {
                                             const release = releases.find(r => r.upc === row.upc || r.tracks?.some((t: any) => t.isrc === row.isrc));
                                             const ownerName = (release as any)?.ownerDisplayName || 'No Akun';
                                             
@@ -673,6 +718,14 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                         })}
                                     </tbody>
                                 </table>
+                                <Pagination 
+                                    totalItems={selectedFileData.length} 
+                                    currentPage={currentPage} 
+                                    onPageChange={(p) => {
+                                        setCurrentPage(p);
+                                        // Scroll to top of table or container if needed
+                                    }} 
+                                />
                             </div>
                         </div>
                     </div>

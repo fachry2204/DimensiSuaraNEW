@@ -74,9 +74,10 @@ router.post('/delete-batch', authenticateToken, async (req, res) => {
             return res.status(400).json({ error: 'Missing fileName or timestamp' });
         }
 
-        const sql = 'DELETE FROM reports WHERE original_file_name = ? AND created_at = ?';
+        const sql = `DELETE FROM reports WHERE original_file_name = ? AND DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') = DATE_FORMAT(?, '%Y-%m-%d %H:%i:%s')`;
         const [result] = await db.query(sql, [fileName, timestamp]);
-
+        
+        console.log(`Deleted reports for ${fileName} at ${timestamp}. Affected rows: ${result.affectedRows}`);
         res.json({ message: `Successfully deleted ${result.affectedRows} rows` });
     } catch (err) {
         console.error('Delete Batch Error:', err);
