@@ -6,6 +6,7 @@ const router = express.Router();
 
 // GET REPORTS
 router.get('/', authenticateToken, async (req, res) => {
+    console.log('GET /api/reports hit - Diagnostic log');
     try {
         let sql = 'SELECT * FROM reports';
         const params = [];
