@@ -49,15 +49,17 @@ router.post('/import', authenticateToken, async (req, res) => {
         ]);
 
         const sql = `INSERT INTO reports 
-            (period, upc, isrc, title, artist, platform, country, quantity, revenue, original_file_name,
-             sales_period, reporting_period, album_title, release_date, royalty_type, sales_type, sales_sub_type) 
+            (\`period\`, \`upc\`, \`isrc\`, \`title\`, \`artist\`, \`platform\`, \`country\`, \`quantity\`, \`revenue\`, \`original_file_name\`,
+             \`sales_period\`, \`reporting_period\`, \`album_title\`, \`release_date\`, \`royalty_type\`, \`sales_type\`, \`sales_sub_type\`) 
             VALUES ?`;
 
+        console.log(`Importing ${values.length} rows into reports table...`);
         const [result] = await db.query(sql, [values]);
 
         res.json({ message: `Successfully imported ${result.affectedRows} rows` });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error('Import Database Error:', err);
+        res.status(500).json({ error: err.sqlMessage || err.message || 'Database error during import' });
     }
 });
 

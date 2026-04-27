@@ -144,8 +144,8 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
             artist: limit(artist || 'Unknown Artist', 255),
             platform: limit(platform, 100),
             country: limit(country, 100),
-            quantity: quantity,
-            revenue: revenue,
+            quantity: Math.floor(quantity), // Must be integer
+            revenue: parseFloat(revenue.toFixed(2)), // 2 decimal places max
             period: formattedPeriod,
             sales_period: limit(sales_period, 50),
             reporting_period: limit(reporting_period, 50),
