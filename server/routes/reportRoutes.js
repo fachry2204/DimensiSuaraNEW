@@ -63,4 +63,25 @@ router.post('/import', authenticateToken, async (req, res) => {
     }
 });
 
+// DELETE BATCH OF REPORTS (Admin Only)
+router.post('/delete-batch', authenticateToken, async (req, res) => {
+    try {
+        if (req.user.role !== 'Admin') {
+            return res.status(403).json({ error: 'Access denied' });
+        }
+        const { fileName, timestamp } = req.body;
+        if (!fileName || !timestamp) {
+            return res.status(400).json({ error: 'Missing fileName or timestamp' });
+        }
+
+        const sql = 'DELETE FROM reports WHERE original_file_name = ? AND created_at = ?';
+        const [result] = await db.query(sql, [fileName, timestamp]);
+
+        res.json({ message: `Successfully deleted ${result.affectedRows} rows` });
+    } catch (err) {
+        console.error('Delete Batch Error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 export default router;

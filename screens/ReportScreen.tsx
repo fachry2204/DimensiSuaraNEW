@@ -1,6 +1,6 @@
 import React, { useRef, useState, useMemo } from 'react';
 import * as XLSX from 'xlsx';
-import { Upload, FileText, AlertCircle, CheckCircle, CheckCircle2, Download, Calendar, Clock, ChevronLeft, Search, User, XCircle, Filter, FileSpreadsheet } from 'lucide-react';
+import { Upload, FileText, AlertCircle, CheckCircle, CheckCircle2, Download, Calendar, Clock, ChevronLeft, Search, User, XCircle, Filter, FileSpreadsheet, Trash2, AlertTriangle } from 'lucide-react';
 import { ReportData, ReleaseData } from '../types';
 import { formatDMY, formatHM } from '../utils/date';
 import { PublishingReports } from './publishing/PublishingReports';
@@ -33,6 +33,26 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [selectedAggregator, setSelectedAggregator] = useState<string>('');
+  const [batchToDelete, setBatchToDelete] = useState<{ fileName: string, timestamp: string } | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDeleteBatch = async () => {
+    if (!batchToDelete || !token) return;
+    setIsDeleting(true);
+    try {
+        await api.deleteReportBatch(token, batchToDelete.fileName, batchToDelete.timestamp);
+        // Refresh data
+        const refreshedData = await api.getReports(token);
+        onImport(refreshedData);
+        setSuccessMsg(`Berhasil menghapus data untuk file: ${batchToDelete.fileName}`);
+        setBatchToDelete(null);
+    } catch (err: any) {
+        console.error("Delete Batch Error:", err);
+        setError(err.message || 'Gagal menghapus data.');
+    } finally {
+        setIsDeleting(false);
+    }
+  };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -421,13 +441,13 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                 <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full text-[11px] text-left">
-                            <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider">
+                            <thead className="bg-slate-50 text-black font-bold uppercase tracking-wider border-b border-slate-200">
                                 <tr>
                                     <th className="px-6 py-4">Period</th>
                                     <th className="px-6 py-4">UPC / ISRC</th>
                                     <th className="px-6 py-4">Title / Album</th>
+                                    <th className="px-6 py-4">User</th>
                                     <th className="px-6 py-4">Platform</th>
-                                    <th className="px-6 py-4">Country</th>
                                     <th className="px-6 py-4 text-right">Qty</th>
                                     <th className="px-6 py-4 text-right">Revenue</th>
                                 </tr>
@@ -435,7 +455,7 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                             <tbody className="divide-y divide-slate-100">
                                 {data.length === 0 ? (
                                     <tr>
-                                        <td colSpan={7} className="px-6 py-20 text-center text-slate-400">
+                                        <td colSpan={8} className="px-6 py-20 text-center text-slate-400">
                                             <div className="flex flex-col items-center gap-3 opacity-50">
                                                 <FileText size={48} />
                                                 <p className="font-medium text-sm">Belum Ada Data Yang Diimpor</p>
@@ -443,27 +463,34 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                         </td>
                                     </tr>
                                 ) : (
-                                    data.slice(0, 1000).map((row) => (
-                                        <tr key={row.id} className="hover:bg-slate-50 transition-colors">
-                                            <td className="px-6 py-3 font-medium text-slate-500">{row.period}</td>
-                                            <td className="px-6 py-3">
-                                                <div className="font-mono text-slate-700 font-bold">{row.upc}</div>
-                                                <div className="font-mono text-slate-400">{row.isrc}</div>
-                                            </td>
-                                            <td className="px-6 py-3">
-                                                <div className="font-bold text-slate-800">{row.title}</div>
-                                                {row.album_title && <div className="text-[10px] text-slate-400 truncate max-w-[150px] font-medium">{row.album_title}</div>}
-                                            </td>
-                                            <td className="px-6 py-3">
-                                                <span className="bg-slate-100 px-2 py-0.5 rounded font-bold text-slate-600">{row.platform}</span>
-                                            </td>
-                                            <td className="px-6 py-3 font-medium uppercase">{row.country}</td>
-                                            <td className="px-6 py-3 text-right font-mono">{row.quantity.toLocaleString()}</td>
-                                            <td className="px-6 py-3 text-right font-mono font-bold text-emerald-600">
-                                                ${row.revenue.toFixed(4)}
-                                            </td>
-                                        </tr>
-                                    ))
+                                    data.slice(0, 1000).map((row) => {
+                                        const release = releases.find(r => r.upc === row.upc || r.tracks?.some((t: any) => t.isrc === row.isrc));
+                                        const ownerName = (release as any)?.ownerDisplayName || 'No Akun';
+
+                                        return (
+                                            <tr key={row.id} className="hover:bg-slate-50 transition-colors">
+                                                <td className="px-6 py-3 font-medium text-black">
+                                                    {String(row.period).includes('T') ? formatDMY(row.period) : row.period}
+                                                </td>
+                                                <td className="px-6 py-3">
+                                                    <div className="font-mono text-black font-bold">{row.upc}</div>
+                                                    <div className="font-mono text-slate-500">{row.isrc}</div>
+                                                </td>
+                                                <td className="px-6 py-3">
+                                                    <div className="font-bold text-black">{row.title}</div>
+                                                    {row.album_title && <div className="text-[10px] text-slate-500 truncate max-w-[150px] font-medium">{row.album_title}</div>}
+                                                </td>
+                                                <td className="px-6 py-3 font-bold text-black">{ownerName}</td>
+                                                <td className="px-6 py-3 uppercase">
+                                                    <span className="bg-slate-100 px-2 py-0.5 rounded font-bold text-black">{row.platform}</span>
+                                                </td>
+                                                <td className="px-6 py-3 text-right font-mono text-black">{row.quantity.toLocaleString()}</td>
+                                                <td className="px-6 py-3 text-right font-mono font-bold text-emerald-600">
+                                                    Rp. {(Number(row.revenue) || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
                                 )}
                             </tbody>
                         </table>
@@ -480,12 +507,13 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                         <th className="px-6 py-4">Nama File</th>
                                         <th className="px-6 py-4">Periode Upload</th>
                                         <th className="px-6 py-4">Status</th>
+                                        <th className="px-6 py-4 text-right">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
                                     {uploadHistory.length === 0 ? (
                                         <tr>
-                                            <td colSpan={3} className="px-6 py-20 text-center text-slate-400">
+                                            <td colSpan={4} className="px-6 py-20 text-center text-slate-400">
                                                 Belum Ada File Yang Diupload
                                             </td>
                                         </tr>
@@ -528,6 +556,18 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                                         {file.status}
                                                     </span>
                                                 </td>
+                                                <td className="px-6 py-4 text-right">
+                                                    <button 
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setBatchToDelete({ fileName: file.fileName, timestamp: file.timestamp });
+                                                        }}
+                                                        className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                                                        title="Hapus Laporan"
+                                                    >
+                                                        <Trash2 size={18} />
+                                                    </button>
+                                                </td>
                                             </tr>
                                         ))
                                     )}
@@ -559,11 +599,12 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                             <div className="overflow-x-auto">
                                 <table className="w-full text-[11px] text-left">
-                                    <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider">
+                                    <thead className="bg-slate-50 text-black font-bold uppercase tracking-wider border-b border-slate-200">
                                         <tr>
                                             <th className="px-6 py-4">period</th>
                                             <th className="px-6 py-4">upc / isrc</th>
                                             <th className="px-6 py-4">title / album</th>
+                                            <th className="px-6 py-4">Akun Pemilik</th>
                                             <th className="px-6 py-4">platform</th>
                                             <th className="px-6 py-4 text-right">qty</th>
                                             <th className="px-6 py-4 text-right">revenue</th>
@@ -571,44 +612,65 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">
-                                        {selectedFileData.map((row: any) => (
-                                            <tr key={row.id || Math.random()} className="hover:bg-slate-50 transition-colors">
-                                                <td className="px-6 py-3 font-medium">{row.period || '-'}</td>
-                                                <td className="px-6 py-3">
-                                                    <div className="font-mono font-bold text-slate-700">{row.upc || '-'}</div>
-                                                    <div className="font-mono text-slate-400">{row.isrc || '-'}</div>
-                                                </td>
-                                                <td className="px-6 py-3">
-                                                    <div className="font-bold text-slate-800">{row.title || 'Untitled'}</div>
-                                                    {(row.album_title || row.album_title) && (
-                                                        <div className="text-[10px] text-slate-400 truncate max-w-[150px] font-medium">
-                                                            {row.album_title || row.album_title}
+                                        {selectedFileData.map((row: any) => {
+                                            const release = releases.find(r => r.upc === row.upc || r.tracks?.some((t: any) => t.isrc === row.isrc));
+                                            const ownerName = (release as any)?.ownerDisplayName || 'No Akun';
+                                            
+                                            // Handle potential ISO string in period
+                                            let displayPeriod = row.period || '-';
+                                            if (displayPeriod.includes('T')) {
+                                                try {
+                                                    displayPeriod = formatDMY(displayPeriod);
+                                                } catch (e) {}
+                                            }
+
+                                            return (
+                                                <tr key={row.id || Math.random()} className="hover:bg-slate-50 transition-colors">
+                                                    <td className="px-6 py-3 font-medium text-black">{displayPeriod}</td>
+                                                    <td className="px-6 py-3">
+                                                        <div className="font-mono font-bold text-black">{row.upc || '-'}</div>
+                                                        <div className="font-mono text-slate-500">{row.isrc || '-'}</div>
+                                                    </td>
+                                                    <td className="px-6 py-3">
+                                                        <div className="font-bold text-black">{row.title || 'Untitled'}</div>
+                                                        {row.album_title && (
+                                                            <div className="text-[10px] text-slate-500 truncate max-w-[150px] font-medium">
+                                                                {row.album_title}
+                                                            </div>
+                                                        )}
+                                                    </td>
+                                                    <td className="px-6 py-3">
+                                                        <div className="flex items-center gap-1.5 text-black font-bold">
+                                                            <User size={12} className="text-slate-400" />
+                                                            {ownerName}
                                                         </div>
-                                                    )}
-                                                </td>
-                                                <td className="px-6 py-3 font-bold text-slate-600">{row.platform || 'General'}</td>
-                                                <td className="px-6 py-3 text-right font-mono">{(Number(row.quantity) || 0).toLocaleString()}</td>
-                                                <td className="px-6 py-3 text-right font-mono font-bold text-slate-900">${(Number(row.revenue) || 0).toFixed(4)}</td>
-                                                <td className="px-6 py-3">
-                                                    {row.verificationStatus === 'Valid' ? (
-                                                        <span className="inline-flex items-center gap-1 text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg text-[10px] font-bold border border-emerald-100 uppercase">
-                                                            <CheckCircle size={10} />
-                                                            valid
-                                                        </span>
-                                                    ) : row.verificationStatus === 'No User' ? (
-                                                        <span className="inline-flex items-center gap-1 text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg text-[10px] font-bold border border-amber-100 uppercase">
-                                                            <AlertCircle size={10} />
-                                                            no user
-                                                        </span>
-                                                    ) : (
-                                                        <span className="text-slate-400 font-bold uppercase tracking-tighter text-[9px] italic flex items-center gap-1">
-                                                            <AlertCircle size={10} />
-                                                            Unchecked
-                                                        </span>
-                                                    )}
-                                                </td>
-                                            </tr>
-                                        ))}
+                                                    </td>
+                                                    <td className="px-6 py-3 font-bold text-black uppercase">{row.platform || 'General'}</td>
+                                                    <td className="px-6 py-3 text-right font-mono text-black">{(Number(row.quantity) || 0).toLocaleString()}</td>
+                                                    <td className="px-6 py-3 text-right font-mono font-bold text-emerald-600">
+                                                        Rp. {(Number(row.revenue) || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                    </td>
+                                                    <td className="px-6 py-3">
+                                                        {row.verificationStatus === 'Valid' ? (
+                                                            <span className="inline-flex items-center gap-1 text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg text-[10px] font-bold border border-emerald-100 uppercase">
+                                                                <CheckCircle size={10} />
+                                                                valid
+                                                            </span>
+                                                        ) : row.verificationStatus === 'No User' ? (
+                                                            <span className="inline-flex items-center gap-1 text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg text-[10px] font-bold border border-amber-100 uppercase">
+                                                                <AlertCircle size={10} />
+                                                                no user
+                                                            </span>
+                                                        ) : (
+                                                            <span className="text-slate-400 font-bold uppercase tracking-tighter text-[9px] italic flex items-center gap-1">
+                                                                <AlertCircle size={10} />
+                                                                Unchecked
+                                                            </span>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
@@ -616,6 +678,44 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                     </div>
                 )
             )}
+          </div>
+      )}
+      {/* Confirmation Modal */}
+      {batchToDelete && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+              <div className="bg-white rounded-3xl shadow-2xl max-w-sm w-full overflow-hidden transform transition-all scale-100 border border-slate-100">
+                  <div className="p-8 text-center">
+                      <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                          <AlertTriangle size={40} className="text-red-500" />
+                      </div>
+                      <h3 className="text-xl font-bold text-slate-900 mb-3">Hapus Laporan?</h3>
+                      <p className="text-slate-500 text-sm mb-8 leading-relaxed">
+                          Apakah Anda yakin ingin menghapus seluruh data dari file <span className="font-bold text-slate-800">"{batchToDelete.fileName}"</span>? 
+                          Tindakan ini tidak dapat dibatalkan.
+                      </p>
+                      <div className="flex gap-4">
+                          <button 
+                              onClick={() => setBatchToDelete(null)}
+                              disabled={isDeleting}
+                              className="flex-1 px-6 py-3 bg-slate-100 text-slate-700 font-bold rounded-2xl hover:bg-slate-200 transition-all active:scale-95 disabled:opacity-50"
+                          >
+                              Batal
+                          </button>
+                          <button 
+                              onClick={handleDeleteBatch}
+                              disabled={isDeleting}
+                              className="flex-1 px-6 py-3 bg-red-600 text-white font-bold rounded-2xl hover:bg-red-700 transition-all shadow-lg shadow-red-200 active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
+                          >
+                              {isDeleting ? (
+                                  <span className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></span>
+                              ) : (
+                                  <Trash2 size={18} />
+                              )}
+                              Hapus
+                          </button>
+                      </div>
+                  </div>
+              </div>
           </div>
       )}
     </div>

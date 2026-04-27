@@ -566,6 +566,21 @@ export const api = {
         }
         return res.json();
     },
+    deleteReportBatch: async (token, fileName, timestamp) => {
+        const res = await fetch(`${API_BASE_URL}/reports/delete-batch`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ fileName, timestamp })
+        });
+        if (!res.ok) {
+            const errorData = await res.json().catch(() => ({}));
+            throw new Error(errorData.error || 'Failed to delete report batch');
+        }
+        return res.json();
+    },
 
     // Notifications
     getNotifications: async (token) => {
