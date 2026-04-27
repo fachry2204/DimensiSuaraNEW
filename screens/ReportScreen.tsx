@@ -171,7 +171,16 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
         // SAVE TO DATABASE
         if (!token) throw new Error('Token Sesi Tidak Ditemukan. Silakan Login Ulang.');
         
-        await api.importReports(token, processedData);
+        // Chunking to avoid "Request Entity Too Large" errors from Nginx/Server limits
+        const chunkSize = 100;
+        const totalChunks = Math.ceil(processedData.length / chunkSize);
+        
+        for (let i = 0; i < processedData.length; i += chunkSize) {
+            const chunk = processedData.slice(i, i + chunkSize);
+            const currentChunkNum = Math.floor(i / chunkSize) + 1;
+            console.log(`Uploading chunk ${currentChunkNum}/${totalChunks}...`);
+            await api.importReports(token, chunk);
+        }
         
         // REFRESH DATA FROM BACKEND
         const refreshedData = await api.getReports(token);
