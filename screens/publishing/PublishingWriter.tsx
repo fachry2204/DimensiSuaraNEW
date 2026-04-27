@@ -302,60 +302,60 @@ export const PublishingWriter: React.FC<Props> = ({ token, userRole }) => {
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap</label>
                                     <input 
                                         type="text" name="name" required
                                         value={formData.name} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">NIK</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">NIK</label>
                                     <input 
                                         type="text" name="nik" required
                                         value={formData.nik} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Tempat Lahir</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Tempat Lahir</label>
                                     <input 
                                         type="text" name="birth_place"
                                         value={formData.birth_place} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Tanggal Lahir</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Tanggal Lahir</label>
                                     <input 
                                         type="date" name="birth_date"
                                         value={formData.birth_date} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                                 <div className="md:col-span-2">
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Alamat Lengkap</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Alamat Lengkap</label>
                                     <textarea 
                                         name="address" rows={2}
                                         value={formData.address} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Kewarganegaraan</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Kewarganegaraan</label>
                                     <input 
                                         type="text" name="nationality"
                                         value={formData.nationality} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Nomor Whatsapp</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Nomor Whatsapp</label>
                                     <input 
                                         type="text" name="whatsapp_number"
                                         value={formData.whatsapp_number} onChange={handleInputChange}
                                         placeholder="08xxxxxxxxxx"
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                             </div>
@@ -366,27 +366,27 @@ export const PublishingWriter: React.FC<Props> = ({ token, userRole }) => {
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
-                                        <label className="block text-xs font-medium text-slate-600 mb-1">Nama Bank</label>
+                                        <label className="block text-[10px] font-bold text-slate-600 mb-1">Nama Bank</label>
                                         <input 
                                             type="text" name="bank_name"
                                             value={formData.bank_name} onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                            className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-xs"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-medium text-slate-600 mb-1">Nomor Rekening</label>
+                                        <label className="block text-[10px] font-bold text-slate-600 mb-1">Nomor Rekening</label>
                                         <input 
                                             type="text" name="bank_account_number"
                                             value={formData.bank_account_number} onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                            className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-xs"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-medium text-slate-600 mb-1">Atas Nama</label>
+                                        <label className="block text-[10px] font-bold text-slate-600 mb-1">Atas Nama</label>
                                         <input 
                                             type="text" name="bank_account_name"
                                             value={formData.bank_account_name} onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                            className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-xs"
                                         />
                                     </div>
                                 </div>

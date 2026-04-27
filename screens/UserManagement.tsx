@@ -18,15 +18,20 @@ import { User } from '../types';
 import { api } from '../utils/api';
 import { AlertModal, AlertState } from '../components/AlertModal';
 
-export const UserManagement: React.FC = () => {
+interface Props {
+  currentUserRole?: string;
+  token: string | null;
+}
+
+export const UserManagement: React.FC<Props> = ({ currentUserRole, token: propToken }) => {
   // --- USER MANAGEMENT LOGIC ---
   const [userTab, setUserTab] = useState<'REGISTERED' | 'INTERNAL' | 'ALL'>('REGISTERED');
   const [users, setUsers] = useState<User[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [token] = useState(localStorage.getItem('cms_token') || '');
-  const [userRole] = useState(localStorage.getItem('cms_role') || '');
-  const [isImpersonating] = useState(localStorage.getItem('is_impersonating') === 'true');
+  const token = propToken || '';
+  const userRole = currentUserRole || '';
+  const isImpersonating = localStorage.getItem('is_impersonating') === 'true';
   const [showUserViewModal, setShowUserViewModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);

@@ -598,45 +598,45 @@ export const PublishingSongs: React.FC<Props> = ({ token, userRole }) => {
                                     </h3>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Judul Lagu</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Judul Lagu</label>
                                     <input 
                                         type="text" name="title" required
                                         value={formData.title} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Song ID</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Song ID</label>
                                     <input 
                                         type="text" name="song_id"
                                         value={formData.song_id} onChange={handleInputChange}
-                                        className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none ${userRole !== 'Admin' ? 'bg-slate-100 text-slate-500 cursor-not-allowed' : ''}`}
+                                        className={`w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm ${userRole !== 'Admin' ? 'bg-slate-100 text-slate-500 cursor-not-allowed' : ''}`}
                                         placeholder="Song ID"
                                         disabled={userRole !== 'Admin'}
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Judul Alternatif</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Judul Alternatif</label>
                                     <input 
                                         type="text" name="other_title"
                                         value={formData.other_title} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Artis / Performer</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Artis / Performer</label>
                                     <input 
                                         type="text" name="performer" required
                                         value={formData.performer} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Genre <span className="text-red-500">*</span></label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Genre <span className="text-red-500">*</span></label>
                                     <select 
                                         name="genre" required
                                         value={formData.genre} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     >
                                         <option value="">Pilih Genre</option>
                                         {TRACK_GENRES.map(g => (
@@ -645,20 +645,20 @@ export const PublishingSongs: React.FC<Props> = ({ token, userRole }) => {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Durasi (MM:SS) <span className="text-red-500">*</span></label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Durasi (MM:SS) <span className="text-red-500">*</span></label>
                                     <input 
                                         type="text" name="duration" placeholder="MM:SS" required
                                         value={formData.duration} onChange={handleDurationChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                         maxLength={5}
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Bahasa</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Bahasa</label>
                                     <select 
                                         name="language"
                                         value={formData.language} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     >
                                         <option value="">Pilih Bahasa</option>
                                         {COUNTRIES_WITH_DIAL_CODES.map(c => (
@@ -667,11 +667,11 @@ export const PublishingSongs: React.FC<Props> = ({ token, userRole }) => {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">Region / Negara <span className="text-red-500">*</span></label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">Region / Negara <span className="text-red-500">*</span></label>
                                     <select 
                                         name="region" required
                                         value={formData.region} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     >
                                         <option value="">Pilih Negara</option>
                                         {COUNTRIES_WITH_DIAL_CODES.map(c => (
@@ -689,19 +689,19 @@ export const PublishingSongs: React.FC<Props> = ({ token, userRole }) => {
                                     </h3>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">ISRC</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">ISRC</label>
                                     <input 
                                         type="text" name="isrc"
                                         value={formData.isrc} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">ISWC</label>
+                                    <label className="block text-xs font-bold text-slate-700 mb-1">ISWC</label>
                                     <input 
                                         type="text" name="iswc"
                                         value={formData.iswc} onChange={handleInputChange}
-                                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
                                     />
                                 </div>
                             </div>
@@ -796,12 +796,12 @@ export const PublishingSongs: React.FC<Props> = ({ token, userRole }) => {
                                                 </select>
                                             </div>
                                             <div className="w-1/5">
-                                                <label className="block text-xs font-bold text-slate-700 mb-1">Share (%) <span className="text-red-500">*</span></label>
+                                                <label className="block text-[10px] font-bold text-slate-700 mb-1">Share (%) <span className="text-red-500">*</span></label>
                                                 <input 
                                                     type="number" required min="0" max="100"
                                                     value={writer.share_percent}
                                                     onChange={(e) => handleWriterChange(index, 'share_percent', e.target.value)}
-                                                    className="w-full px-3 py-2 border rounded text-sm"
+                                                    className="w-full px-3 py-1.5 border rounded text-xs"
                                                 />
                                             </div>
                                             {writers.length > 1 && (
