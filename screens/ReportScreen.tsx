@@ -265,14 +265,19 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
     const history = new Map<string, { fileName: string, timestamp: string, status: string }>();
     
     data.forEach(item => {
-        const ts = item.uploadTimestamp || '';
-        const key = `${item.originalFileName}-${ts}`;
+        // Handle both camelCase from frontend and snake_case from backend
+        const record = item as any;
+        const ts = record.uploadTimestamp || record.created_at || '';
+        const fn = record.originalFileName || record.original_file_name || 'Unknown File';
+        const st = record.status || 'Pending';
+        
+        const key = `${fn}-${ts}`;
         
         if (!history.has(key)) {
             history.set(key, { 
-                fileName: item.originalFileName, 
+                fileName: fn, 
                 timestamp: ts,
-                status: item.status || 'Pending'
+                status: st
             });
         }
     });
@@ -286,7 +291,11 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
 
   const selectedFileData = useMemo(() => {
     if (!selectedFile) return [];
-    return data.filter(d => d.originalFileName === selectedFile);
+    return data.filter(d => {
+        const record = d as any;
+        const fn = record.originalFileName || record.original_file_name;
+        return fn === selectedFile;
+    });
   }, [data, selectedFile]);
 
   const totalRevenue = useMemo(() => {
@@ -562,20 +571,24 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">
-                                        {selectedFileData.map((row) => (
-                                            <tr key={row.id} className="hover:bg-slate-50 transition-colors">
-                                                <td className="px-6 py-3 font-medium">{row.period}</td>
+                                        {selectedFileData.map((row: any) => (
+                                            <tr key={row.id || Math.random()} className="hover:bg-slate-50 transition-colors">
+                                                <td className="px-6 py-3 font-medium">{row.period || '-'}</td>
                                                 <td className="px-6 py-3">
-                                                    <div className="font-mono font-bold text-slate-700">{row.upc}</div>
-                                                    <div className="font-mono text-slate-400">{row.isrc}</div>
+                                                    <div className="font-mono font-bold text-slate-700">{row.upc || '-'}</div>
+                                                    <div className="font-mono text-slate-400">{row.isrc || '-'}</div>
                                                 </td>
                                                 <td className="px-6 py-3">
-                                                    <div className="font-bold text-slate-800">{row.title}</div>
-                                                    {row.album_title && <div className="text-[10px] text-slate-400 truncate max-w-[150px] font-medium">{row.album_title}</div>}
+                                                    <div className="font-bold text-slate-800">{row.title || 'Untitled'}</div>
+                                                    {(row.album_title || row.album_title) && (
+                                                        <div className="text-[10px] text-slate-400 truncate max-w-[150px] font-medium">
+                                                            {row.album_title || row.album_title}
+                                                        </div>
+                                                    )}
                                                 </td>
-                                                <td className="px-6 py-3 font-bold text-slate-600">{row.platform}</td>
-                                                <td className="px-6 py-3 text-right font-mono">{row.quantity.toLocaleString()}</td>
-                                                <td className="px-6 py-3 text-right font-mono font-bold text-slate-900">${row.revenue.toFixed(4)}</td>
+                                                <td className="px-6 py-3 font-bold text-slate-600">{row.platform || 'General'}</td>
+                                                <td className="px-6 py-3 text-right font-mono">{(Number(row.quantity) || 0).toLocaleString()}</td>
+                                                <td className="px-6 py-3 text-right font-mono font-bold text-slate-900">${(Number(row.revenue) || 0).toFixed(4)}</td>
                                                 <td className="px-6 py-3">
                                                     {row.verificationStatus === 'Valid' ? (
                                                         <span className="inline-flex items-center gap-1 text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg text-[10px] font-bold border border-emerald-100 uppercase">
@@ -588,7 +601,10 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                                             no user
                                                         </span>
                                                     ) : (
-                                                        <span className="text-slate-400 font-bold">-</span>
+                                                        <span className="text-slate-400 font-bold uppercase tracking-tighter text-[9px] italic flex items-center gap-1">
+                                                            <AlertCircle size={10} />
+                                                            Unchecked
+                                                        </span>
                                                     )}
                                                 </td>
                                             </tr>
