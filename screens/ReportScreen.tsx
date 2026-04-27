@@ -56,10 +56,19 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
         const processedData: ReportData[] = [];
         const timestamp = new Date().toISOString();
 
+        // Helper to parse numbers properly
+        const parseNum = (val: any) => {
+            if (typeof val === 'number') return val;
+            if (!val) return 0;
+            const cleaned = String(val).replace(/[$,]/g, '').trim();
+            const num = parseFloat(cleaned);
+            return isNaN(num) ? 0 : num;
+        };
+
         jsonData.forEach((row: any, index) => {
           let upc = '';
           let isrc = '';
-          let title = 'Unknown Title';
+          let title = '';
           let artist = 'Unknown Artist';
           let platform = 'Unknown';
           let country = 'WW';
@@ -78,22 +87,23 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
           if (selectedAggregator === 'Believe') {
               upc = String(row['UPC'] || '');
               isrc = String(row['ISRC'] || '');
-              title = row['Track title'] || row['Release title'] || 'Unknown Title';
+              title = row['Track title'] || row['Release title'] || '';
               artist = row['Artist Name'] || 'Unknown Artist';
               platform = row['Platform'] || 'Unknown';
               country = row['Country / Region'] || 'WW';
-              quantity = Number(row['Quantity'] || 0);
-              revenue = Number(row['Net Revenue'] || 0);
+              quantity = parseNum(row['Quantity'] || 0);
+              revenue = parseNum(row['Net Revenue'] || 0);
               period = row['Reporting month'] || row['Sales Month'] || period;
           } else {
               upc = String(row['UPC Code'] || row['UPC'] || row['upc'] || '');
               isrc = String(row['ISRC'] || row['isrc'] || '');
-              title = row['Track Title'] || row['Title'] || row['title'] || 'Unknown Title';
+              title = row['Track Title'] || row['Title'] || row['title'] || '';
               artist = row['Track Artists'] || row['Artist'] || row['artist'] || 'Unknown Artist';
               platform = row['Store Name'] || row['Platform'] || row['platform'] || 'Unknown';
               country = row['Sales Region'] || row['Country'] || row['country'] || 'WW';
-              quantity = Number(row['Stream/Create'] || row['Quantity'] || row['quantity'] || 0);
-              revenue = Number(row['Final Royalty'] || row['Revenue'] || row['revenue'] || 0);
+              
+              quantity = parseNum(row['Stream/Create'] || row['Quantity'] || row['quantity'] || 0);
+              revenue = parseNum(row['Final Royalty'] || row['Revenue'] || row['revenue'] || 0);
               period = String(row['Sales Period'] || row['Period'] || row['period'] || period);
               
               sales_period = String(row['Sales Period'] || '');
@@ -105,30 +115,50 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
               sales_sub_type = row['Sales Sub Type'] || '';
           }
 
+          // Skip rows that are clearly empty
+          if (!upc && !isrc && !title && revenue === 0) return;
+
+          // Ensure title is not empty
+          if (!title) title = 'Unknown Title';
+
+          // Ensure period is YYYY-MM-DD format for database date column
+          let formattedPeriod = String(period || '');
+          if (formattedPeriod.length === 7 && formattedPeriod.includes('-')) {
+              formattedPeriod = `${formattedPeriod}-01`;
+          } else if (formattedPeriod.length === 6 && !formattedPeriod.includes('-')) {
+              // Handle YYYYMM format
+              formattedPeriod = `${formattedPeriod.slice(0, 4)}-${formattedPeriod.slice(4, 6)}-01`;
+          } else if (!formattedPeriod.match(/^\d{4}-\d{2}-\d{2}$/)) {
+              // Fallback to first of current month if invalid
+              formattedPeriod = new Date().toISOString().slice(0, 8) + '01';
+          }
+
           processedData.push({
             id: `${Date.now()}-${index}`,
-            upc,
-            isrc,
-            title,
-            artist,
-            platform,
-            country,
-            quantity,
-            revenue,
-            period,
-            sales_period,
-            reporting_period,
-            album_title,
-            release_date,
-            royalty_type,
-            sales_type,
-            sales_sub_type,
+            upc: upc || '',
+            isrc: isrc || '',
+            title: title || 'Unknown Title',
+            artist: artist || 'Unknown Artist',
+            platform: platform || 'Unknown',
+            country: country || 'WW',
+            quantity: quantity,
+            revenue: revenue,
+            period: formattedPeriod,
+            sales_period: sales_period || '',
+            reporting_period: reporting_period || '',
+            album_title: album_title || '',
+            release_date: release_date || '',
+            royalty_type: royalty_type || '',
+            sales_type: sales_type || '',
+            sales_sub_type: sales_sub_type || '',
             originalFileName: file.name,
             uploadTimestamp: timestamp,
             status: 'Pending',
             verificationStatus: 'Unchecked'
           });
         });
+
+        console.log('Processed Data for Import:', processedData.length, 'rows');
 
         if (processedData.length === 0) {
             setError('File Kosong Atau Format Tidak Sesuai.');
