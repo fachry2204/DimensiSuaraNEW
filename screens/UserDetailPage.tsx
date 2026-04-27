@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { User } from '../types';
 import { api } from '../utils/api';
-import { XCircle, Eye, Download, CheckCircle, Edit } from 'lucide-react';
+import { XCircle, Eye, Download, CheckCircle, Edit, User as UserIcon } from 'lucide-react';
 import { AlertModal } from '../components/AlertModal';
 
 export const UserDetailPage: React.FC = () => {
@@ -33,6 +33,7 @@ export const UserDetailPage: React.FC = () => {
   const [editFormData, setEditFormData] = useState<Partial<User>>({});
   const [newFiles, setNewFiles] = useState<{ [key: string]: File }>({});
   const [isSaving, setIsSaving] = useState(false);
+  const [isImpersonating, setIsImpersonating] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -67,6 +68,38 @@ export const UserDetailPage: React.FC = () => {
     };
     load();
   }, [id, token]);
+
+  const handleImpersonate = async () => {
+    if (!user || !token) return;
+    try {
+        setIsImpersonating(true);
+        const res = await api.impersonateUser(token, user.id);
+        if (res.token) {
+            // Save admin token to switch back later
+            localStorage.setItem('admin_token', token || '');
+            localStorage.setItem('admin_user', localStorage.getItem('cms_user') || '');
+            localStorage.setItem('admin_role', localStorage.getItem('cms_role') || 'Admin');
+
+            // Store new token and redirect
+            localStorage.setItem('cms_token', res.token);
+            localStorage.setItem('cms_user', res.user.username);
+            localStorage.setItem('cms_role', res.user.role);
+            localStorage.setItem('is_impersonating', 'true');
+            
+            // Reload page to apply changes
+            window.location.href = '/';
+        }
+    } catch (err: any) {
+        setAlertState({
+            isOpen: true,
+            title: 'Gagal Impersonate',
+            message: err.message || 'Terjadi kesalahan saat mencoba impersonate',
+            type: 'error'
+        });
+    } finally {
+        setIsImpersonating(false);
+    }
+  };
 
   const handleEditClick = () => {
     if (!user) return;
@@ -223,12 +256,28 @@ export const UserDetailPage: React.FC = () => {
           <div className="flex items-center gap-3">
             <h3 className="text-base font-medium text-slate-800">Profile Lengkap</h3>
             {currentUser?.role === 'Admin' && (
-              <button 
-                onClick={handleEditClick}
-                className="flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium hover:bg-blue-100 transition-colors"
-              >
-                <Edit size={14} /> Edit Data
-              </button>
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={handleEditClick}
+                  className="flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium hover:bg-blue-100 transition-colors"
+                >
+                  <Edit size={14} /> Edit Data
+                </button>
+                {user.role === 'User' && (
+                  <button 
+                    onClick={handleImpersonate}
+                    disabled={isImpersonating}
+                    className="flex items-center gap-1 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-lg text-xs font-medium hover:bg-amber-100 transition-colors disabled:opacity-50"
+                  >
+                    {isImpersonating ? (
+                      <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-amber-600"></div>
+                    ) : (
+                      <UserIcon size={14} />
+                    )}
+                    Impersonate
+                  </button>
+                )}
+              </div>
             )}
           </div>
           <button onClick={() => navigate('/users')} className="text-slate-400 hover:text-slate-600">
@@ -487,26 +536,26 @@ export const UserDetailPage: React.FC = () => {
           {statusDraft === 'Approved' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-sm font-medium text-slate-800">Aggregator Percentage (%)</label>
+                <label className="text-sm font-medium text-black">Aggregator Percentage (%)</label>
                 <input
                   type="number"
                   min="0"
                   max="100"
                   value={aggregatorPercentage ?? ''}
                   onChange={(e) => setAggregatorPercentage(e.target.value ? parseFloat(e.target.value) : undefined)}
-                  className="w-full p-2 border border-slate-200 rounded-xl text-sm"
+                  className="w-full p-2 border border-slate-200 rounded-xl text-sm text-black"
                   placeholder="0-100"
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-sm font-medium text-slate-800">Publishing Percentage (%)</label>
+                <label className="text-sm font-medium text-black">Publishing Percentage (%)</label>
                 <input
                   type="number"
                   min="0"
                   max="100"
                   value={publishingPercentage ?? ''}
                   onChange={(e) => setPublishingPercentage(e.target.value ? parseFloat(e.target.value) : undefined)}
-                  className="w-full p-2 border border-slate-200 rounded-xl text-sm"
+                  className="w-full p-2 border border-slate-200 rounded-xl text-sm text-black"
                   placeholder="0-100"
                 />
               </div>

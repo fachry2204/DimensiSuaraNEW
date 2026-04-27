@@ -786,6 +786,14 @@ export const api = {
         });
         return parseResponse(res);
     },
+    impersonateUser: async (token, id) => {
+        const res = await fetch(`${API_BASE_URL}/users/${id}/impersonate`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` },
+            credentials: 'include'
+        });
+        return parseResponse(res);
+    },
 
     createUser: async (token, userData) => {
         const res = await fetch(`${API_BASE_URL}/users`, {

@@ -1,5 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import db from '../config/db.js';
 import { authenticateToken } from '../middleware/authMiddleware.js';
 import multer from 'multer';
@@ -597,6 +598,60 @@ router.get('/:id', authenticateToken, async (req, res) => {
         if (rows.length === 0) return res.status(404).json({ error: 'User not found' });
         res.json(rows[0]);
     } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// IMPERSONATE USER (Admin only)
+router.post('/:id/impersonate', authenticateToken, async (req, res) => {
+    try {
+        if (req.user.role !== 'Admin') {
+            return res.status(403).json({ error: 'Access denied. Only admins can impersonate users.' });
+        }
+        
+        const userId = req.params.id;
+        const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey123';
+
+        // Fetch the user to impersonate
+        const [users] = await db.query('SELECT id, username, role, status FROM users WHERE id = ?', [userId]);
+        
+        if (users.length === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const user = users[0];
+
+        // Create token for the user being impersonated
+        // We include isImpersonating flag and the original admin's ID
+        const payload = { 
+            id: user.id, 
+            role: user.role,
+            isImpersonating: true,
+            adminId: req.user.id 
+        };
+        
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+
+        // Set session cookie
+        const secure = req.secure || (req.headers['x-forwarded-proto'] === 'https');
+        res.cookie('auth_token', token, {
+            httpOnly: true,
+            sameSite: 'lax',
+            secure,
+            maxAge: 60 * 60 * 1000 // 1 hour
+        });
+
+        res.json({ 
+            token, 
+            user: { 
+                id: user.id, 
+                username: user.username, 
+                role: user.role,
+                status: user.status 
+            } 
+        });
+    } catch (err) {
+        console.error('Impersonation error:', err);
         res.status(500).json({ error: err.message });
     }
 });

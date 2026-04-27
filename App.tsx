@@ -81,6 +81,7 @@ const App: React.FC = () => {
   const [token, setToken] = useState<string>('');
   const [userRole, setUserRole] = useState<string>('');
   const [userStatus, setUserStatus] = useState<string>('');
+  const [isImpersonating, setIsImpersonating] = useState<boolean>(false);
   
   // Notification State
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -490,15 +491,40 @@ const App: React.FC = () => {
     const storedRole = localStorage.getItem('cms_role');
     const storedStatus = localStorage.getItem('cms_status');
     
+    
     if (storedAuth === 'true') {
       setIsAuthenticated(true);
       if (storedUser) setCurrentUser(storedUser);
       if (storedToken) setToken(storedToken);
       if (storedRole) setUserRole(storedRole);
       if (storedStatus) setUserStatus(storedStatus);
+      setIsImpersonating(localStorage.getItem('is_impersonating') === 'true');
     }
     setIsAuthChecking(false);
   }, []);
+
+  const stopImpersonating = () => {
+    const adminToken = localStorage.getItem('admin_token');
+    const adminUser = localStorage.getItem('admin_user');
+    const adminRole = localStorage.getItem('admin_role');
+
+    if (adminToken) {
+        localStorage.setItem('cms_token', adminToken);
+        localStorage.setItem('cms_user', adminUser || '');
+        localStorage.setItem('cms_role', adminRole || 'Admin');
+        localStorage.setItem('cms_auth', 'true');
+        
+        // Remove impersonation flags
+        localStorage.removeItem('admin_token');
+        localStorage.removeItem('admin_user');
+        localStorage.removeItem('admin_role');
+        localStorage.removeItem('is_impersonating');
+
+        window.location.href = '/';
+    } else {
+        confirmLogout();
+    }
+  };
 
   const handleLogin = (user: any, token: string) => {
     localStorage.setItem('cms_auth', 'true');
@@ -1118,6 +1144,7 @@ const App: React.FC = () => {
                 releases={allReleases}
                 onViewRelease={handleViewDetails}
                 onNavigateToAll={() => navigate('/releases')}
+                userRole={userRole}
             />
         } />
         <Route path="/aggregator/artists" element={<Artists releases={userRole === 'User' ? myReleases : allReleases} />} />
@@ -1429,6 +1456,22 @@ const App: React.FC = () => {
                     }
                 }}
             />
+        )}
+
+        {/* Impersonation Banner */}
+        {isImpersonating && (
+          <div className="fixed bottom-0 left-0 right-0 bg-amber-600 text-white py-2 px-4 flex items-center justify-between z-[9999] shadow-lg animate-slide-up">
+            <div className="flex items-center gap-2 text-sm font-medium">
+              <AlertTriangle size={16} />
+              Anda sedang login sebagai <span className="font-bold underline">{currentUser}</span> (Impersonation)
+            </div>
+            <button 
+              onClick={stopImpersonating}
+              className="bg-white text-amber-700 px-3 py-1 rounded-lg text-xs font-bold hover:bg-amber-50 transition-colors"
+            >
+              Berhenti Impersonate
+            </button>
+          </div>
         )}
 
         <AlertModal

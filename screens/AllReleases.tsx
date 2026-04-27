@@ -335,7 +335,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search Title, Artist, UPC, Aggregator..." 
+                        placeholder={`Search Title, Artist, UPC${(userRole === 'Admin' || userRole === 'Operator') ? ', Aggregator' : ''}...`} 
                         className="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 bg-white shadow-sm transition-all text-[13px] text-slate-800"
                     />
                     <Search size={16} className="absolute left-3 top-2.5 text-slate-400" />
@@ -361,7 +361,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                             <ThSortable label="Type" sortKey="type" />
                             <ThSortable label="Release Date" sortKey="date" />
                             <th className="px-4 py-2 text-[13px] text-slate-500 tracking-wider">Submit Date</th>
-                            {userRole === 'Admin' && <ThSortable label="Aggregator" sortKey="aggregator" />}
+                            {(userRole === 'Admin' || userRole === 'Operator') && <ThSortable label="Aggregator" sortKey="aggregator" />}
                             <ThSortable label="Status" sortKey="status" />
                             <th className="px-4 py-2 text-[13px] text-slate-500 tracking-wider text-right">Action</th>
                         </tr>
@@ -454,7 +454,7 @@ export const AllReleases: React.FC<Props> = ({ releases, onViewDetails, availabl
                                             {release.submissionDate ? formatDMY(release.submissionDate) : 'N/A'}
                                         </div>
                                     </td>
-                                    {userRole === 'Admin' && (
+                                    {(userRole === 'Admin' || userRole === 'Operator') && (
                                     <td className="px-4 py-2 text-[13px]">
                                         {release.aggregator ? (
                                             <div className="flex items-center gap-1 text-[13px] font-medium text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-100 w-fit">

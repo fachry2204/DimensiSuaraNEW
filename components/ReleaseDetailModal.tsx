@@ -453,7 +453,7 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                         <ArrowLeft size={20} />
                         Back to List
                     </button>
-                    {userRole === 'Admin' && (
+                    {(userRole === 'Admin' || userRole === 'Operator') && (
                         <div className="flex gap-2">
                             <button onClick={onClose} className="px-4 py-2 text-slate-500 font-bold text-sm hover:bg-slate-100 rounded-lg transition-colors">
                                 Discard
@@ -566,7 +566,7 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                             {status === 'Rejected' && <AlertTriangle size={14} />}
                             <span className="uppercase tracking-wider">{(status === 'Live' || status === 'Released') ? 'Released' : status}</span>
                         </span>
-                        {userRole === 'Admin' && release.aggregator && (
+                        {(userRole === 'Admin' || userRole === 'Operator') && release.aggregator && (
                             <span className="px-3 py-1.5 rounded-full text-xs font-bold bg-purple-100 text-purple-700 border border-purple-200 flex items-center gap-1.5">
                                 <Globe size={14} /> {release.aggregator}
                             </span>
@@ -666,7 +666,7 @@ export const ReleaseDetailModal: React.FC<Props> = ({ release, isOpen, onClose, 
                 >
                     <FileText size={16} /> Metadata & Tracks
                 </button>
-                {userRole === 'Admin' && (
+                {(userRole === 'Admin' || userRole === 'Operator') && (
                     <button 
                         onClick={() => setActiveTab('DISTRIBUTION')}
                         className={`pb-4 px-4 text-sm font-bold border-b-2 transition-colors flex items-center gap-2 ${activeTab === 'DISTRIBUTION' ? 'border-blue-500 text-blue-600' : 'border-transparent text-slate-500 hover:text-slate-800'}`}
