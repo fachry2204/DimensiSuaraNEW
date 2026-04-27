@@ -21,9 +21,10 @@ import { AlertModal, AlertState } from '../components/AlertModal';
 interface Props {
   currentUserRole?: string;
   token: string | null;
+  isImpersonating?: boolean;
 }
 
-export const UserManagement: React.FC<Props> = ({ currentUserRole, token: propToken }) => {
+export const UserManagement: React.FC<Props> = ({ currentUserRole, token: propToken, isImpersonating: propIsImpersonating }) => {
   // --- USER MANAGEMENT LOGIC ---
   const [userTab, setUserTab] = useState<'REGISTERED' | 'INTERNAL' | 'ALL'>('REGISTERED');
   const [users, setUsers] = useState<User[]>([]);
@@ -31,7 +32,7 @@ export const UserManagement: React.FC<Props> = ({ currentUserRole, token: propTo
   const [isLoading, setIsLoading] = useState(true);
   const token = propToken || '';
   const userRole = currentUserRole || '';
-  const isImpersonating = localStorage.getItem('is_impersonating') === 'true';
+  const isImpersonating = propIsImpersonating !== undefined ? propIsImpersonating : (localStorage.getItem('is_impersonating') === 'true');
   const [showUserViewModal, setShowUserViewModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);

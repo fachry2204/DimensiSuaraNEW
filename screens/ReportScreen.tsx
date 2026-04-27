@@ -1,6 +1,6 @@
 import React, { useRef, useState, useMemo } from 'react';
 import * as XLSX from 'xlsx';
-import { Upload, FileText, AlertCircle, CheckCircle, CheckCircle2, Download, Calendar, Clock, ChevronLeft, Search, User, XCircle } from 'lucide-react';
+import { Upload, FileText, AlertCircle, CheckCircle, CheckCircle2, Download, Calendar, Clock, ChevronLeft, Search, User, XCircle, Filter, FileSpreadsheet } from 'lucide-react';
 import { ReportData, ReleaseData } from '../types';
 import { formatDMY, formatHM } from '../utils/date';
 import { PublishingReports } from './publishing/PublishingReports';
@@ -182,19 +182,36 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
       { 
         "Sales Period": "2024-01", 
         "Reporting Period": "2024-03", 
-        "Track Title": "Song Name", 
-        "ISRC": "USABC1234567", 
-        "Track Artists": "Artist A, Artist B", 
-        "UPC Code": "123456789012", 
-        "Album Title": "Album Name",
+        "Track Title": "Judul Lagu Contoh 1", 
+        "ISRC": "IDABC2400001", 
+        "Track Artists": "Penyanyi Utama, Artis Fitur", 
+        "UPC Code": "1234567890123", 
+        "Album Title": "Nama Album Contoh",
         "Release Date": "2023-12-01",
         "Royalty Type": "Streaming",
         "Store Name": "Spotify", 
         "Sales Region": "ID", 
         "Sales Type": "Subscription",
         "Sales Sub Type": "Premium",
-        "Stream/Create": 1000, 
-        "Final Royalty": 50.45 
+        "Stream/Create": 12500, 
+        "Final Royalty": 625000 
+      },
+      { 
+        "Sales Period": "2024-01", 
+        "Reporting Period": "2024-03", 
+        "Track Title": "Judul Lagu Contoh 2", 
+        "ISRC": "IDABC2400002", 
+        "Track Artists": "Penyanyi Solo", 
+        "UPC Code": "1234567890123", 
+        "Album Title": "Nama Album Contoh",
+        "Release Date": "2023-12-01",
+        "Royalty Type": "Streaming",
+        "Store Name": "Apple Music", 
+        "Sales Region": "US", 
+        "Sales Type": "Subscription",
+        "Sales Sub Type": "Premium",
+        "Stream/Create": 800, 
+        "Final Royalty": 450000 
       }
     ]);
     const wb = XLSX.utils.book_new();
@@ -258,214 +275,141 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
       {activeTab === 'publishing' ? (
           <PublishingReports token={token} mode={mode} />
       ) : (
-          <>
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-xl font-bold text-white">
-            {mode === 'import' ? 'Import Laporan' : 'Laporan'}
-          </h1>
-          <p className="text-slate-400 text-sm">
-            {mode === 'import' 
-                ? 'Upload Laporan Excel (.xlsx) Untuk Memperbarui Statistik Dan Pendapatan' 
-                : 'Ringkasan Laporan Dan Statistik Pendapatan'}
-          </p>
-        </div>
-        {mode === 'import' && !selectedFile && (
-            <div className="flex gap-3">
-                <select
-                    value={selectedAggregator}
-                    onChange={(e) => setSelectedAggregator(e.target.value)}
-                    className="px-4 py-2 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors font-medium text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                >
-                    <option value="">Pilih Aggregator</option>
-                    {aggregators.map(agg => (
-                        <option key={agg} value={agg}>{agg}</option>
-                    ))}
-                </select>
-                <button 
-                    onClick={downloadTemplate}
-                    className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-600 rounded-xl hover:bg-slate-50 transition-colors font-medium text-xs"
-                >
-                    <Download size={16} />
-                    Download Template
-                </button>
-                <div className="relative">
-                    <input 
-                        type="file" 
-                        ref={fileInputRef}
-                        onChange={handleFileUpload}
-                        accept=".xlsx, .xls"
-                        className="hidden" 
-                    />
-                    <button 
-                        onClick={() => fileInputRef.current?.click()}
-                        disabled={isProcessing}
-                        className="flex items-center gap-2 px-4 py-2 text-white rounded-xl shadow-lg transition-all font-medium text-xs disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90"
-                        style={{ backgroundColor: getButtonColor() }}
-                    >
-                        {isProcessing ? (
-                            <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></span>
-                        ) : (
-                            <Upload size={16} />
-                        )}
-                        Import Excel
-                    </button>
+          <div className="flex flex-col gap-6">
+            {/* Header Section */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+                <div>
+                    <h1 className="text-2xl font-extrabold text-white tracking-tight">
+                        {mode === 'import' ? 'Import Laporan Pendapatan' : 'Laporan Pendapatan'}
+                    </h1>
+                    <p className="text-indigo-200 text-xs mt-1 font-medium italic">
+                        {mode === 'import' 
+                            ? 'Gunakan template Excel standar untuk hasil import yang maksimal' 
+                            : 'Ringkasan Laporan Dan Statistik Pendapatan'}
+                    </p>
                 </div>
+                
+                {mode === 'import' && (
+                    <button 
+                        onClick={downloadTemplate}
+                        className="group relative px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold text-xs flex items-center gap-3 transition-all hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 active:scale-95 shadow-md border border-white/10"
+                    >
+                        <div className="bg-white/20 p-1.5 rounded-lg group-hover:bg-white/30 transition-colors">
+                            <Download size={16} className="animate-pulse" />
+                        </div>
+                        <div className="flex flex-col items-start leading-tight text-left">
+                            <span className="uppercase tracking-wider">Unduh Template</span>
+                            <span className="text-[9px] text-white/70 font-medium">Format Excel (.xlsx)</span>
+                        </div>
+                    </button>
+                )}
             </div>
-        )}
-      </div>
 
-      {/* Alerts */}
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl flex items-center gap-3 animate-fade-in">
-          <AlertCircle size={20} />
-          {error}
-        </div>
-      )}
-      
-      {successMsg && (
-        <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-xl flex items-center gap-3 animate-fade-in">
-          <CheckCircle size={20} />
-          {successMsg}
-        </div>
-      )}
+            {/* Import Controls */}
+            {mode === 'import' && !selectedFile && (
+                <div className="flex flex-wrap items-center gap-3 bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm">
+                    <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm">
+                        <Filter size={14} className="text-slate-400" />
+                        <select
+                            value={selectedAggregator}
+                            onChange={(e) => setSelectedAggregator(e.target.value)}
+                            className="bg-transparent text-slate-700 font-bold text-xs focus:outline-none cursor-pointer"
+                        >
+                            <option value="">Pilih Aggregator</option>
+                            {aggregators.map(agg => (
+                                <option key={agg} value={agg}>{agg}</option>
+                            ))}
+                        </select>
+                    </div>
 
-      {/* View Mode: Summary Cards */}
-      {mode === 'view' && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-              <div className="flex items-center gap-4 mb-2">
-                  <div className="p-3 bg-blue-50 text-blue-600 rounded-xl">
-                      <FileText size={24} />
-                  </div>
-                  <div>
-                      <div className="text-xs font-medium text-slate-500">Total Baris Data</div>
-                      <div className="text-2xl font-bold text-slate-800">{data.length.toLocaleString()}</div>
-                  </div>
-              </div>
-          </div>
-           <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-              <div className="flex items-center gap-4 mb-2">
-                  <div className="p-3 bg-green-50 text-green-600 rounded-xl">
-                      <FileText size={24} />
-                  </div>
-                  <div>
-                      <div className="text-xs font-medium text-slate-500">Total Pendapatan Terimpor</div>
-                      <div className="text-2xl font-bold text-slate-800">
-                          ${totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-      )}
+                    <div className="h-6 w-px bg-white/10 mx-1"></div>
 
-      {/* Content Area */}
-      {mode === 'view' ? (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="overflow-x-auto">
-                <table className="w-full text-xs text-left">
-                    <thead className="bg-slate-50 text-slate-500 font-medium">
-                        <tr>
-                            <th className="px-6 py-3 font-normal">Period</th>
-                            <th className="px-6 py-3 font-normal">UPC / ISRC</th>
-                            <th className="px-6 py-3 font-normal">Title / Album</th>
-                            <th className="px-6 py-3 font-normal">Platform</th>
-                            <th className="px-6 py-3 font-normal">Country</th>
-                            <th className="px-6 py-3 text-right font-normal">Qty</th>
-                            <th className="px-6 py-3 text-right font-normal">Revenue</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                        {data.length === 0 ? (
-                             <tr>
-                                <td colSpan={7} className="px-6 py-12 text-center text-slate-400">
-                                    Belum Ada Data Yang Diimpor. Silakan Upload File Excel.
-                                </td>
-                            </tr>
-                        ) : (
-                            data.slice(0, 100).map((row) => (
-                                <tr key={row.id} className="hover:bg-slate-50 transition-colors">
-                                    <td className="px-6 py-3">{row.period}</td>
-                                    <td className="px-6 py-3">
-                                        <div className="font-mono text-xs text-slate-600">{row.upc}</div>
-                                        <div className="font-mono text-xs text-slate-400">{row.isrc}</div>
-                                    </td>
-                                    <td className="px-6 py-3">
-                                        <div className="font-medium text-slate-700">{row.title}</div>
-                                        {row.album_title && <div className="text-[10px] text-slate-400 truncate max-w-[150px]">{row.album_title}</div>}
-                                    </td>
-                                    <td className="px-6 py-3">{row.platform}</td>
-                                    <td className="px-6 py-3">{row.country}</td>
-                                    <td className="px-6 py-3 text-right">{row.quantity.toLocaleString()}</td>
-                                    <td className="px-6 py-3 text-right font-medium text-green-600">
-                                        ${row.revenue.toFixed(4)}
-                                    </td>
-                                </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
+                    <div className="relative">
+                        <input 
+                            type="file" 
+                            ref={fileInputRef}
+                            onChange={handleFileUpload}
+                            accept=".xlsx, .xls"
+                            className="hidden" 
+                        />
+                        <button 
+                            onClick={() => fileInputRef.current?.click()}
+                            disabled={isProcessing}
+                            className="flex items-center gap-2 px-5 py-2.5 text-white rounded-xl shadow-lg transition-all font-bold text-xs disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 active:scale-95"
+                            style={{ backgroundColor: getButtonColor() }}
+                        >
+                            {isProcessing ? (
+                                <span className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></span>
+                            ) : (
+                                <Upload size={16} />
+                            )}
+                            MULAI IMPORT EXCEL
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Alerts */}
+            <div className="space-y-3">
+                {error && (
+                    <div className="bg-red-500/10 backdrop-blur-md border border-red-500/20 text-red-400 px-4 py-3 rounded-xl flex items-center gap-3 animate-fade-in text-sm font-medium">
+                        <AlertCircle size={20} />
+                        {error}
+                    </div>
+                )}
+                {successMsg && (
+                    <div className="bg-emerald-500/10 backdrop-blur-md border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-xl flex items-center gap-3 animate-fade-in text-sm font-medium">
+                        <CheckCircle size={20} />
+                        {successMsg}
+                    </div>
+                )}
             </div>
-        </div>
-      ) : (
-        // IMPORT MODE
-        <>
-            {!selectedFile ? (
+
+            {/* Main Content Area */}
+            {mode === 'view' ? (
                 <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div className="overflow-x-auto">
-                        <table className="w-full text-xs text-left">
-                            <thead className="bg-slate-50 text-slate-500 font-medium">
+                        <table className="w-full text-[11px] text-left">
+                            <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider">
                                 <tr>
-                                    <th className="px-6 py-3 font-normal">Nama File</th>
-                                    <th className="px-6 py-3 font-normal">Tanggal Upload</th>
-                                    <th className="px-6 py-3 font-normal">Jam Upload</th>
-                                    <th className="px-6 py-3 font-normal">Status</th>
+                                    <th className="px-6 py-4">Period</th>
+                                    <th className="px-6 py-4">UPC / ISRC</th>
+                                    <th className="px-6 py-4">Title / Album</th>
+                                    <th className="px-6 py-4">Platform</th>
+                                    <th className="px-6 py-4">Country</th>
+                                    <th className="px-6 py-4 text-right">Qty</th>
+                                    <th className="px-6 py-4 text-right">Revenue</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
-                                {uploadHistory.length === 0 ? (
-                                     <tr>
-                                        <td colSpan={4} className="px-6 py-12 text-center text-slate-400">
-                                            Belum Ada File Yang Diupload.
+                                {data.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={7} className="px-6 py-20 text-center text-slate-400">
+                                            <div className="flex flex-col items-center gap-3 opacity-50">
+                                                <FileText size={48} />
+                                                <p className="font-medium text-sm">Belum Ada Data Yang Diimpor</p>
+                                            </div>
                                         </td>
                                     </tr>
                                 ) : (
-                                    uploadHistory.map((file, idx) => (
-                                        <tr 
-                                            key={`${file.fileName}-${idx}`} 
-                                            onClick={() => setSelectedFile(file.fileName)}
-                                            className="hover:bg-slate-50 transition-colors cursor-pointer group"
-                                        >
-                                            <td className="px-6 py-4">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="p-2 bg-blue-50 text-blue-600 rounded-lg group-hover:bg-blue-100 transition-colors">
-                                                        <FileText size={18} />
-                                                    </div>
-                                                    <span className="font-medium text-slate-700 group-hover:text-blue-600 transition-colors">{file.fileName}</span>
-                                                </div>
+                                    data.slice(0, 1000).map((row) => (
+                                        <tr key={row.id} className="hover:bg-slate-50 transition-colors">
+                                            <td className="px-6 py-3 font-medium text-slate-500">{row.period}</td>
+                                            <td className="px-6 py-3">
+                                                <div className="font-mono text-slate-700 font-bold">{row.upc}</div>
+                                                <div className="font-mono text-slate-400">{row.isrc}</div>
                                             </td>
-                                            <td className="px-6 py-4 text-slate-600">
-                                                <div className="flex items-center gap-2">
-                                                    <Calendar size={16} className="text-slate-400" />
-                                                    {file.timestamp ? formatDMY(file.timestamp) : '-'}
-                                                </div>
+                                            <td className="px-6 py-3">
+                                                <div className="font-bold text-slate-800">{row.title}</div>
+                                                {row.album_title && <div className="text-[10px] text-slate-400 truncate max-w-[150px] font-medium">{row.album_title}</div>}
                                             </td>
-                                            <td className="px-6 py-4 text-slate-600">
-                                                <div className="flex items-center gap-2">
-                                                    <Clock size={16} className="text-slate-400" />
-                                                    {file.timestamp ? formatHM(file.timestamp) : '-'}
-                                                </div>
+                                            <td className="px-6 py-3">
+                                                <span className="bg-slate-100 px-2 py-0.5 rounded font-bold text-slate-600">{row.platform}</span>
                                             </td>
-                                            <td className="px-6 py-4">
-                                                <span className={`px-3 py-1 rounded-full text-xs font-medium border ${
-                                                    file.status === 'Pending' 
-                                                        ? 'bg-amber-50 text-amber-600 border-amber-100' 
-                                                        : 'bg-green-50 text-green-600 border-green-100'
-                                                }`}>
-                                                    {file.status}
-                                                </span>
+                                            <td className="px-6 py-3 font-medium uppercase">{row.country}</td>
+                                            <td className="px-6 py-3 text-right font-mono">{row.quantity.toLocaleString()}</td>
+                                            <td className="px-6 py-3 text-right font-mono font-bold text-emerald-600">
+                                                ${row.revenue.toFixed(4)}
                                             </td>
                                         </tr>
                                     ))
@@ -475,88 +419,146 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                     </div>
                 </div>
             ) : (
-                // FILE DETAIL VIEW
-                <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                        <button 
-                            onClick={() => setSelectedFile(null)}
-                            className="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors"
-                        >
-                            <ChevronLeft size={20} />
-                            Kembali Ke Daftar File
-                        </button>
-                        <div className="flex items-center gap-3">
-                            <h2 className="text-lg font-bold text-slate-800">{selectedFile}</h2>
-                        </div>
-                        <button 
-                            onClick={handleCheckMatches}
-                            className="flex items-center gap-2 px-4 py-2 text-white rounded-xl shadow-lg transition-all font-medium text-sm hover:opacity-90"
-                            style={{ backgroundColor: getButtonColor() }}
-                        >
-                            <Search size={18} />
-                            Cek UPC & ISRC
-                        </button>
-                    </div>
-
+                /* IMPORT MODE TABLE */
+                !selectedFile ? (
                     <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full text-xs text-left">
-                                <thead className="bg-slate-50 text-slate-500 font-medium">
+                                <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider">
                                     <tr>
-                                        <th className="px-6 py-3 font-normal">period</th>
-                                        <th className="px-6 py-3 font-normal">upc / isrc</th>
-                                        <th className="px-6 py-3 font-normal">title / album</th>
-                                        <th className="px-6 py-3 font-normal">platform</th>
-                                        <th className="px-6 py-3 font-normal">country</th>
-                                        <th className="px-6 py-3 text-right font-normal">qty</th>
-                                        <th className="px-6 py-3 text-right font-normal">revenue</th>
-                                        <th className="px-6 py-3 font-normal">status</th>
+                                        <th className="px-6 py-4">Nama File</th>
+                                        <th className="px-6 py-4">Periode Upload</th>
+                                        <th className="px-6 py-4">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
-                                    {selectedFileData.slice(0, 100).map((row) => (
-                                        <tr key={row.id} className="hover:bg-slate-50 transition-colors">
-                                            <td className="px-6 py-3">{row.period}</td>
-                                            <td className="px-6 py-3">
-                                                <div className="font-mono text-xs text-slate-600">{row.upc}</div>
-                                                <div className="font-mono text-xs text-slate-400">{row.isrc}</div>
-                                            </td>
-                                            <td className="px-6 py-3">
-                                                <div className="font-medium text-slate-700">{row.title}</div>
-                                                {row.album_title && <div className="text-[10px] text-slate-400 truncate max-w-[150px]">{row.album_title}</div>}
-                                            </td>
-                                            <td className="px-6 py-3">{row.platform}</td>
-                                            <td className="px-6 py-3">{row.country}</td>
-                                            <td className="px-6 py-3 text-right">{row.quantity.toLocaleString()}</td>
-                                            <td className="px-6 py-3 text-right font-medium text-green-600">
-                                                ${row.revenue.toFixed(4)}
-                                            </td>
-                                            <td className="px-6 py-3">
-                                                {row.verificationStatus === 'Valid' ? (
-                                                    <span className="flex items-center gap-1 text-green-600 bg-green-50 px-2 py-1 rounded-lg text-xs font-medium border border-green-100 w-fit">
-                                                        <CheckCircle2 size={12} />
-                                                        valid
-                                                    </span>
-                                                ) : row.verificationStatus === 'No User' ? (
-                                                    <span className="flex items-center gap-1 text-amber-600 bg-amber-50 px-2 py-1 rounded-lg text-xs font-medium border border-amber-100 w-fit">
-                                                        <AlertCircle size={12} />
-                                                        no user
-                                                    </span>
-                                                ) : (
-                                                    <span className="text-slate-400">-</span>
-                                                )}
+                                    {uploadHistory.length === 0 ? (
+                                        <tr>
+                                            <td colSpan={3} className="px-6 py-20 text-center text-slate-400">
+                                                Belum Ada File Yang Diupload
                                             </td>
                                         </tr>
-                                    ))}
+                                    ) : (
+                                        uploadHistory.map((file, idx) => (
+                                            <tr 
+                                                key={`${file.fileName}-${idx}`} 
+                                                onClick={() => setSelectedFile(file.fileName)}
+                                                className="hover:bg-slate-50 transition-colors cursor-pointer group"
+                                            >
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm">
+                                                            <FileSpreadsheet size={20} />
+                                                        </div>
+                                                        <div>
+                                                            <div className="font-bold text-slate-800 group-hover:text-blue-600 transition-colors">{file.fileName}</div>
+                                                            <div className="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Click to view details</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center gap-4 text-slate-600">
+                                                        <div className="flex items-center gap-1.5 font-bold">
+                                                            <Calendar size={14} className="text-slate-400" />
+                                                            {file.timestamp ? formatDMY(file.timestamp) : '-'}
+                                                        </div>
+                                                        <div className="flex items-center gap-1.5 font-bold text-slate-400">
+                                                            <Clock size={14} />
+                                                            {file.timestamp ? formatHM(file.timestamp) : '-'}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <span className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border ${
+                                                        file.status === 'Pending' 
+                                                            ? 'bg-amber-50 text-amber-600 border-amber-100' 
+                                                            : 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                                                    }`}>
+                                                        {file.status}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
+                ) : (
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm">
+                            <button 
+                                onClick={() => setSelectedFile(null)}
+                                className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-xs font-bold uppercase"
+                            >
+                                <ChevronLeft size={18} />
+                                Kembali
+                            </button>
+                            <h2 className="text-sm font-bold text-white truncate max-w-md px-4 border-l border-white/20">{selectedFile}</h2>
+                            <button 
+                                onClick={handleCheckMatches}
+                                className="flex items-center gap-2 px-5 py-2 text-white rounded-xl shadow-lg transition-all font-bold text-xs hover:opacity-90 active:scale-95 border border-white/10"
+                                style={{ backgroundColor: getButtonColor() }}
+                            >
+                                <Search size={16} />
+                                VALIDASI DATA
+                            </button>
+                        </div>
+
+                        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-[11px] text-left">
+                                    <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider">
+                                        <tr>
+                                            <th className="px-6 py-4">period</th>
+                                            <th className="px-6 py-4">upc / isrc</th>
+                                            <th className="px-6 py-4">title / album</th>
+                                            <th className="px-6 py-4">platform</th>
+                                            <th className="px-6 py-4 text-right">qty</th>
+                                            <th className="px-6 py-4 text-right">revenue</th>
+                                            <th className="px-6 py-4">status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-100">
+                                        {selectedFileData.map((row) => (
+                                            <tr key={row.id} className="hover:bg-slate-50 transition-colors">
+                                                <td className="px-6 py-3 font-medium">{row.period}</td>
+                                                <td className="px-6 py-3">
+                                                    <div className="font-mono font-bold text-slate-700">{row.upc}</div>
+                                                    <div className="font-mono text-slate-400">{row.isrc}</div>
+                                                </td>
+                                                <td className="px-6 py-3">
+                                                    <div className="font-bold text-slate-800">{row.title}</div>
+                                                    {row.album_title && <div className="text-[10px] text-slate-400 truncate max-w-[150px] font-medium">{row.album_title}</div>}
+                                                </td>
+                                                <td className="px-6 py-3 font-bold text-slate-600">{row.platform}</td>
+                                                <td className="px-6 py-3 text-right font-mono">{row.quantity.toLocaleString()}</td>
+                                                <td className="px-6 py-3 text-right font-mono font-bold text-slate-900">${row.revenue.toFixed(4)}</td>
+                                                <td className="px-6 py-3">
+                                                    {row.verificationStatus === 'Valid' ? (
+                                                        <span className="inline-flex items-center gap-1 text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg text-[10px] font-bold border border-emerald-100 uppercase">
+                                                            <CheckCircle size={10} />
+                                                            valid
+                                                        </span>
+                                                    ) : row.verificationStatus === 'No User' ? (
+                                                        <span className="inline-flex items-center gap-1 text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg text-[10px] font-bold border border-amber-100 uppercase">
+                                                            <AlertCircle size={10} />
+                                                            no user
+                                                        </span>
+                                                    ) : (
+                                                        <span className="text-slate-400 font-bold">-</span>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                )
             )}
-        </>
-      )}
-      </>
+          </div>
       )}
     </div>
   );

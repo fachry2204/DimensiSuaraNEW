@@ -299,136 +299,136 @@ export const PublishingWriter: React.FC<Props> = ({ token, userRole }) => {
                             <button onClick={() => setShowModal(false)} className="text-slate-400 hover:text-slate-600">✕</button>
                         </div>
                         
-                        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <form onSubmit={handleSubmit} className="p-4 space-y-3">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap</label>
+                                    <label className="block text-[10px] font-bold text-slate-700 mb-1 uppercase tracking-tight">Nama Lengkap</label>
                                     <input 
                                         type="text" name="name" required
                                         value={formData.name} onChange={handleInputChange}
-                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                        className="w-full px-2.5 py-1 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-[11px]"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-700 mb-1">NIK</label>
+                                    <label className="block text-[10px] font-bold text-slate-700 mb-1 uppercase tracking-tight">NIK</label>
                                     <input 
                                         type="text" name="nik" required
                                         value={formData.nik} onChange={handleInputChange}
-                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                        className="w-full px-2.5 py-1 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-[11px]"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-700 mb-1">Tempat Lahir</label>
+                                    <label className="block text-[10px] font-bold text-slate-700 mb-1 uppercase tracking-tight">Tempat Lahir</label>
                                     <input 
                                         type="text" name="birth_place"
                                         value={formData.birth_place} onChange={handleInputChange}
-                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                        className="w-full px-2.5 py-1 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-[11px]"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-700 mb-1">Tanggal Lahir</label>
+                                    <label className="block text-[10px] font-bold text-slate-700 mb-1 uppercase tracking-tight">Tanggal Lahir</label>
                                     <input 
                                         type="date" name="birth_date"
                                         value={formData.birth_date} onChange={handleInputChange}
-                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                        className="w-full px-2.5 py-1 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-[11px]"
                                     />
                                 </div>
                                 <div className="md:col-span-2">
-                                    <label className="block text-xs font-bold text-slate-700 mb-1">Alamat Lengkap</label>
+                                    <label className="block text-[10px] font-bold text-slate-700 mb-1 uppercase tracking-tight">Alamat Lengkap</label>
                                     <textarea 
                                         name="address" rows={2}
                                         value={formData.address} onChange={handleInputChange}
-                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                        className="w-full px-2.5 py-1 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-[11px]"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-700 mb-1">Kewarganegaraan</label>
+                                    <label className="block text-[10px] font-bold text-slate-700 mb-1 uppercase tracking-tight">Kewarganegaraan</label>
                                     <input 
                                         type="text" name="nationality"
                                         value={formData.nationality} onChange={handleInputChange}
-                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                        className="w-full px-2.5 py-1 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-[11px]"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold text-slate-700 mb-1">Nomor Whatsapp</label>
+                                    <label className="block text-[10px] font-bold text-slate-700 mb-1 uppercase tracking-tight">Nomor Whatsapp</label>
                                     <input 
                                         type="text" name="whatsapp_number"
                                         value={formData.whatsapp_number} onChange={handleInputChange}
                                         placeholder="08xxxxxxxxxx"
-                                        className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                                        className="w-full px-2.5 py-1 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-[11px]"
                                     />
                                 </div>
                             </div>
 
-                            <div className="border-t pt-4 mt-4">
-                                <h3 className="text-sm font-semibold text-slate-800 mb-3 flex items-center gap-2">
-                                    <CreditCard size={16} /> Informasi Bank
+                            <div className="border-t pt-3 mt-1">
+                                <h3 className="text-xs font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                                    <CreditCard size={14} /> Informasi Bank
                                 </h3>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                     <div>
-                                        <label className="block text-[10px] font-bold text-slate-600 mb-1">Nama Bank</label>
+                                        <label className="block text-[9px] font-bold text-slate-600 mb-1 uppercase">Nama Bank</label>
                                         <input 
                                             type="text" name="bank_name"
                                             value={formData.bank_name} onChange={handleInputChange}
-                                            className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-xs"
+                                            className="w-full px-2.5 py-1 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-[10px]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[10px] font-bold text-slate-600 mb-1">Nomor Rekening</label>
+                                        <label className="block text-[9px] font-bold text-slate-600 mb-1 uppercase">No. Rekening</label>
                                         <input 
                                             type="text" name="bank_account_number"
                                             value={formData.bank_account_number} onChange={handleInputChange}
-                                            className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-xs"
+                                            className="w-full px-2.5 py-1 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-[10px]"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[10px] font-bold text-slate-600 mb-1">Atas Nama</label>
+                                        <label className="block text-[9px] font-bold text-slate-600 mb-1 uppercase">Atas Nama</label>
                                         <input 
                                             type="text" name="bank_account_name"
                                             value={formData.bank_account_name} onChange={handleInputChange}
-                                            className="w-full px-3 py-1.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-xs"
+                                            className="w-full px-2.5 py-1 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-[10px]"
                                         />
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="border-t pt-4 mt-4">
-                                <h3 className="text-sm font-semibold text-slate-800 mb-3 flex items-center gap-2">
-                                    <FileText size={16} /> Dokumen
+                            <div className="border-t pt-3 mt-1">
+                                <h3 className="text-xs font-semibold text-slate-800 mb-2 flex items-center gap-2">
+                                    <FileText size={14} /> Dokumen
                                 </h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     <div>
-                                        <label className="block text-xs font-medium text-slate-600 mb-1">Foto KTP</label>
+                                        <label className="block text-[10px] font-medium text-slate-600 mb-1">Foto KTP</label>
                                         <input 
                                             type="file" name="ktp" accept="image/*"
                                             onChange={handleFileChange}
-                                            className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                                            className="w-full text-[10px] text-slate-500 file:mr-3 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-[10px] file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
                                         />
-                                        {isEditing && formData.ktp_path && <span className="text-xs text-green-600">File tersimpan (upload baru untuk ganti)</span>}
+                                        {isEditing && formData.ktp_path && <span className="text-[9px] text-green-600 font-medium">File tersimpan</span>}
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-medium text-slate-600 mb-1">Foto NPWP</label>
+                                        <label className="block text-[10px] font-medium text-slate-600 mb-1">Foto NPWP</label>
                                         <input 
                                             type="file" name="npwp" accept="image/*"
                                             onChange={handleFileChange}
-                                            className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                                            className="w-full text-[10px] text-slate-500 file:mr-3 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-[10px] file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
                                         />
-                                        {isEditing && formData.npwp_path && <span className="text-xs text-green-600">File tersimpan (upload baru untuk ganti)</span>}
+                                        {isEditing && formData.npwp_path && <span className="text-[9px] text-green-600 font-medium">File tersimpan</span>}
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex justify-end gap-3 pt-4 border-t border-slate-200">
+                            <div className="flex justify-end gap-2 pt-3 border-t border-slate-200">
                                 <button 
                                     type="button" 
                                     onClick={() => setShowModal(false)}
-                                    className="px-4 py-2 text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                                    className="px-3 py-1.5 text-[11px] font-bold text-slate-600 hover:bg-slate-100 rounded-lg transition-colors border border-slate-200"
                                 >
                                     Batal
                                 </button>
                                 <button 
                                     type="submit" 
-                                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-sm"
+                                    className="px-4 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-sm text-[11px] font-bold"
                                 >
                                     {isEditing ? 'Simpan Perubahan' : 'Simpan Data'}
                                 </button>

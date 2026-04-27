@@ -5,7 +5,11 @@ import { api } from '../utils/api';
 import { XCircle, Eye, Download, CheckCircle, Edit, User as UserIcon } from 'lucide-react';
 import { AlertModal } from '../components/AlertModal';
 
-export const UserDetailPage: React.FC = () => {
+interface Props {
+  isImpersonating?: boolean;
+}
+
+export const UserDetailPage: React.FC<Props> = ({ isImpersonating: propIsImpersonating }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [token] = useState(localStorage.getItem('cms_token') || '');
@@ -35,7 +39,7 @@ export const UserDetailPage: React.FC = () => {
   const [newFiles, setNewFiles] = useState<{ [key: string]: File }>({});
   const [isSaving, setIsSaving] = useState(false);
   const [isImpersonatingLoading, setIsImpersonatingLoading] = useState(false);
-  const isImpersonatingActive = localStorage.getItem('is_impersonating') === 'true';
+  const isImpersonatingActive = propIsImpersonating !== undefined ? propIsImpersonating : (localStorage.getItem('is_impersonating') === 'true');
 
   useEffect(() => {
     const load = async () => {

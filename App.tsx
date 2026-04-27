@@ -481,6 +481,7 @@ const App: React.FC = () => {
       // We don't clear editingRelease here because the wizard might rely on it persisting across sub-routes
       // or we handle it specifically in the wizard flow.
       // But for the detail modal, it should definitely close when changing pages.
+      setIsImpersonating(localStorage.getItem('is_impersonating') === 'true');
   }, [location.pathname]);
 
   // Check LocalStorage on Mount
@@ -1271,10 +1272,11 @@ const App: React.FC = () => {
                 <UserManagement 
                     currentUserRole={userRole} 
                     token={token}
+                    isImpersonating={isImpersonating}
                 />
             } />
             <Route path="/roles/user" element={<RoleUserPage />} />
-            <Route path="/users/:id" element={<UserDetailPage />} />
+            <Route path="/users/:id" element={<UserDetailPage isImpersonating={isImpersonating} />} />
             <Route path="/users/:id/edit" element={<UserEditPage />} />
             <Route path="/reports" element={
                 <ReportScreen 
