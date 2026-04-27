@@ -34,7 +34,8 @@ export const UserDetailPage: React.FC = () => {
   const [editFormData, setEditFormData] = useState<Partial<User>>({});
   const [newFiles, setNewFiles] = useState<{ [key: string]: File }>({});
   const [isSaving, setIsSaving] = useState(false);
-  const [isImpersonating, setIsImpersonating] = useState(false);
+  const [isImpersonatingLoading, setIsImpersonatingLoading] = useState(false);
+  const isImpersonatingActive = localStorage.getItem('is_impersonating') === 'true';
 
   useEffect(() => {
     const load = async () => {
@@ -73,7 +74,7 @@ export const UserDetailPage: React.FC = () => {
   const handleImpersonate = async () => {
     if (!user || !token) return;
     try {
-        setIsImpersonating(true);
+        setIsImpersonatingLoading(true);
         const res = await api.impersonateUser(token, user.id);
         if (res.token) {
             // Save admin token to switch back later
@@ -98,7 +99,7 @@ export const UserDetailPage: React.FC = () => {
             type: 'error'
         });
     } finally {
-        setIsImpersonating(false);
+        setIsImpersonatingLoading(false);
     }
   };
 
@@ -267,10 +268,10 @@ export const UserDetailPage: React.FC = () => {
                 {user.role === 'User' && (
                   <button 
                     onClick={handleImpersonate}
-                    disabled={isImpersonating}
+                    disabled={isImpersonatingLoading || isImpersonatingActive}
                     className="flex items-center gap-1 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-lg text-xs font-medium hover:bg-amber-100 transition-colors disabled:opacity-50"
                   >
-                    {isImpersonating ? (
+                    {isImpersonatingLoading ? (
                       <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-amber-600"></div>
                     ) : (
                       <UserIcon size={14} />

@@ -74,14 +74,14 @@ const App: React.FC = () => {
   }, [branding]);
 
   // Authentication State
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [isAuthChecking, setIsAuthChecking] = useState<boolean>(true);
-  const [currentUser, setCurrentUser] = useState<string>('');
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(localStorage.getItem('cms_auth') === 'true');
+  const [isAuthChecking, setIsAuthChecking] = useState<boolean>(false);
+  const [currentUser, setCurrentUser] = useState<string>(localStorage.getItem('cms_user') || '');
   const [currentUserData, setCurrentUserData] = useState<any>(null);
-  const [token, setToken] = useState<string>('');
-  const [userRole, setUserRole] = useState<string>('');
-  const [userStatus, setUserStatus] = useState<string>('');
-  const [isImpersonating, setIsImpersonating] = useState<boolean>(false);
+  const [token, setToken] = useState<string>(localStorage.getItem('cms_token') || '');
+  const [userRole, setUserRole] = useState<string>(localStorage.getItem('cms_role') || '');
+  const [userStatus, setUserStatus] = useState<string>(localStorage.getItem('cms_status') || '');
+  const [isImpersonating, setIsImpersonating] = useState<boolean>(localStorage.getItem('is_impersonating') === 'true');
   
   // Notification State
   const [notifications, setNotifications] = useState<Notification[]>([]);
