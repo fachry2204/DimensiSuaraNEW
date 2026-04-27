@@ -424,8 +424,8 @@ export const PublishingSongs: React.FC<Props> = ({ token, userRole }) => {
         <div className="p-6">
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h1 className="text-2xl font-extrabold text-slate-800">Data Lagu (Songs)</h1>
-                    <p className="text-slate-500 text-sm">Kelola katalog lagu dan pembagian royalti</p>
+                    <h1 className="text-2xl font-extrabold text-white">Data Lagu (Songs)</h1>
+                    <p className="text-slate-400 text-sm">Kelola katalog lagu dan pembagian royalti</p>
                 </div>
                 <button 
                     onClick={() => { resetForm(); setShowModal(true); }}

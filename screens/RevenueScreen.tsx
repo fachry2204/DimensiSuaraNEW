@@ -78,8 +78,8 @@ export const RevenueScreen: React.FC<Props> = ({ data, token, defaultTab = 'aggr
             <>
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h1 className="text-2xl font-bold text-slate-800">Pendapatan</h1>
-                  <p className="text-slate-500">Ringkasan pendapatan dan royalti</p>
+                  <h1 className="text-2xl font-bold text-white">Pendapatan</h1>
+                  <p className="text-slate-400">Ringkasan pendapatan dan royalti</p>
                 </div>
               </div>
         

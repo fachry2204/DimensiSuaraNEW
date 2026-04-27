@@ -153,8 +153,8 @@ export const UserEditPage: React.FC = () => {
                 <ChevronLeft size={24} />
             </button>
             <div>
-                <h1 className="text-xl font-bold text-slate-800">Edit Data User</h1>
-                <p className="text-sm text-slate-500">Ubah informasi profil dan dokumen pendukung.</p>
+                <h1 className="text-xl font-bold text-white">Edit Data User</h1>
+                <p className="text-sm text-slate-400">Ubah informasi profil dan dokumen pendukung.</p>
             </div>
         </div>
         <button

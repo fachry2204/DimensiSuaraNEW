@@ -61,8 +61,8 @@ export const PublishingAnalytics: React.FC<Props> = ({ token }) => {
                     <BarChart3 size={24} />
                 </div>
                 <div>
-                    <h1 className="text-base font-bold text-slate-800">Analitik Publishing</h1>
-                    <p className="text-slate-500 text-[10px]">Ringkasan performa katalog dan pendapatan</p>
+                    <h1 className="text-base font-bold text-white">Analitik Publishing</h1>
+                    <p className="text-slate-400 text-[10px]">Ringkasan performa katalog dan pendapatan</p>
                 </div>
             </div>
 

@@ -39,14 +39,18 @@ router.post('/import', authenticateToken, async (req, res) => {
         }
 
         // Prepare bulk insert
-        // Columns: period, upc, isrc, title, artist, platform, country, quantity, revenue, original_file_name
+        // Columns: period, upc, isrc, title, artist, platform, country, quantity, revenue, original_file_name,
+        // sales_period, reporting_period, album_title, release_date, royalty_type, sales_type, sales_sub_type
         const values = data.map(row => [
             row.period, row.upc, row.isrc, row.title, row.artist, 
-            row.platform, row.country, row.quantity, row.revenue, row.originalFileName
+            row.platform, row.country, row.quantity, row.revenue, row.originalFileName,
+            row.sales_period, row.reporting_period, row.album_title, row.release_date, 
+            row.royalty_type, row.sales_type, row.sales_sub_type
         ]);
 
         const sql = `INSERT INTO reports 
-            (period, upc, isrc, title, artist, platform, country, quantity, revenue, original_file_name) 
+            (period, upc, isrc, title, artist, platform, country, quantity, revenue, original_file_name,
+             sales_period, reporting_period, album_title, release_date, royalty_type, sales_type, sales_sub_type) 
             VALUES ?`;
 
         const [result] = await db.query(sql, [values]);

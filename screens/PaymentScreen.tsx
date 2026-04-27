@@ -134,8 +134,8 @@ export const PaymentScreen: React.FC<Props> = ({ token, defaultTab = 'aggregator
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-800">Menu Pembayaran</h1>
-                    <p className="text-slate-500">Kelola pembayaran royalti berdasarkan kuartal</p>
+                    <h1 className="text-2xl font-bold text-white">Menu Pembayaran</h1>
+                    <p className="text-slate-400">Kelola pembayaran royalti berdasarkan kuartal</p>
                 </div>
                 <button 
                     onClick={() => setShowGenerateModal(true)}

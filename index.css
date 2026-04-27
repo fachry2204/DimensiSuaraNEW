@@ -36,6 +36,20 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Force all form inputs to have black text for readability */
+input, select, textarea {
+  color: black !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #94a3b8 !important; /* slate-400 */
+}
+
+/* Ensure labels are dark as well */
+label {
+  color: #0f172a !important; /* slate-900 */
+}
+
 /* App wide scrollbar */
 ::-webkit-scrollbar {
   width: 10px;

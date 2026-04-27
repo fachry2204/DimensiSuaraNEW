@@ -67,8 +67,8 @@ export const AggregatorDashboard: React.FC<Props> = ({ releases, onViewRelease, 
     <div className="p-4 md:p-8 w-full max-w-[1400px] mx-auto min-h-screen">
        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
            <div>
-                <h1 className="text-lg text-slate-800 tracking-tight font-bold">Dashboard</h1>
-                <p className="text-slate-500 mt-0.5 text-[12px]">Welcome back, here is your catalog overview.</p>
+                <h1 className="text-lg text-white tracking-tight font-bold">Dashboard</h1>
+                <p className="text-slate-400 mt-0.5 text-[12px]">Welcome back, here is your catalog overview.</p>
            </div>
            <button 
                 onClick={() => navigate('/new-release')}

@@ -149,8 +149,8 @@ export const PublishingReports: React.FC<Props> = ({ token, mode = 'view' }) => 
                                 <ClipboardList size={24} />
                             </div>
                             <div>
-                                <h1 className="text-xl font-bold text-slate-800">Laporan Publishing</h1>
-                                <p className="text-slate-500 text-xs">Kelola dan upload laporan royalti bulanan</p>
+                                <h1 className="text-xl font-bold text-white">Laporan Publishing</h1>
+                                <p className="text-slate-400 text-xs">Kelola dan upload laporan royalti bulanan</p>
                             </div>
                         </div>
                         <button 
@@ -262,8 +262,8 @@ export const PublishingReports: React.FC<Props> = ({ token, mode = 'view' }) => 
                 <>
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                         <div>
-                            <h1 className="text-xl font-bold text-slate-800">Import Laporan Publishing</h1>
-                            <p className="text-slate-500 text-sm">Upload Laporan Excel (.xlsx) Untuk Memperbarui Statistik Dan Pendapatan</p>
+                            <h1 className="text-xl font-bold text-white">Import Laporan Publishing</h1>
+                            <p className="text-slate-400 text-sm">Upload Laporan Excel (.xlsx) Untuk Memperbarui Statistik Dan Pendapatan</p>
                         </div>
                         <button 
                             onClick={() => setShowUploadModal(true)}

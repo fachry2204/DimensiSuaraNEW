@@ -163,8 +163,8 @@ const Tickets: React.FC<TicketsProps> = ({ token, userRole }) => {
         <div className="p-6 max-w-6xl mx-auto">
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h1 className="text-lg text-gray-900">Tiket Bantuan</h1>
-                    <p className="text-xs text-gray-500">
+                    <h1 className="text-lg text-white">Tiket Bantuan</h1>
+                    <p className="text-xs text-slate-400">
                         {userRole === 'Admin' 
                             ? 'Kelola tiket bantuan dari pengguna' 
                             : 'Kirim tiket bantuan jika Anda mengalami kendala'}

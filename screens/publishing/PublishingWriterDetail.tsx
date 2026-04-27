@@ -74,8 +74,8 @@ const PublishingWriterDetail: React.FC<WriterDetailProps> = ({ token }) => {
                     <ArrowLeft size={24} className="text-slate-600" />
                 </button>
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-800">Detail Pencipta</h1>
-                    <p className="text-slate-500">Informasi lengkap data pencipta lagu</p>
+                    <h1 className="text-2xl font-bold text-white">Detail Pencipta</h1>
+                    <p className="text-slate-400">Informasi lengkap data pencipta lagu</p>
                 </div>
             </div>
 

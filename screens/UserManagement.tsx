@@ -25,6 +25,8 @@ export const UserManagement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [token] = useState(localStorage.getItem('cms_token') || '');
+  const [userRole] = useState(localStorage.getItem('cms_role') || '');
+  const [isImpersonating] = useState(localStorage.getItem('is_impersonating') === 'true');
   const [showUserViewModal, setShowUserViewModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
@@ -165,6 +167,35 @@ export const UserManagement: React.FC = () => {
       }
   };
 
+  const handleImpersonate = async (user: User) => {
+    if (!token) return;
+    
+    try {
+        const res = await api.impersonateUser(token, user.id);
+        
+        // Save current admin session to restore later
+        localStorage.setItem('admin_token', token);
+        localStorage.setItem('admin_user', localStorage.getItem('cms_user') || '');
+        localStorage.setItem('admin_role', localStorage.getItem('cms_role') || 'Admin');
+        
+        // Set new impersonated session
+        localStorage.setItem('cms_token', res.token);
+        localStorage.setItem('cms_user', res.user.username);
+        localStorage.setItem('cms_role', res.user.role || 'User');
+        localStorage.setItem('is_impersonating', 'true');
+        
+        // Reload page to apply changes
+        window.location.href = '/';
+    } catch (err: any) {
+        setAlertState({
+            isOpen: true,
+            title: 'Gagal Impersonate',
+            message: err.message || 'Terjadi kesalahan saat mencoba impersonate',
+            type: 'error'
+        });
+    }
+  };
+
   const filteredUsers = users.filter(user => {
     const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -182,11 +213,11 @@ export const UserManagement: React.FC = () => {
   return (
     <div className="p-8 max-w-7xl mx-auto min-h-screen">
        <div className="mb-6 border-b border-gray-200 pb-4 md:hidden">
-            <h1 className="text-lg text-slate-800 tracking-tight flex items-center gap-2">
+            <h1 className="text-lg text-white tracking-tight flex items-center gap-2">
                 <Users size={22} className="text-slate-400" />
                 User Management
             </h1>
-            <p className="text-slate-500 mt-1 ml-8 text-[12px]">Manage system access and registered users.</p>
+            <p className="text-slate-400 mt-1 ml-8 text-[12px]">Manage system access and registered users.</p>
        </div>
 
        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 animate-fade-in">
@@ -196,8 +227,8 @@ export const UserManagement: React.FC = () => {
                         <Users size={24} />
                     </div>
                     <div>
-                        <h2 className="text-xl font-bold text-slate-800">User Management</h2>
-                        <p className="text-sm text-slate-500">Manage system access and registered users.</p>
+                        <h2 className="text-xl font-bold text-white">User Management</h2>
+                        <p className="text-sm text-slate-400">Manage system access and registered users.</p>
                     </div>
                 </div>
                 
@@ -368,6 +399,16 @@ export const UserManagement: React.FC = () => {
                                                     title="Edit User"
                                                 >
                                                     <Edit size={12} /> Edit
+                                                </button>
+                                            )}
+                                            {user.role === 'User' && userRole === 'Admin' && (
+                                                <button
+                                                    onClick={() => handleImpersonate(user)}
+                                                    disabled={isImpersonating}
+                                                    className="px-3 py-1.5 text-xs rounded-lg bg-amber-500 text-white hover:bg-amber-600 font-bold flex items-center gap-1 disabled:opacity-50"
+                                                    title="Impersonate User"
+                                                >
+                                                    <UserIcon size={12} /> Impersonate
                                                 </button>
                                             )}
                                             <button 

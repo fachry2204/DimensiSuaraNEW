@@ -5,6 +5,7 @@ import { ReportData, ReleaseData } from '../types';
 import { formatDMY, formatHM } from '../utils/date';
 import { PublishingReports } from './publishing/PublishingReports';
 import { useBranding } from '../contexts/BrandingContext';
+import { api } from '../utils/api';
 
 interface ReportScreenProps {
   onImport: (data: ReportData[]) => void;
@@ -40,9 +41,10 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
     setIsProcessing(true);
     setError(null);
     setSuccessMsg(null);
+    setSelectedFile(null); // Clear selected file view to show history after import
 
     const reader = new FileReader();
-    reader.onload = (evt) => {
+    reader.onload = async (evt) => {
       try {
         const bstr = evt.target?.result;
         const wb = XLSX.read(bstr, { type: 'binary' });
@@ -50,7 +52,7 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
         const ws = wb.Sheets[wsname];
         const jsonData = XLSX.utils.sheet_to_json(ws);
 
-        // Process data - IMPORT ALL without filtering
+        // Process data
         const processedData: ReportData[] = [];
         const timestamp = new Date().toISOString();
 
@@ -64,10 +66,16 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
           let quantity = 0;
           let revenue = 0;
           let period = new Date().toISOString().slice(0, 7);
+          
+          let sales_period = '';
+          let reporting_period = '';
+          let album_title = '';
+          let release_date = '';
+          let royalty_type = '';
+          let sales_type = '';
+          let sales_sub_type = '';
 
           if (selectedAggregator === 'Believe') {
-              // Believe Format Mapping
-              // Columns: Reporting month, Sales Month, Platform, Country / Region, Label Name, Artist Name, Release title, Track title, UPC, ISRC, Release Type, Sales Type, Quantity, Net Revenue
               upc = String(row['UPC'] || '');
               isrc = String(row['ISRC'] || '');
               title = row['Track title'] || row['Release title'] || 'Unknown Title';
@@ -78,16 +86,23 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
               revenue = Number(row['Net Revenue'] || 0);
               period = row['Reporting month'] || row['Sales Month'] || period;
           } else {
-              // Default / Generic Mapping
-              upc = String(row['UPC'] || row['upc'] || '');
+              upc = String(row['UPC Code'] || row['UPC'] || row['upc'] || '');
               isrc = String(row['ISRC'] || row['isrc'] || '');
-              title = row['Title'] || row['title'] || 'Unknown Title';
-              artist = row['Artist'] || row['artist'] || 'Unknown Artist';
-              platform = row['Platform'] || row['platform'] || 'Unknown';
-              country = row['Country'] || row['country'] || 'WW';
-              quantity = Number(row['Quantity'] || row['quantity'] || 0);
-              revenue = Number(row['Revenue'] || row['revenue'] || 0);
-              period = row['Period'] || row['period'] || period;
+              title = row['Track Title'] || row['Title'] || row['title'] || 'Unknown Title';
+              artist = row['Track Artists'] || row['Artist'] || row['artist'] || 'Unknown Artist';
+              platform = row['Store Name'] || row['Platform'] || row['platform'] || 'Unknown';
+              country = row['Sales Region'] || row['Country'] || row['country'] || 'WW';
+              quantity = Number(row['Stream/Create'] || row['Quantity'] || row['quantity'] || 0);
+              revenue = Number(row['Final Royalty'] || row['Revenue'] || row['revenue'] || 0);
+              period = String(row['Sales Period'] || row['Period'] || row['period'] || period);
+              
+              sales_period = String(row['Sales Period'] || '');
+              reporting_period = String(row['Reporting Period'] || '');
+              album_title = row['Album Title'] || '';
+              release_date = String(row['Release Date'] || '');
+              royalty_type = row['Royalty Type'] || '';
+              sales_type = row['Sales Type'] || '';
+              sales_sub_type = row['Sales Sub Type'] || '';
           }
 
           processedData.push({
@@ -101,6 +116,13 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
             quantity,
             revenue,
             period,
+            sales_period,
+            reporting_period,
+            album_title,
+            release_date,
+            royalty_type,
+            sales_type,
+            sales_sub_type,
             originalFileName: file.name,
             uploadTimestamp: timestamp,
             status: 'Pending',
@@ -108,19 +130,24 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
           });
         });
 
-        // Merge with existing data (or replace? Assuming append for history logic, but strictly following prop)
-        // If we want to keep existing files, we should append. 
-        // Current App.tsx implementation of onImport is `setReportData(data)`, so it replaces.
-        // To support "History", we should probably append here or change App.tsx.
-        // For now, let's append to existing data to simulate history behavior if the parent allows it,
-        // but since parent controls state, we should pass [...data, ...processedData].
-        const newData = [...data, ...processedData];
-        onImport(newData);
+        if (processedData.length === 0) {
+            setError('File Kosong Atau Format Tidak Sesuai.');
+            return;
+        }
+
+        // SAVE TO DATABASE
+        if (!token) throw new Error('Token Sesi Tidak Ditemukan. Silakan Login Ulang.');
         
-        setSuccessMsg(`Berhasil Mengimpor ${processedData.length} Baris Data.`);
-      } catch (err) {
+        await api.importReports(token, processedData);
+        
+        // REFRESH DATA FROM BACKEND
+        const refreshedData = await api.getReports(token);
+        onImport(refreshedData);
+        
+        setSuccessMsg(`Berhasil Mengimpor ${processedData.length} Baris Data Ke Database.`);
+      } catch (err: any) {
         console.error("Import Error:", err);
-        setError('Gagal Memproses File. Pastikan Format Excel Valid.');
+        setError(err.message || 'Gagal Memproses File. Pastikan Format Excel Valid.');
       } finally {
         setIsProcessing(false);
         if (fileInputRef.current) fileInputRef.current.value = '';
@@ -152,10 +179,26 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
 
   const downloadTemplate = () => {
     const ws = XLSX.utils.json_to_sheet([
-      { UPC: "123456789012", ISRC: "USABC1234567", Title: "Song Title", Artist: "Artist Name", Platform: "Spotify", Country: "ID", Quantity: 1000, Revenue: 50.00, Period: "2024-01" }
+      { 
+        "Sales Period": "2024-01", 
+        "Reporting Period": "2024-03", 
+        "Track Title": "Song Name", 
+        "ISRC": "USABC1234567", 
+        "Track Artists": "Artist A, Artist B", 
+        "UPC Code": "123456789012", 
+        "Album Title": "Album Name",
+        "Release Date": "2023-12-01",
+        "Royalty Type": "Streaming",
+        "Store Name": "Spotify", 
+        "Sales Region": "ID", 
+        "Sales Type": "Subscription",
+        "Sales Sub Type": "Premium",
+        "Stream/Create": 1000, 
+        "Final Royalty": 50.45 
+      }
     ]);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Template");
+    XLSX.utils.book_append_sheet(wb, ws, "Template Reports");
     XLSX.writeFile(wb, "Template_Laporan_Pendapatan.xlsx");
   };
 
@@ -219,10 +262,10 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-slate-800">
+          <h1 className="text-xl font-bold text-white">
             {mode === 'import' ? 'Import Laporan' : 'Laporan'}
           </h1>
-          <p className="text-slate-500 text-sm">
+          <p className="text-slate-400 text-sm">
             {mode === 'import' 
                 ? 'Upload Laporan Excel (.xlsx) Untuk Memperbarui Statistik Dan Pendapatan' 
                 : 'Ringkasan Laporan Dan Statistik Pendapatan'}
@@ -327,7 +370,7 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                         <tr>
                             <th className="px-6 py-3 font-normal">Period</th>
                             <th className="px-6 py-3 font-normal">UPC / ISRC</th>
-                            <th className="px-6 py-3 font-normal">Title</th>
+                            <th className="px-6 py-3 font-normal">Title / Album</th>
                             <th className="px-6 py-3 font-normal">Platform</th>
                             <th className="px-6 py-3 font-normal">Country</th>
                             <th className="px-6 py-3 text-right font-normal">Qty</th>
@@ -349,7 +392,10 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                         <div className="font-mono text-xs text-slate-600">{row.upc}</div>
                                         <div className="font-mono text-xs text-slate-400">{row.isrc}</div>
                                     </td>
-                                    <td className="px-6 py-3 font-medium text-slate-700">{row.title}</td>
+                                    <td className="px-6 py-3">
+                                        <div className="font-medium text-slate-700">{row.title}</div>
+                                        {row.album_title && <div className="text-[10px] text-slate-400 truncate max-w-[150px]">{row.album_title}</div>}
+                                    </td>
                                     <td className="px-6 py-3">{row.platform}</td>
                                     <td className="px-6 py-3">{row.country}</td>
                                     <td className="px-6 py-3 text-right">{row.quantity.toLocaleString()}</td>
@@ -459,7 +505,7 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                     <tr>
                                         <th className="px-6 py-3 font-normal">period</th>
                                         <th className="px-6 py-3 font-normal">upc / isrc</th>
-                                        <th className="px-6 py-3 font-normal">title</th>
+                                        <th className="px-6 py-3 font-normal">title / album</th>
                                         <th className="px-6 py-3 font-normal">platform</th>
                                         <th className="px-6 py-3 font-normal">country</th>
                                         <th className="px-6 py-3 text-right font-normal">qty</th>
@@ -475,7 +521,10 @@ export const ReportScreen: React.FC<ReportScreenProps> = ({ onImport, data: prop
                                                 <div className="font-mono text-xs text-slate-600">{row.upc}</div>
                                                 <div className="font-mono text-xs text-slate-400">{row.isrc}</div>
                                             </td>
-                                            <td className="px-6 py-3 font-medium text-slate-700">{row.title}</td>
+                                            <td className="px-6 py-3">
+                                                <div className="font-medium text-slate-700">{row.title}</div>
+                                                {row.album_title && <div className="text-[10px] text-slate-400 truncate max-w-[150px]">{row.album_title}</div>}
+                                            </td>
                                             <td className="px-6 py-3">{row.platform}</td>
                                             <td className="px-6 py-3">{row.country}</td>
                                             <td className="px-6 py-3 text-right">{row.quantity.toLocaleString()}</td>

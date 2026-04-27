@@ -71,8 +71,8 @@ export const UserAnalytics: React.FC<Props> = ({ releases, reportData, currentUs
   return (
     <div className="p-8 max-w-7xl mx-auto min-h-screen">
       <div className="mb-6">
-        <h1 className="text-lg text-slate-800 tracking-tight">User Analytics</h1>
-        <p className="text-slate-500 mt-0.5 text-[12px]">Ringkasan performa rilisan Anda.</p>
+        <h1 className="text-lg text-white tracking-tight">User Analytics</h1>
+        <p className="text-slate-400 mt-0.5 text-[12px]">Ringkasan performa rilisan Anda.</p>
       </div>
 
       {/* Tabs */}

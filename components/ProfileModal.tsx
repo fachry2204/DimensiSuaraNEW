@@ -166,7 +166,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, tok
                                         type="text" 
                                         value={userData.username}
                                         onChange={(e) => setUserData({...userData, username: e.target.value})}
-                                        className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10"
+                                        className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-black font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10"
                                         placeholder="Username"
                                     />
                                 </div>
@@ -180,7 +180,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, tok
                                         type="email" 
                                         value={userData.email}
                                         onChange={(e) => setUserData({...userData, email: e.target.value})}
-                                        className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10"
+                                        className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-black font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10"
                                         placeholder="Email Address"
                                     />
                                 </div>
@@ -194,7 +194,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, tok
                                         type="password" 
                                         value={userData.password}
                                         onChange={(e) => setUserData({...userData, password: e.target.value})}
-                                        className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10"
+                                        className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-black font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10"
                                         placeholder="Leave blank to keep current"
                                     />
                                 </div>

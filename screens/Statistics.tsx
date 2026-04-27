@@ -119,8 +119,8 @@ export const Statistics: React.FC<Props> = ({ releases, reportData, token, defau
   return (
     <div className="p-4 md:p-8 w-full max-w-[1400px] mx-auto min-h-screen">
        <div className="mb-6">
-            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Statistik Katalog Lagu Anda</h1>
-            <p className="text-slate-500 mt-1 text-sm">Analisis performa katalog musik dan pendapatan Anda.</p>
+            <h1 className="text-2xl font-bold text-white tracking-tight">Statistik Katalog Lagu Anda</h1>
+            <p className="text-slate-400 mt-1 text-sm">Analisis performa katalog musik dan pendapatan Anda.</p>
        </div>
 
        {activeTab === 'aggregator' ? (

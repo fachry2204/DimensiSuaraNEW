@@ -403,6 +403,16 @@ const initDb = async () => {
                         quantity INT DEFAULT 0,
                         revenue DECIMAL(15, 2) DEFAULT 0.00,
                         original_file_name VARCHAR(255),
+                        
+                        -- New Fields
+                        sales_period VARCHAR(50),
+                        reporting_period VARCHAR(50),
+                        album_title VARCHAR(255),
+                        release_date VARCHAR(50),
+                        royalty_type VARCHAR(100),
+                        sales_type VARCHAR(100),
+                        sales_sub_type VARCHAR(100),
+                        
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                     )
                 `);
@@ -420,7 +430,14 @@ const initDb = async () => {
             { name: 'country', type: "VARCHAR(100)" },
             { name: 'quantity', type: "INT DEFAULT 0" },
             { name: 'revenue', type: "DECIMAL(15, 2) DEFAULT 0.00" },
-            { name: 'original_file_name', type: "VARCHAR(255)" }
+            { name: 'original_file_name', type: "VARCHAR(255)" },
+            { name: 'sales_period', type: "VARCHAR(50)" },
+            { name: 'reporting_period', type: "VARCHAR(50)" },
+            { name: 'album_title', type: "VARCHAR(255)" },
+            { name: 'release_date', type: "VARCHAR(50)" },
+            { name: 'royalty_type', type: "VARCHAR(100)" },
+            { name: 'sales_type', type: "VARCHAR(100)" },
+            { name: 'sales_sub_type', type: "VARCHAR(100)" }
         ];
 
         for (const col of reportColumns) {

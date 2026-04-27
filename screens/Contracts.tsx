@@ -190,13 +190,13 @@ export const Contracts: React.FC<Props> = ({ token, defaultTab = 'aggregator' })
   return (
     <div className="p-8 max-w-7xl mx-auto min-h-screen animate-fade-in">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-800 tracking-tight flex items-center gap-3">
+        <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-3">
           <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
             <FileText size={24} />
           </div>
           Manajemen Kontrak
         </h1>
-        <p className="text-slate-500 mt-1 ml-14">Kelola kontrak kerjasama Aggregator dan Publishing.</p>
+        <p className="text-slate-400 mt-1 ml-14">Kelola kontrak kerjasama Aggregator dan Publishing.</p>
       </div>
 
       {/* Tabs */}

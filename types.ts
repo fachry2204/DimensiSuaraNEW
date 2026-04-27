@@ -190,7 +190,17 @@ export interface ReportData {
   country: string;
   quantity: number;
   revenue: number;
-  period: string; // YYYY-MM
+  period: string; // Typically Sales Period (YYYY-MM)
+  
+  // New Fields from Template
+  sales_period?: string;
+  reporting_period?: string;
+  album_title?: string;
+  release_date?: string;
+  royalty_type?: string;
+  sales_type?: string;
+  sales_sub_type?: string;
+
   originalFileName: string;
   uploadTimestamp?: string;
   status?: 'Pending' | 'Reviewed';

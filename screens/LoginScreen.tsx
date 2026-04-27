@@ -89,7 +89,7 @@ export const LoginScreen: React.FC<Props> = ({ onLogin }) => {
       login_form_bg_opacity: 90,
       login_bg_opacity: 100,
       login_glass_effect: 'false',
-      login_form_text_color: '#334155'
+      login_form_text_color: '#000000'
   });
 
   useEffect(() => {
@@ -189,7 +189,7 @@ export const LoginScreen: React.FC<Props> = ({ onLogin }) => {
               type="email"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full pl-9 pr-3 py-2.5 bg-slate-50/10 border border-slate-200/50 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 transition-all font-normal text-xs text-slate-700 placeholder:text-slate-400 backdrop-blur-sm"
+              className="w-full pl-9 pr-3 py-2.5 bg-slate-50/10 border border-slate-200/50 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 transition-all font-normal text-xs text-black placeholder:text-slate-400 backdrop-blur-sm"
               style={{ color: branding.login_form_text_color || '#334155' }}
               placeholder="Enter email"
               required
@@ -207,7 +207,7 @@ export const LoginScreen: React.FC<Props> = ({ onLogin }) => {
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full pl-9 pr-10 py-2.5 bg-slate-50/10 border border-slate-200/50 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 transition-all font-normal text-xs text-slate-700 placeholder:text-slate-400 backdrop-blur-sm"
+              className="w-full pl-9 pr-10 py-2.5 bg-slate-50/10 border border-slate-200/50 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 transition-all font-normal text-xs text-black placeholder:text-slate-400 backdrop-blur-sm"
               style={{ color: branding.login_form_text_color || '#334155' }}
               placeholder="Enter password"
               required

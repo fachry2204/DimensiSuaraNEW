@@ -9,6 +9,7 @@ export const UserDetailPage: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [token] = useState(localStorage.getItem('cms_token') || '');
+  const [userRole] = useState(localStorage.getItem('cms_role') || '');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -254,8 +255,8 @@ export const UserDetailPage: React.FC = () => {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 animate-fade-in">
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center gap-3">
-            <h3 className="text-base font-medium text-slate-800">Profile Lengkap</h3>
-            {currentUser?.role === 'Admin' && (
+            <h3 className="text-base font-medium text-white">Profile Lengkap</h3>
+            {(currentUser?.role === 'Admin' || userRole === 'Admin') && (
               <div className="flex items-center gap-2">
                 <button 
                   onClick={handleEditClick}

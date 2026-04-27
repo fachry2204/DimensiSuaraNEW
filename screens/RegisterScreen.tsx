@@ -41,7 +41,7 @@ export const RegisterScreen: React.FC<Props> = () => {
       login_form_bg_opacity: 90,
       login_bg_opacity: 100,
       login_glass_effect: 'false',
-      login_form_text_color: '#334155'
+      login_form_text_color: '#000000'
   });
 
   useEffect(() => {
