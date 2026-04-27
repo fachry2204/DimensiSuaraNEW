@@ -102,6 +102,12 @@ app.get('/api/health', async (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/releases', releaseRoutes);
 app.use('/api/reports', reportRoutes);
+
+// TEMPORARY TEST ROUTE
+app.post('/api/reports/delete-batch-test', async (req, res) => {
+    res.json({ message: 'Test endpoint reached' });
+});
+
 app.use('/api/publishing', publishingRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/users', userRoutes);

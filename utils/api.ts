@@ -567,7 +567,7 @@ export const api = {
         return res.json();
     },
     deleteReportBatch: async (token, fileName, timestamp) => {
-        const res = await fetch(`${API_BASE_URL}/reports/delete-batch`, {
+        const res = await fetch(`${API_BASE_URL}/reports/delete-batch-test`, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
