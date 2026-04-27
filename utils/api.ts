@@ -560,7 +560,9 @@ export const api = {
         });
         if (!res.ok) {
             const errorData = await res.json().catch(() => ({}));
-            throw new Error(errorData.error || 'Failed to import reports');
+            // Prioritize details/sqlMessage for debugging, fallback to generic error
+            const detailedError = errorData.details || errorData.sqlMessage || errorData.error || 'Failed to import reports';
+            throw new Error(detailedError);
         }
         return res.json();
     },
